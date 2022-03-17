@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>ትዕዛዝ</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link href="../ " rel="stylesheet">
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="../static/css/footer.css" />
+
+</head>
+<body>
+    
+
+<br>
+<br>
+<div class="container" role="main">
+    <div class="row">
+        <div class="col-md-2">
+                    <!-- Vertical navbar -->
+                    <div class="vertical-nav bg-white " id="sidebar ">
+                        <h2 class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0 ">ማውጫ</h2>
+                    
+                        <ul class="nav flex-column bg-white mb-0 ">
+                            <li class="nav-item ">
+                                <a href="admin-orders.html" class="nav-link text-dark font-italic bg-light ">
+                                    <i class="fa fa-th-large mr-3 text-primary fa-fw "></i>ትእዛዞች
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="create-book (2).html" class="nav-link text-dark font-italic ">
+                                    <i class="fa fa-address-card mr-3 text-primary fa-fw "></i> መጽሃፍ አስገባ
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="listOfUsers.html" class="nav-link text-dark font-italic ">
+                                    <i class="fa fa-cubes mr-3 text-primary fa-fw "></i> እቁብ
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="create-package.html" class="nav-link text-dark font-italic ">
+                                    <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End vertical navbar -->
+        </div>
+        <div class="col-sm-8">
+            <h2>ትዕዛዞች</h2>
+        <!-- <div class="store-filter clearfix">
+            <div class="store-sort">
+                <label>
+                    መርጠህ አሳይ፡
+                    <select class="input-select">
+                        <option value="0">ሁሉም</option>
+                        <option value="1">ማከፋፈያ መጥተው የሚወስዱ</option>
+                        <option value="2">ሚጓጓዙ</option>
+                    </select>
+                </label>
+        
+            </div>
+        
+        </div> -->
+        <form class="d-flex">
+            <input class="form-control rounded-0" type="search" placeholder="ትእዛዞችን ፈልግ" aria-label="Search">
+            <span class="input-group-btn border"><button class="btn" type="submit"> <img
+                        src="../static/img/search_black_24dp.svg" alt=""> </button>
+            </span>
+        </form>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+    <label class="btn btn-secondary btn-lg active">
+        <input type="radio" name="options" id="option2" autocomplete="off" checked>ማከፋፈያ መጥተው የሚወስዱ
+    </label>
+    <label class="btn btn-secondary btn-lg">
+        <input type="radio" name="options" id="option3" autocomplete="off"> ሚጓጓዙ
+    </label>
+</div>            <table class="table table-striped w-20">
+
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>ስም</th>
+                        <th>የክፍያ መለያ</th>
+                        <th>ጠቅላላ ገንዘብ</th>
+                        <th>ወስዷል</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+
+                <!--Table body-->
+                <tbody>
+                    <tr class="table-info">
+                        <td scope="row"><a href="detail-order.html"> አቶ ሄኖክ ማቲያስ </a></td>
+                        <td><a href="detail-order.html">qw2er34</a></td>
+                        <td>220</td>
+                        <td><a href=""><i class="fa fa-check"></i></a></td>
+                        
+
+                    </tr>
+                        <td><a href="detail-order.html">oi23oi23</a></td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+
+                    </tr>
+                        <tr class="table-info">
+                            <th scope="row"><a href="detail-order.html">አቶ ሄኖክ ማቲያስ</a> </th>
+                            <td> <a href="detail-order.html">qw2er34</a> </td>
+                            <td>220</td>
+                            <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                        
+                        </tr>
+                        <tr>
+                            <th scope="row"><a href="detail-order.html">አቶ ያሬድ ተገኝ</a></th>
+                            <td><a href="detail-order.html">oi23oi23</a></td>
+                            <td>220</td>
+                            <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                        
+                        </tr>
+                    <tr class="table-info">
+                        <th scope="row"><a href="detail-order.html">አቶ ሄኖክ ማቲያስ</a> </th>
+                        <td> <a href="detail-order.html">qw2er34</a> </td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="detail-order.html">አቶ ያሬድ ተገኝ</a></th>
+                        <td><a href="detail-order.html">oi23oi23</a></td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr class="table-info">
+                        <th scope="row"><a href="detail-order.html">አቶ ሄኖክ ማቲያስ</a> </th>
+                        <td> <a href="detail-order.html">qw2er34</a> </td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="detail-order.html">አቶ ያሬድ ተገኝ</a></th>
+                        <td><a href="detail-order.html">oi23oi23</a></td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr class="table-info">
+                        <th scope="row"><a href="detail-order.html">አቶ ሄኖክ ማቲያስ</a> </th>
+                        <td> <a href="detail-order.html">qw2er34</a> </td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+
+                    
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="detail-order.html">አቶ ያሬድ ተገኝ</a></th>
+                        <td><a href="detail-order.html">oi23oi23</a></td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr class="table-info">
+                        <th scope="row"><a href="detail-order.html">አቶ ሄኖክ ማቲያስ</a> </th>
+                        <td> <a href="detail-order.html">qw2er34</a> </td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+                    <tr>
+                        <th scope="row"><a href="detail-order.html">አቶ ያሬድ ተገኝ</a></th>
+                        <td><a href="detail-order.html">oi23oi23</a></td>
+                        <td>220</td>
+                        <td> <a href=""><i class="fa fa-check" aria-hidden="true"></i></a></td>
+                    
+                    </tr>
+
+
+                                    </tbody>
+                <!--Table body-->
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<footer class="footer-distributed">
+
+    <div class="footer-left">
+
+        <h3>መንፈሳዊ-<span>መጻህፍት</span></h3>
+
+        <p class="footer-links">
+            <a href="#">ዋና ገጽ</a>
+            ·
+            <a href="#">መጻህፍት</a>
+            ·
+            <a href="#">ስለድርጅቱ</a>
+            ·
+            <a href="#">ተደጋጋሚ ጥያቄዎች</a>
+            ·
+            <a href="#">ያነጋግሩን</a>
+        </p>
+
+        <p class="footer-company-name">መንፈሳዊ መጻህፍት © 2014</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ</span> አዲስ አበባ, ኢትዮጵያ </p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>+251 925 421 700</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:menfesawi_metsahft@gmail.com">menfesawi_metsahft@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+         
+
+        <div class="footer-icons">
+
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-telegram"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#"><i class="fa fa-youtube"></i></a>
+
+        </div>
+
+    </div>
+    <script src="../static/js/bootstrap.min.js"></script>
+</footer>
