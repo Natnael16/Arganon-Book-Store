@@ -150,12 +150,12 @@
 	var priceSlider = document.getElementById('price-slider');
 	if (priceSlider) {
 		noUiSlider.create(priceSlider, {
-			start: [1, 9999],
+			start: [1, 5000],
 			connect: true,
 			step: 1,
 			range: {
 				'min': 1,
-				'max': 9999
+				'max': 5000
 			}
 		});
 

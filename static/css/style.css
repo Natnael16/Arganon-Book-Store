@@ -684,7 +684,7 @@ textarea.input {
     background-color: #FFF;
     color: #228B22;
     border-color: #228B22;
-    padding: 0px 30px 0px 50px;
+    /* padding: 0px 30px 0px 20px; */
 }
 
 .product .add-to-cart .add-to-cart-btn:hover>i {
@@ -1518,7 +1518,15 @@ textarea.input {
 	13 -> RESPONSIVE
 ===========================================================*/
 
-@media only screen and (max-width: 1201px) {}
+@media only screen and (max-width: 1201px) {
+    .order-submit {
+        /* width: 7%; */
+        /* height: 5vw; */
+        font-size: 15px;
+        /* text-align:justify; */
+        padding: 15px;
+    }
+}
 
 @media only screen and (max-width: 991px) {
     #top-header .header-links.pull-left {
@@ -1546,19 +1554,49 @@ textarea.input {
         margin-top: 30px;
         margin-bottom: 30px;
     }
+    .row #prod {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    /* .product {
+        width: 22vw;
+    }
+     */
+    .product {
+        width: 22vw;
+        height: 10%;
+    }
+    .row #prod {
+        display: flex;
+        flex-wrap: wrap;
+    }
+     .order-submit {
+        /* width: 7%; */
+        /* height: 5vw; */
+        font-size: 15px;
+        /* text-align:justify; */
+        padding: 15px;
+    }
 }
 
-@media only screen and (max-width: 767px) {
-    .section-title .section-nav {
-        float: none;
-        margin-top: 10px;
+@media only screen and (max-width: 600px) {
+    .row #prod {
+        display: flex;
+        flex-wrap: wrap;
     }
-    .section-tab-nav li {
-        margin-top: 10px;
+    .product {
+        width: 30vw;
+        /* height: 10%; */
+    }
+    .order-submit {
+        /* width: 7%; */
+        /* height: 5vw; */
+        font-size: 14px;
+        /* text-align:justify; */
+        padding: 17px;
     }
 }
-
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 500px) {
     [class*='col-xs'] {
         width: 100%;
     }
@@ -1570,7 +1608,34 @@ textarea.input {
         float: none;
         margin-top: 10px;
     }
+    .order-submit {
+        /* width: 7%; */
+        /* height: 5vw; */
+        width: 25vw;
+        font-size: 11px;
+        /* text-align:justify; */
+        padding: 13px;
+    }
 }
+@media only screen and (max-width: 290px) {
+     .order-submit {
+        width: 25vw;
+        /* height: 5vw; */
+        font-size: 10px;
+        /* text-align:justify; */
+        padding: 9px;
+        /* border-radius: 10px; */
+    }
+    .row #prod {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .product {
+        width: 30vw;
+        /* height: 10%; */
+    }
+}
+
 
 .slick-dots li,
 .slick-dots li button,
