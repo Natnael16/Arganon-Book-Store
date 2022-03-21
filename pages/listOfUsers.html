@@ -7,150 +7,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>list of Users</title>
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/bootstrap.min1.css">
-    <!-- <link href="../ " rel="stylesheet"> -->
-    <link rel="stylesheet" href="static/css/main.css">
-    <link type="text/css" rel="stylesheet" href="static/css/header.css" />
+    <!-- <link rel="stylesheet" href="../static/css/bootstrap.min1.css"> -->
+    <!-- <link href="../" rel="stylesheet"> -->
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link type="text/css" rel="stylesheet" href="../static/css/header.css" />
     <link rel="stylesheet" href="../static/css/style.css" />
     <link rel="stylesheet" href="../static/css/font-awesome.min.css">
     <link href="../static/css/footer.css" rel="stylesheet">
+    
 </head>
-<header class="header-top">
+<header>
 
-    <div class="bg-light mb-3" style="z-index: 3;">
-        <div class="container-fluid ">
-            <div class="row p-2 d-flex align-items-center">
-                <div class="d-none d-md-block col-8 col-md-3">
-                    <h3>መንፈሳዊ-<span style="color:#228B22;">መጻህፍት</span></h3>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- BRAND -->
+            <div class="row " style="width: 100%; padding-top: 10px; align-items: center;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#alignment-example" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="col-xs-6 col-sm-8 col-md-3">
+                    <a href="../index.html">
+                        <h3 class="navbar-brand" href="../index.html" style="font-size: 30px;">መንፈሳዊ-<span
+                                style="color:#228B22;">መጻሕፍት</span></h3>
+                    </a>
                 </div>
-                <!-- for mobile  -->
-                <div class="d-block d-md-none col-12">
-
-                    <nav id="navbar2" class="navbar navbar-expand-md navbar-light">
-                        <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex" href="#">
-                                <h3>መንፈሳዊ-<span style="color:#228B22;">መጻህፍት</span></h3>
-                            </a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                                aria-expanded="false" aria-label="Toggle navigation"> <span
-                                    class="navbar-toggler-icon"></span> </button>
-                            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item"> <a class="nav-link active" aria-current="page"
-                                            href="pages/equb.html">ዕቁብ</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/metsahft.html">መፃህፍት</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/admin-orders.html">Login |
-                                            Register</a> </li>
-                                    <!-- <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mobiles </a> -->
-                                    <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                            <li><a class="dropdown-item" href="#">Smart Phones</a></li>
-                                                            <li><a class="dropdown-item" href="#">Feature Phones</a></li>
-                                                            <li><a class="dropdown-item" href="#">Mobile Covers</a></li>
-                                                        </ul> -->
-                                    </li>
-                                </ul>
-                            </div>
-
-
-                        </div>
-                    </nav>
-
-                </div>
-                <div class="col-7 col-sm-8 col-md-7">
+                <div class="col-xs-9 col-sm-8 col-md-7">
                     <div class="d-flex form-inputs"> <input class="form-control " type="text"
-                            placeholder="Search Books..."> <i class="fa fa-search"></i>
+                            placeholder="Search Books...">
+                        <i class="fa fa-search"></i>
                     </div>
                 </div>
-                <div class="col-5 col-sm-4 col-md-2">
-                    <div class="d-flex d-md-flex flex-row align-items-center"> <span class="shop-bag"><i
-                                class="fa fa-shopping-cart"></i></span>
-                        <div class="d-flex flex-column ms-2"> <span class="qty">3 መጻህፍት</span> <span class="fw-bold">270
-                                ብር</span> </div>
-                    </div>
-                </div>
-                <div class="d-none d-md-block col-12">
-
-                    <nav id="navbar" class="navbar navbar-expand-md navbar-light">
-                        <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex" href="#"></a> <button
-                                class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                                aria-expanded="false" aria-label="Toggle navigation"> <span
-                                    class="navbar-toggler-icon"></span> </button>
-                            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item"> <a class="nav-link active" aria-current="page"
-                                            href="pages/equb.html">እቅብ</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/metsahft.html">መጻህፍት</a> </li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/admin-orders.html">Login |
-                                            Register</a> </li>
-                                    <!-- <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mobiles </a> -->
-                                    <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                        <li><a class="dropdown-item" href="#">Smart Phones</a></li>
-                                                        <li><a class="dropdown-item" href="#">Feature Phones</a></li>
-                                                        <li><a class="dropdown-item" href="#">Mobile Covers</a></li>
-                                                    </ul> -->
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="col-xs-3 col-sm-3 col-md-2">
+                    <a href="shoping-cart.html">
+                        <div class="align-items-center" style="display: flex; align-items: center;"> <span
+                                class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2"
+                                style="display: flex; flex-direction: column; align-self: center;margin: 4%;"> <span
+                                    class="qty">2
+                                    መጻሕፍት</span> <span class="fw-bold">230 ብር</span> </div>
                         </div>
-                    </nav>
+                    </a>
+                </div>
+
+                <div id="navbar" class="d-xs-none d-md-block col-xs-12">
+                    <div class="collapse navbar-collapse" id="alignment-example">
+
+                        <!-- Links -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page"
+                                    href="equb.html">እቁብ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="metsahft.html">መጻሕፍት</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="admin-orders.html">አስተዳዳሪ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="#">Login | Register</a> </li>
+                        </ul>
+
+
+                    </div>
 
                 </div>
+
+
+
             </div>
+
+            <!-- COLLAPSIBLE NAVBAR -->
+
+
         </div>
-    </div>
-
-
-
-
+    </nav>
 </header>
 
 <body>
-    <div class="container">
-        <br>
-        <br>
-        <div class="row">
+    <br>
+    <br>
+    <!-- <div style="padding: 3%;"></div> -->
+<div class="container" role="main">
+    <div class="row">
+        <div class="col-md-2">
+            <!-- Vertical navbar -->
+            <div class="vertical-nav bg-white " id="sidebar ">
+                <h2 class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0 ">ማውጫ</h2>
 
-            <div class="col-md-2">
-                <!-- Vertical navbar -->
-                <div class="vertical-nav bg-white " id="sidebar ">
-                    <h2 class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0 ">ማውጫ</h2>
-
-                    <ul class="nav flex-column bg-white mb-0 ">
-                        <li class="nav-item ">
-                            <a href="admin-orders.html" class="nav-link text-dark font-italic">
-                                <i class="fa fa-th-large mr-3 text-primary fa-fw "></i>ትእዛዞች
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="create-book (2).html" class="nav-link text-dark font-italic ">
-                                <i class="fa fa-address-card mr-3 text-primary fa-fw "></i> መጽሃፍ አስገባ
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="listOfUsers.html" class="nav-link text-dark font-italic ">
-                                <i class="fa fa-cubes mr-3 text-primary fa-fw "></i> እቁብ
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="create-package.html" class="nav-link text-dark font-italic ">
-                                <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- End vertical navbar -->
+                <ul class="nav flex-column bg-white mb-0 ">
+                    <li class="nav-item ">
+                        <a href="admin-orders.html" class="nav-link text-dark font-italic bg-light ">
+                            <i class="fa fa-th-large mr-3 text-primary fa-fw "></i>ትእዛዞች
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="create-book (2).html" class="nav-link text-dark font-italic ">
+                            <i class="fa fa-address-card mr-3 text-primary fa-fw "></i> መጽሃፍ አስገባ
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="listOfUsers.html" class="nav-link text-dark font-italic ">
+                            <i class="fa fa-cubes mr-3 text-primary fa-fw "></i> እቁብ
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="create-package.html" class="nav-link text-dark font-italic ">
+                            <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <!-- End vertical navbar -->
+        </div>
             <div class="col-md-6">
                 <label>
                     መርጠህ አሳይ፡
                     <select class="input-select፟">
                         <option value="0">ሁሉም</option>
-                      <option value="1">1ኛ ደረጃ</option>
-                      <option value="2">2ኛ ደረጃ</option>
-                    <option value ="3">3ኛ ደረጃ</option>
-                    <option value ="4">4ኛ ደረጃ</option>
+                        <option value="1">1ኛ ደረጃ</option>
+                        <option value="2">2ኛ ደረጃ</option>
+                        <option value="3">3ኛ ደረጃ</option>
+                        <option value="4">4ኛ ደረጃ</option>
                     </select>
-                  </label>
+                </label>
                 <br><br>
                 <h4>የዕቁብ መዋጮ ክፍያ ያለባቸው አባላት ዝርዝር</h4>
                 <table class="table">
@@ -168,7 +147,8 @@
                             <td>ያሬድ ተገኝ ገበያው</td>
                             <td>ደረጃ 2</td>
                             <td>
-                                <input type="number" value="2" style="width: 40px;"> </td>
+                                <input type="number" value="2" style="width: 40px;">
+                            </td>
 
                         </tr>
                         <tr>
@@ -176,7 +156,8 @@
                             <td>ያሬድ ተገኝ ገበያው</td>
                             <td>ደረጃ 2</td>
                             <td>
-                                <input type="number" value="2" style="width: 40px;"> </td>
+                                <input type="number" value="2" style="width: 40px;">
+                            </td>
 
                         </tr>
                         <tr>
@@ -184,7 +165,8 @@
                             <td>ያሬድ ተገኝ ገበያው</td>
                             <td>ደረጃ 2</td>
                             <td>
-                                <input type="number" value="2" style="width: 40px;"> </td>
+                                <input type="number" value="2" style="width: 40px;">
+                            </td>
 
                         </tr>
                         <tr>
@@ -192,14 +174,15 @@
                             <td>ያሬድ ተገኝ ገበያው</td>
                             <td>ደረጃ 2</td>
                             <td>
-                                <input type="number" value="2" style="width: 40px;"> </td>
+                                <input type="number" value="2" style="width: 40px;">
+                            </td>
 
                         </tr>
                         <tr>
                             <td>
-                                <div class="product-details ">
-                                    <div class="add-to-cart ">
-                                        <button class="add-to-cart-btn "><i class="fa fa-save"></i>መልዕክት ላክ</button>
+                                <div class="product-details">
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-save"></i>መዝግብ</button>
                                     </div>
                                 </div>
                             </td>
@@ -207,140 +190,135 @@
                     </tbody>
 
                 </table>
-                <div class="product-details ">
-                    <div class="add-to-cart ">
-                        <p>የወርሃዊ መዋጮዋቸውን ላላዋጡ አባላት የቴሊግራም መልዕክት ለመላክ ቀጥሎ ያለውን ቁልፍ ይጫኑ።</p>
-                        <button class="add-to-cart-btn "><i class="fa fa-telegram "></i>መልዕክት ላክ</button>
-                        <br>
-                        <br>
-                        <p>አዲስ ሰዎችን ወደ ዕቁቡ ለማስገባት ቀጥሎ ያለውን ቁልፍ ይጫኑ።</p>
-                        <button class="add-to-cart-btn " data-bs-toggle="modal " data-bs-target="#exampleModal "><i class="fa fa-user " ></i>አዲስ ዕቁብትኛ አስገባ</button>
+                <div class="product-details">
+                    <div class="add-to-cart">
+                        <!-- <p>የወርሃዊ መዋጮዋቸውን ላላዋጡ አባላት የቴሊግራም መልዕክት ለመላክ ቀጥሎ ያለውን ቁልፍ ይጫኑ።</p>
+                        <button class="add-to-cart-btn"><i class="fa fa-telegram"></i>ለውጦችን</button> -->
+                        <!-- <br> -->
+                        <!-- <br> -->
+                        <!-- <p>አዲስ ሰዎችን ወደ ዕቁቡ ለማስገባት ቀጥሎ ያለውን ቁልፍ ይጫኑ።</p>
+                        <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                class="fa fa-user"></i>አዲስ ዕቁብትኛ አስገባ</button> -->
                         <!-- Modal -->
-                        <div class="modal fade " id="exampleModal " tabindex="-1 " aria-labelledby="exampleModalLabel " aria-hidden="true ">
-                            <div class="modal-dialog ">
-                                <div class="modal-content ">
-                                    <div class="modal-header ">
-                                        <h5 class="modal-title " id="exampleModalLabel ">አዲስ አባል ማስገቢያ ገጽ</h5>
-                                        <button type="button " class="btn-close " data-bs-dismiss="modal " aria-label="Close "></button>
+                      
+                       
+                        <div class="input-radio">
+                            <input type="radio" name=" payment " id="payment-1 ">
+                            <label for="payment-1 ">
+                                <span></span>
+                                <h4>አዲስ ዕቁብተኛ አስገባ</h4>
+                            </label>
+                            <div class="caption ">
+                                <label>
+                                    የዕቁብ አይነት፡
+                                    <select class="input-select፟ ">
+                                        <option value="0 ">1ኛ ደረጃ</option>
+                                        <option value="1 ">2ኛ ደረጃ</option>
+                                        <option value="2 ">3ኛ ደረጃ</option>
+                                        <option value="3 ">4ኛ ደረጃ</option>
+                                    </select>
+                                </label>
+                                <br>
+                                <br>
+                                <form>
+                                    <div class="mb-3 ">
+                                        <label for="exampleInputEmail1" class="form-label">ስልክ ቁጥር: </label>
+                                        <input type="text" id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
-                                    <div class="modal-body ">
-                                        <label>
-                                            የዕቁብ አይነት፡
-                                            <select class="input-select፟ ">
-                                              <option value="0 ">1ኛ ደረጃ</option>
-                                              <option value="1 ">2ኛ ደረጃ</option>
-                                            <option value ="2 ">3ኛ ደረጃ</option>
-                                            <option value ="3 ">4ኛ ደረጃ</option>
-                                            </select>
-                                          </label>
-                                        <br>
-                                        <br>
-                                        <form>
-                                            <div class="mb-3 ">
-                                                <label for="exampleInputEmail1 " class="form-label ">ስልክ ቁጥር</label>
-                                                <input type="text " class="form-control " id="exampleInputEmail1 " aria-describedby="emailHelp ">
-                                                <div class="mb-3 ">
-                                                    <!--  <label for="exampleInputPassword1 " class="form-label ">Password</label>
-                                                    <input type="password " class="form-control " id="exampleInputPassword1 ">
-                                                </div>
-                                                <div class="mb-3 form-check ">
-                                                    <input type="checkbox " class="form-check-input " id="exampleCheck1 ">
-                                                    <label class="form-check-label " for="exampleCheck1 ">Check me out</label>-->
-                                                </div>
-                                                <button type="submit " class="add-to-cart-btn "><i class="fa fa-arrow-right "></i>አስግባ</button>
-                                        </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <br>
+                                    <button type="submit" class="add-to-cart-btn"><i class="fa fa-arrow-right"></i>አስግባ</button>
+                                </form>
+                        
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 order-details ">
-                <div class="section-title text-center ">
-                    <h3 class="title ">ባልዕጣዎችን ለይ</h3>
-                </div>
-                <div class="order-summary ">
-                    <div class="order-col ">
-                        <div></div>
-                        <p>የዚን ወር የዕቁብ ባለዕጣዎች አውጣ፡</p>
-                        <form action=" ">
-                            <label for="num "><strong>የሰዎች ብዛት:</strong> </label>
-                            <input type="number " id="num ">
-                            <input type="submit " class="primary-btn order-submit " value=" የ1ኛ ደረጃ አሸናፊዎችን አውጣ ">
-                        </form>
-                    </div>
-                </div>
-                <p><strong>የዚህ ወር የ1ኛ ደረጃ ዕቁብ ባለዕጣዎች ዝርዝር፡</strong></p>
-                <ul>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                    <li>ሄኖክ ማትያስ</li>
-                    <li>ናቲ ታደለ</li>
-                    <li>ያሬድተገኝ</li>
-                </ul>
-            </div>
-
         </div>
+        <div class="col-md-3 order-details">
+            <div class="section-title text-center">
+                <h3 class="title">ባልዕጣዎችን ለይ</h3>
+            </div>
+            <div class="order-summary">
+                <div class="order-col">
+                    <div></div>
+                    <p>የዚን ወር የዕቁብ ባለዕጣዎች አውጣ፡</p>
+                    <form action="">
+                        <label for="num"><strong>የሰዎች ብዛት:</strong> </label>
+                        <input type="number" id="num" style="width: 50px;">
+                        <a href="book_detail.html" class="primary-btn order-submit" style="margin-top: 10px ;">አሸናፊዎችን አውጣ
+                        </a>
+                    </form>
+                </div>
+            </div>
+            <p><strong>የዚህ ወር የ1ኛ ደረጃ ዕቁብ ባለዕጣዎች ዝርዝር፡</strong></p>
+            <ul>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+                <li>ሄኖክ ማትያስ</li>
+                <li>ናቲ ታደለ</li>
+                <li>ያሬድተገኝ</li>
+            </ul>
+        </div>
+
     </div>
     </div>
-    <script src="../static/js/bootstrap.bundle.min1.js "></script>
+    </div>
+    <script src="../static/js/bootstrap.bundle.min1.js"></script>
 </body>
-<footer class="footer-distributed ">
-    <div class="footer-left ">
-        <h3>መንፈሳዊ-<span>መጻህፍት</span></h3>
-        <p class="footer-links ">
-            <a href="# ">ዋና ገጽ</a> ·
-            <a href="# ">መጻህፍት</a> ·
-            <a href="# ">ስለድርጅቱ</a> ·
-            <a href="# ">ተደጋጋሚ ጥያቄዎች</a> ·
-            <a href="# ">ያነጋግሩን</a>
+<footer class="footer-distributed">
+    <div class="footer-left">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+        <p class="footer-links">
+            <a href="#">ዋና ገጽ</a> ·
+            <a href="#">መጻሕፍት</a> ·
+            <a href="about-us.html">ስለድርጅቱ</a> ·
+            <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+            <a href="#">ያነጋግሩን</a>
         </p>
 
-        <p class="footer-company-name ">መንፈሳዊ መጻህፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
-    <div class="footer-center ">
+    <div class="footer-center">
 
         <div>
-            <i class="fa fa-map-marker "></i>
-            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ</span> አዲስ አበባ, ኢትዮጵያ </p>
+            <i class="fa fa-map-marker"></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
         </div>
 
         <div>
-            <i class="fa fa-phone "></i>
+            <i class="fa fa-phone"></i>
             <p>+251 925 421 700</p>
         </div>
 
         <div>
-            <i class="fa fa-envelope "></i>
-            <p><a href="mailto:menfesawi_metsahft@gmail.com ">menfesawi_metsahft@gmail.com</a></p>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
         </div>
 
     </div>
 
-    <div class="footer-right ">
+    <div class="footer-right">
 
-        <div class="footer-icons ">
+        <div class="footer-icons">
 
-            <a href="# "><i class="fa fa-facebook "></i></a>
-            <a href="# "><i class="fa fa-telegram "></i></a>
-            <a href="# "><i class="fa fa-instagram "></i></a>
-            <a href="# "><i class="fa fa-youtube "></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.t.me/BetMetsahfte"><i class="fa fa-telegram"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#"><i class="fa fa-youtube"></i></a>
 
         </div>
 

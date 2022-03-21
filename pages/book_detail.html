@@ -45,8 +45,10 @@
                 </button>
 
                 <div class="col-xs-6 col-sm-8 col-md-3">
-                    <h3 class="navbar-brand" href="../index.html" style="font-size: 30px;">መንፈሳዊ-<span
-                            style="color:#228B22;">መጻህፍት</span></h3>
+                    <a href="../index.html">
+                        <h3 class="navbar-brand" href="../index.html" style="font-size: 30px;">መንፈሳዊ-<span
+                                style="color:#228B22;">መጻሕፍት</span></h3>
+                    </a>
                 </div>
                 <div class="col-xs-9 col-sm-8 col-md-7">
                     <div class="d-flex form-inputs"> <input class="form-control " type="text"
@@ -55,12 +57,15 @@
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-2">
-                    <div class="align-items-center" style="display: flex; align-items: center;"> <span
-                            class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
-                        <div class="d-flex flex-column ms-2"
-                            style="display: flex; flex-direction: column; align-self: center;"> <span class="qty">2
-                                መጻህፍት</span> <span class="fw-bold">230 ብር</span> </div>
-                    </div>
+                    <a href="shoping-cart.html">
+                        <div class="align-items-center" style="display: flex; align-items: center;"> <span
+                                class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2"
+                                style="display: flex; flex-direction: column; align-self: center;margin: 4%;"> <span
+                                    class="qty">2
+                                    መጻሕፍት</span> <span class="fw-bold">230 ብር</span> </div>
+                        </div>
+                    </a>
                 </div>
 
                 <div id="navbar" class="d-xs-none d-md-block col-xs-12">
@@ -70,9 +75,9 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link active" aria-current="page"
                                     href="equb.html">እቁብ</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="metsahft.html">Books</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="admin-orders.html">Login | Register</a>
-                            </li>
+                            <li class="nav-item"> <a class="nav-link" href="metsahft.html">መጻሕፍት</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="admin-orders.html">አስተዳዳሪ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="#">Login | Register</a> </li>
                         </ul>
 
 
@@ -150,7 +155,7 @@
                                 </div>
                             </div>
                             <!-- this button will redirect to shoping cart after being added to the cart -->
-                            <a href="shoping-cart.html"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>ወደ ዘንቢሎ ይጨምሩ</button></a>
+                            <a href="shoping-cart.html"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>ይግዙ</button></a>
                         </div>
 
                         <ul class="product-links">
@@ -239,73 +244,80 @@
 
                         <!-- product -->
                         <div class="col-md-3 col-xs-5">
-                            <div class="product">
+                        <div class="product">
+                            <a href="book_detail.html">
                                 <div class="product-img">
                                     <img src="../static/img/yebrhan_enat.jpg" alt="">
                                 </div>
+                            </a>
+                            <div class="product-body">
+                                <p class="product-category">ነገረ ማርያም</p>
+                                <h3 class="product-name"><a href="book_detail.html">የብርሃን እናት</h3>
+                                <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
+                                <h4 class="product-price">280.00 ብር <del class="product-old-price">350.00 ብር</del></h4>
+                                <div class="product-rating">
+                                </div>
+                        
+                                <br>
+                                <br>
+                                <div class="add-to-cart">
+                                    <div style="text-align: center;">
+                                        <a href="book_detail.html" class="primary-btn order-submit" style="margin-top: 10px ;">ወደ መጽሃፉ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-3 col-xs-5">
+                            <div class="product">
+                                <a href="book_detail.html">
+                                    <div class="product-img">
+                                        <img src="../static/img/yebrhan_enat.jpg" alt="">
+                                    </div>
+                                </a>
                                 <div class="product-body">
                                     <p class="product-category">ነገረ ማርያም</p>
-                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
+                                    <h3 class="product-name"><a href="book_detail.html">የብርሃን እናት</h3>
                                     <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                    <p class="product-category">የገጽ ብዛት፡ 239</p>
                                     <h4 class="product-price">280.00 ብር <del class="product-old-price">350.00 ብር</del></h4>
                                     <div class="product-rating">
                                     </div>
-
+                            
                                     <br>
                                     <br>
                                     <div class="add-to-cart">
-                                        <!-- this button will redirect to shoping cart after being added to the cart -->
-                                        <a href="shoping-cart.html"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> ወደ ዘንቢሎ ይጨምሩ</button></a>
+                                        <div style="text-align: center;">
+                                            <a href="book_detail.html" class="primary-btn order-submit" style="margin-top: 10px ;">ወደ መጽሃፉ
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-5">
                             <div class="product">
-                                <div class="product-img">
-                                    <img src="../static/img/yebrhan_enat.jpg" alt="">
-                                </div>
-                                <div class="product-body">
-                                    <p class="product-category">ነገረ ማርያም</p>
-                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                    <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                    <p class="product-category">የገጽ ብዛት፡ 239</p>
-                                    <h4 class="product-price">280.00 ብር <del class="product-old-price">350.00 ብር</del></h4>
-                                    <div class="product-rating">
-                                    </div>
-
-                                    <br>
-                                    <br>
-                                    <div class="add-to-cart">
-                                        <!-- this button will redirect to shoping cart after being added to the cart -->
-                                        <a href="shoping-cart.html"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> ወደ ዘንቢሎ ይጨምሩ</button></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-5">
-                            <div class="product">
-                                <div class="product-img">
-                                    <img src="../static/img/yebrhan_enat.jpg" alt="">
-                                </div>
-                                <div class="product-body">
-                                    <p class="product-category">ነገረ ማርያም</p>
-                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                    <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                    <p class="product-category">የገጽ ብዛት፡ 239</p>
-                                    <h4 class="product-price">280.00 ብር <del class="product-old-price">350.00 ብር</del></h4>
-                                    <div class="product-rating">
-                                    </div>
-
-                                    <br>
-                                    <br>
-                                    <div class="add-to-cart">
-                                        <!-- this button will redirect to shoping cart after being added to the cart -->
-                                        <a href="shoping-cart.html"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> ወደ ዘንቢሎ ይጨምሩ</button></a>
+                                    <a href="book_detail.html">                                    <div class="product-img">
+                                        <img src="../static/img/yebrhan_enat.jpg" alt="">
+                                    </div></a>
+                                    <div class="product-body">
+                                        <p class="product-category">ነገረ ማርያም</p>
+                                        <h3 class="product-name"><a href="book_detail.html">የብርሃን እናት</h3>
+                                         <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
+                                        <h4 class="product-price">280.00 ብር <del class="product-old-price">350.00 ብር</del></h4>
+                                        <div class="product-rating">
+                                        </div>
+                            
+                                        <br>
+                                        <br>
+                                        <div class="add-to-cart">
+                                            <div style="text-align: center;">
+            <a href="book_detail.html" class="primary-btn order-submit" style="margin-top: 10px ;">ወደ መጽሃፉ
+                </a>
+        </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
 
                     </div>
@@ -324,23 +336,23 @@
 
 <footer class="footer-distributed">
     <div class="footer-left">
-        <h3>መንፈሳዊ-<span>መጻህፍት</span></h3>
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <p class="footer-links">
             <a href="#">ዋና ገጽ</a> ·
-            <a href="#">መጻህፍት</a> ·
-            <a href="#">ስለድርጅቱ</a> ·
+            <a href="#">መጻሕፍት</a> ·
+            <a href="about-us.html">ስለድርጅቱ</a> ·
             <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
             <a href="#">ያነጋግሩን</a>
         </p>
 
-        <p class="footer-company-name">መንፈሳዊ መጻህፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">
 
         <div>
             <i class="fa fa-map-marker"></i>
-            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ</span> አዲስ አበባ, ኢትዮጵያ </p>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
         </div>
 
         <div>
@@ -350,26 +362,18 @@
 
         <div>
             <i class="fa fa-envelope"></i>
-            <p><a href="mailto:menfesawi_metsahft@gmail.com">menfesawi_metsahft@gmail.com</a></p>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
         </div>
 
     </div>
 
     <div class="footer-right">
 
-        <p class="footer-company-about">
-            <h5>የኅብረቱ ዋና ዓላማ</h5>
-            <p>፩.መንፈሳዊ መጻሕፍትን በዓላማ፤በእቅድ እንድናነባቸው፤እንድናስነብባቸው በሕይወታችን ትርጉም እንዲኖራቸው ማድረግ።
-                <br>
-                <br> ፪.ከቤተሰቦቻችን፤ዘመዶቻችን፤ወዳጆቻችን ስላነበብናቸው መጻሕፍት እነሱም ስላነበቡት መጻሕፍት ውይይት የማድረግ ልምድን ማዳበር። <br><br> ፫.አንባቢ ትውልድ መፍጠር።
-            </p>
-
-        </p>
-
+        
         <div class="footer-icons">
 
             <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-telegram"></i></a>
+            <a href="https://www.t.me/BetMetsahfte"><i class="fa fa-telegram"></i></a>
             <a href="#"><i class="fa fa-instagram"></i></a>
             <a href="#"><i class="fa fa-youtube"></i></a>
 

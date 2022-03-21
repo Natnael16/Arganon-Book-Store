@@ -20,11 +20,13 @@
 
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/main.css">
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="../static/css/footer.css" />
     <link type="text/css" rel="stylesheet" href="../static/css/style.css" />
-    <link type="text/css" rel="stylesheet" href="../static/css/style_2.css" />
+    <!-- <link type="text/css" rel="stylesheet" href="../static/css/style_2.css" /> -->
 
     <style>
         table {
@@ -57,8 +59,10 @@
                 </button>
 
                 <div class="col-xs-6 col-sm-8 col-md-3">
-                    <h3 class="navbar-brand" href="../index.html" style="font-size: 30px;">መንፈሳዊ-<span
-                            style="color:#228B22;">መጻህፍት</span></h3>
+                    <a href="../index.html">
+                        <h3 class="navbar-brand" href="../index.html" style="font-size: 30px;">መንፈሳዊ-<span
+                                style="color:#228B22;">መጻሕፍት</span></h3>
+                    </a>
                 </div>
                 <div class="col-xs-9 col-sm-8 col-md-7">
                     <div class="d-flex form-inputs"> <input class="form-control " type="text"
@@ -67,12 +71,15 @@
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-2">
-                    <div class="align-items-center" style="display: flex; align-items: center;"> <span
-                            class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
-                        <div class="d-flex flex-column ms-2"
-                            style="display: flex; flex-direction: column; align-self: center;"> <span class="qty">2
-                                መጻህፍት</span> <span class="fw-bold">230 ብር</span> </div>
-                    </div>
+                    <a href="shoping-cart.html">
+                        <div class="align-items-center" style="display: flex; align-items: center;"> <span
+                                class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2"
+                                style="display: flex; flex-direction: column; align-self: center;margin: 4%;"> <span
+                                    class="qty">2
+                                    መጻሕፍት</span> <span class="fw-bold">230 ብር</span> </div>
+                        </div>
+                    </a>
                 </div>
 
                 <div id="navbar" class="d-xs-none d-md-block col-xs-12">
@@ -82,9 +89,9 @@
                         <ul class="nav navbar-nav">
                             <li class="nav-item"> <a class="nav-link active" aria-current="page"
                                     href="equb.html">እቁብ</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="metsahft.html">Books</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="admin-orders.html">Login | Register</a>
-                            </li>
+                            <li class="nav-item"> <a class="nav-link" href="metsahft.html">መጻሕፍት</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="admin-orders.html">አስተዳዳሪ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="#">Login | Register</a> </li>
                         </ul>
 
 
@@ -111,10 +118,11 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th class=" shoping__product">መጻህፍት</th>
+                                    <th class=" shoping__product">መጻሕፍት</th>
                                     <th>ዋጋ</th>
                                     <th>ብዛት</th>
                                     <th style="float:right;"> አጠቃላይ ዋጋ</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -132,8 +140,7 @@
                                         <h5>55.00 ብር</h5>
                                     </td>
                                     <td class="shoping__cart__item">
-                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" value="1"></div>
-                                    </td>
+                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" value="1" style="width: 50px;" ></td>
                                     <td class="shoping__cart__item">
                                         <h5 style="float:right;">55 ብር</h5>
                                     </td>
@@ -156,8 +163,7 @@
                                         <h5>55.00 ብር</h5>
                                     </td>
                                     <td class="shoping__cart__item">
-                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" value="1"></div>
-                                    </td>
+                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" style="width: 50px;"  value="1"                                   </td>
                                     <td class="shoping__cart__item">
                                         <h5 style="float:right;">55 ብር</h5>
                                     </td>
@@ -179,7 +185,7 @@
                                         <h5>55.00 ብር</h5>
                                     </td>
                                     <td class="shoping__cart__item">
-                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" value="1" width=""></div>
+                                        <div class="pro-qty"><input type="number" id="points" name="points" step="1" style="width: 50px;" value="1"></div>
                                     </td>
                                     <td class="shoping__cart__item">
                                         <h5 style="float:right;">55 ብር</h5>
@@ -195,16 +201,42 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="shoping__cart__btns"><a href="metsahft.html" class="primary-btn cart-btn">መሸመት ቀጥል</a><a href="/update-cart" class="primary-btn cart-btn cart-btn-right"><span><i class="fa fa-save" aria-hidden="true"></i></span>ማስተካከያዎችን መዝግብ</a></div>
+                    <div class="shoping__cart__btns"><a href="metsahft.html" class="primary-btn cart-btn" style="margin:5%;">መሸመት ቀጥል</a><a href="/update-cart" class="primary-btn cart-btn cart-btn-right"><span><i class="fa fa-save" aria-hidden="true"></i></span> ለውጦችን መዝግብ</a></div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="shoping__checkout">
-                        <h5>የመረጡት መጻህፍት ድምር</h5>
-                        <ul>
-                            <li>የመጽሃፍት ዋጋ <span>300.00 ብር</span></li>
-                            <li>የማጓጓዣ ዋጋ <span>0.00 ብር</span></li>
-                            <li>Total <span>$454.98</span></li>
-                        </ul><a href="check_out.html" class="primary-btn">ክፍያውን ይፈጽሙ</a></div>
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">የመረጡት መመጽሃፍት</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>መጽሃፍ</strong></div>
+                            <div><strong>ዋጋ</strong></div>
+                        </div>
+                        <div class="order-products">
+                            <div class="order-col">
+                                <div>1. የብርሃን እናት</div>
+                                <div>250 ብር</div>
+                            </div>
+                            <div class="order-col">
+                                <div>2. የብርሃን እናት</div>
+                                <div>250 ብር</div>
+                            </div>
+                            
+                            <div class="order-col">
+                                <div><strong>ድምር</strong></div>
+                                <div><strong class="order-total">500 ብር</strong></div>
+                            </div>
+                        </div>
+                
+                        <!-- <div class="input-checkbox">
+                                        <input type="checkbox" id="terms">
+                                        <label htmlFor="terms">
+                                            <span></span>
+                                            I've read and accept the <a href="#">terms & conditions</a>
+                                        </label>
+                                    </div> -->
+                        <a href="check_out.html" class="primary-btn order-submit">ወደ ክፍያ</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -224,23 +256,23 @@
 </body>
 <footer class="footer-distributed">
     <div class="footer-left">
-        <h3>መንፈሳዊ-<span>መጻህፍት</span></h3>
-        <p class="footer-links"><a href="">ዋና ገጽ</a>· <a href="metsahft.html">መጻህፍት</a>· <a href="about-us.html">ስለድርጅቱ</a>· <a href="FAQ.html">ተደጋጋሚ ጥያቄዎች</a>· <a href="contact.html">ያነጋግሩን</a></p>
-        <p class="footer-company-name">መንፈሳዊ መጻህፍት © 2014</p>
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+        <p class="footer-links"><a href="">ዋና ገጽ</a>· <a href="metsahft.html">መጻሕፍት</a>· <a href="about-us.html">ስለድርጅቱ</a>· <a href="FAQ.html">ተደጋጋሚ ጥያቄዎች</a>· <a href="contact.html">ያነጋግሩን</a></p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
     <div class="footer-center">
         <div><i class="fa fa-map-marker"></i>
-            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ</span>አዲስ አበባ, ኢትዮጵያ </p>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span>አዲስ አበባ, ኢትዮጵያ </p>
         </div>
         <div><i class="fa fa-phone"></i>
             <p>+251925 421700</p>
         </div>
         <div><i class="fa fa-envelope"></i>
-            <p><a href="mailto:menfesawi_metsahft@gmail.com">menfesawi_metsahft@gmail.com</a></p>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
         </div>
     </div>
     <div class="footer-right">
-        <div class="footer-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-telegram"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-youtube"></i></a></div>
+        <div class="footer-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="https://www.t.me/BetMetsahfte"><i class="fa fa-telegram"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="#"><i class="fa fa-youtube"></i></a></div>
     </div>
 </footer>
 
