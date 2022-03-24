@@ -1,0 +1,17 @@
+Home Page
+    for it to work with the others, index needs to be renamed as home.html
+    1. created date.
+    2. the link for the books need to be done for home
+    3. the categories need to be deleted for home.
+    4. the search functionality needs to be done.
+    5. the search page needs to be done.
+    6. the static files need to be reference using the right ways.
+    7. links for the pages needs to be done too.
+All
+8. Admin validation and validation as a whole.
+
+Package Page
+    rename create package to package
+    1. admin validation
+    2. 
+

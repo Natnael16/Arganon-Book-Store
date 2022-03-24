@@ -34,7 +34,7 @@ class Category(models.Model):
 
 class Book(models.Model):
     id = models.UUIDField(
-        primary_key=True, default=uuid.uuid5, editable=False)
+        primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200, null=False, blank=False)
     author = models.CharField(max_length=200, null=False, blank=False)
     price = models.FloatField(null=False, blank=False)
@@ -93,7 +93,7 @@ class Equbtegna(models.Model):
 
 class Order(models.Model):
     id = models.UUIDField(
-        primary_key=True, default=uuid.uuid5, editable=False)
+        primary_key=True, default=uuid.uuid4, editable=False)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     price = models.IntegerField()
     books = models.ManyToManyField(Book)

@@ -205,6 +205,8 @@
                 <!-- Products tab & slick -->
                 <div class="col-12 col-lg-9">
                     <div class="row bg-light rounded">
+
+
                         <!-- product -->
                         <div class="col-6 col-sm-4 col-lg-3">
                             <div class="product">
@@ -334,16 +336,16 @@
                                     <!-- product -->
                                     <div class="col-6 col-md-4 col-lg-3">
 
+                                        {% for book in books %}
                                         <div class="product">
                                             <div class="product-img">
-                                                <img src="static/img/yebrhan_enat.jpg" alt="">
+                                                <img src="{{book.image_front.url}}" alt="{{book.image_front}}">
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category">ነገረ ማርያም</p>
-                                                <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                                <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                                <h4 class="product-price">280.00 ብር <del
-                                                        class="product-old-price">350.00 ብር</del></h4>
+                                                <h3 class="product-name"><a href="#">{{book.title}}</a></h3>
+                                                <p class="product-category">{{book.author}}</p>
+                                                <h4 class="product-price">{{book.price}} ብር <del
+                                                        class="product-old-price">{{book.oldprice}} ብር </del></h4>
                                                 <div class="product-rating">
                                                 </div>
 
@@ -356,6 +358,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {% endfor %}
 
                                     </div>
 
