@@ -1,0 +1,128 @@
+
+.form-inputs {
+    position: relative
+}
+
+.form-inputs .form-control {
+    height: 45px;
+}
+
+.form-inputs .form-control:focus {
+    box-shadow: none;
+    border: 1px solid #000
+}
+
+.form-inputs i {
+    position: absolute;
+    right: 10px;
+    top: 15px
+}
+
+.shop-bag {
+    background-color: #228B22;
+    color: #fff;
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center
+}
+
+.qty {
+    font-size: 12px
+}
+
+.catagories{
+    position: relative;
+    overflow: hidden;
+}
+
+.catagories .catagories_item{
+    position: relative;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    opacity: 85%;
+}
+
+.catagories .catagories_text{
+    position: absolute;
+    left: 50px; max-width: 300px;
+}
+
+.catagories .catagories_text p{  
+    margin-bottom: 15px;
+}
+.catagories .catagories_text h1{
+    font-weight: 800;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:  #fff;
+    margin-bottom: 5px;
+}
+
+.catagories .catagories_text h4{
+    color:  #fff;
+    font-weight: 700;
+}
+
+.catagories .catagories_text a{
+    display: none;
+    color:  #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: relative;
+    padding: 0 0 3px;
+   
+    text-decoration: none;
+}
+.catagories .catagories_text a::after{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #ff7200;
+    content: "";   
+}
+
+.top_catagory{
+    position: absolute;
+    left: 50%;
+    margin-right: 5px;
+    top: 30%;
+}
+
+a{
+  text-decoration: none;
+}
+
+.fore-color{
+    position: absolute;
+    background: linear-gradient(150deg,rgb(64, 133, 46), rgb(64, 133, 46) 60%, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 60%);
+   
+    width: 100%;
+    height: 100%;
+    opacity: 80%;
+    
+}
+
+  .catagories_item:hover {
+      opacity: 75%;
+      transition: all 0.5s;
+      box-shadow: inset 0 1000px 1000px 1000px rgba(0,0,0,.2);
+    
+  }
+  .catagories_item:hover :last-child{
+    position: absolute;
+    display: inline-block;
+    transition: all 0.5s;
+    opacity: 100%;
+}
+.product{
+    z-index: 0;
+}
