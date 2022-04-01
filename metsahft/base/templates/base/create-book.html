@@ -5,17 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        የመጽሃፍ ጥቅል
-    </title>
+    <title>.....</title>
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="../static/css/main.css">
-            <link rel="stylesheet" href="../static/css/header.css">
-    <link href="../ " rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/header.css">
 
     <!-- Slick -->
     <!-- <link type="text/css" rel="stylesheet" href="../static/css/slick.css" />
@@ -98,6 +95,7 @@
         </div>
     </nav>
 </header>
+
 <body>
     <div id="breadcrumb" class="section">
         <!-- container -->
@@ -105,7 +103,7 @@
             <!-- row -->
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="breadcrumb-header">ጥቅል ፍጠር</h2>
+                    <h2 class="breadcrumb-header">መጽሃፍ አስገባ</h2>
                 </div>
             </div>
             <!-- /row -->
@@ -137,81 +135,90 @@
                         </li>
                         <li class="nav-item ">
                             <a href="create-package.html" class="nav-link text-dark font-italic ">
-                                 <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
+                                <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
                             </a>
                         </li>
-              
                     </ul>
                 </div>
                 <!-- End vertical navbar -->
             </div>
-
-            <div class="col-md-5">
-                <div class="billing-details">
-                    
-                    <div class="section-title">
-                        <h3 class="title">የጥቅሉ ዝርዝር መረጃ</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    <div class="billing-details">
+                        <div class="payment-method">
+                            <div>
+                                <h3>የመጽሃፉ ምድብ</h3>
+                            </div>
+                            <div class="book-type">
+                                <div class="form-group">
+                                    <select class="form-control form-control-lg" name="new_book" id="category">
+                                        <option value="True" selected>አዲስ መጽሃፍ</option>
+                                        <option value="False">በቅርብ የሚመጣ ምጽሃፍ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-title">
+                            <h3 class="title">የመጽሃፉ ዝርዝሮች</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="categories">መደብ</label>
+                            <select class="form-control form-control-lg" name="categories" id="categories" required
+                                multiple>
+                                <!-- <option value=" " selected>ገድላትና ድርሳናት</option> -->
+                                {% for category in categories %}
+                                <option value="{{category.id}}">{{category}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="title" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="author" placeholder="Author">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="price" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="oldprice" placeholder="Old Price">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="pages" placeholder="Pages">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" placeholder="Description" id="description"
+                                style="height: 100px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="about_author" placeholder="Information about author"
+                                id="about" style="height: 100px"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">የመጽሃፉን ምስል አስገባ</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="front">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">የመጽሃፉን ምስል አስገባ</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="back">
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <input class="input" type="text" name="title" placeholder="የጥቅሉ ስም">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="number" name="price" placeholder="ቅናሽ ዋጋ">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="number" name="old-price" placeholder="ቅናሽ ያልተደረገበት ዋጋ">
-                    </div>
-                    <div class="form-group">
-                        <input class="input" type="text" name="description" placeholder="ስለ ጥቅሉ መግለጫ">
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">የተመረጡ መጻሕፍት</label>
-                        <table class="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col">መለያ</th>
-                                    <th scope="col">መጽሃፍ</th>
-                                    <th scope="col">ጸሃፊ</th>
-                                    <th scope="col">ከጥቅል አስወጣ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>የብርሃን እናት</td>
-                                    <td>ዲያቆን ሄኖክ ሃይለ</td>
-                        
-                                    <td><a href="/remove-from-package"><i class="fa fa-minus"></i></a></td>
-                        
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- <input class="form-control" type="file" id="formFileMultiple" multiple> -->
-                    </div>
+                    <button class="primary-btn order-submit">መጽሃፉን አስገባ</button>
                 </div>
-                <!-- <a href="/create-package" class="primary-btn order-submit">ጥቅሉን ፍጠር</a> -->
-            </div>
-            <!-- form goes here -->
+            </form>
             <br>
             <div class="col-md-5 order-details">
                 <div class="section-title text-center">
-                    <h3 class="title">የመጻሕፍት ዝርዝር</h3>
+                    <h3 class="title">የታዘዙ መጻሕፍት</h3>
                 </div>
-                <form class="d-flex">
-                    <input class="form-control rounded-0" type="search" placeholder="መጻሕፍትን ፈልግ" aria-label="Search">
-                    <span class="input-group-btn border"><button class="btn" type="submit"> <img src="../static/img/search_black_24dp.svg"
-                                alt=""> </button>
-                    </span>
-                </form>
-                <div>
                 <table class="table table-borderless">
                     <thead>
                         <tr>
-                            <th scope="col">መለያ</th>
+                            <th scope="col">#</th>
                             <th scope="col">መጽሃፍ</th>
                             <th scope="col">ጸሃፊ</th>
-                            <th scope="col">ወደ ጥቅል አስገባ</th>
+                            <th scope="col">ታይቷል</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,7 +227,7 @@
                             <td>የብርሃን እናት</td>
                             <td>ዲያቆን ሄኖክ ሃይለ</td>
 
-                            <td><a href="/add-to-package"><i class="fa fa-plus"></i></a></td>
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
 
                         </tr>
                         <tr>
@@ -228,34 +235,30 @@
                             <td>የብርሃን እናት</td>
                             <td>ዲያቆን ሄኖክ ሃይለ</td>
 
-                            <td><a href="/add-to-package"><i class="fa fa-plus"></i></a></td>
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
                         </tr>
                         <tr>
                             <th scope="row">1</th>
                             <td>የብርሃን እናት</td>
                             <td>ዲያቆን ሄኖክ ሃይለ</td>
 
-                            <td><a href="/add-to-package"><i class="fa fa-plus"></i></a></td>
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
                         </tr>
                         <tr>
                             <th scope="row">1</th>
                             <td>የብርሃን እናት</td>
                             <td>ዲያቆን ሄኖክ ሃይለ</td>
 
-                            <td><a href="/add-to-package"><i class="fa fa-plus"></i></a></td>
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
                         </tr>
                     </tbody>
 
                 </table>
-
             </div>
         </div>
     </div>
 
-        <div style="text-align: center;">
-            <a href="/create-package" class="primary-btn order-submit" style="margin-top: 10px ;">ጥቅሉን
-                ፍጠር</a>
-        </div>
+
     </div>
 
 
@@ -266,7 +269,6 @@
     <script src="../static/js/nouislider.min.js"></script>
     <script src="../static/js/jquery.zoom.min.js"></script>
     <script src="../static/js/main.js"></script>
-
 </body>
 <footer class="footer-distributed">
     <div class="footer-left">
@@ -302,6 +304,7 @@
     </div>
 
     <div class="footer-right">
+
 
 
         <div class="footer-icons">

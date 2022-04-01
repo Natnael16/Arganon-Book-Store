@@ -14,7 +14,7 @@ class Member(models.Model):
     is_equbtegna = models.BooleanField()
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class Request(models.Model):
@@ -44,8 +44,9 @@ class Book(models.Model):
     description = models.TextField(null=False)
     about_author = models.TextField(null=True, blank=True)
     image_front = models.ImageField(default="yebrhan_enat.jpg")
-    image_back = models.ImageField(default="yebrhan_enat.jpg")
+    image_back = models.ImageField(default="yebrhan_back.jpg")
     new_book = models.BooleanField(null=False)
+    count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -97,3 +98,9 @@ class Order(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     price = models.IntegerField()
     books = models.ManyToManyField(Book)
+
+
+class Quantity(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
