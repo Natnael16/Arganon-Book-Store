@@ -40,7 +40,7 @@
         <div class="bg-light mb-3" style="z-index: 3;">
             <div class="container-fluid ">
                 <div class="row p-2 d-flex align-items-center">
-                    <a href="index.html">
+                    <a href="{% url 'home' %}">
                         <div class="d-none d-md-block col-8 col-md-3">
                             <h3>መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
                         </div>
@@ -49,7 +49,8 @@
                     <div class="d-block d-md-none col-12">
 
                         <nav id="navbar2" class="navbar navbar-expand-md navbar-light">
-                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex" href="#">
+                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex"
+                                    href="{% url 'home' %}">
                                     <h3>መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
                                 </a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -58,12 +59,13 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item"> <a class="nav-link active" aria-current="page"
-                                                href="pages/equb.html">ዕቁብ</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="pages/metsahft.html">መፃህፍት</a>
+                                                href="{% url 'equb-user' %}">ዕቁብ</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'books' %}">መፃህፍት</a>
                                         </li>
-                                        <li class="nav-item"> <a class="nav-link"
-                                                href="pages/admin-orders.html">አስተዳዳሪ</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="">Login | Register</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="/admin">አስተዳዳሪ</a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login |
+                                                Register</a></li>
 
                                         </li>
                                     </ul>
@@ -89,7 +91,8 @@
                     <div class="d-none d-md-block col-12">
 
                         <nav id="navbar" class="navbar navbar-expand-md navbar-light">
-                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex" href="#"></a>
+                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex"
+                                    href="{% url 'home' %}"></a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                     aria-expanded="false" aria-label="Toggle navigation"> <span
@@ -97,19 +100,13 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item"> <a class="nav-link active" aria-current="page"
-                                                href="pages/equb.html">እቁብ</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="pages/metsahft.html">መጻሕፍት</a>
+                                                href="{% url 'equb-user' %}">እቁብ</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'books' %}">መጻሕፍት</a>
                                         </li>
-                                        <li class="nav-item"> <a class="nav-link"
-                                                href="pages/admin-orders.html">አስተዳዳሪ</a>
+                                        <li class="nav-item"> <a class="nav-link" href="/admin">አስተዳዳሪ</a>
                                         </li>
-                                        <li class="nav-item"> <a class="nav-link" href="#">Login | Register</a> </li>
-                                        <!-- <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mobiles </a> -->
-                                        <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                        <li><a class="dropdown-item" href="#">Smart Phones</a></li>
-                                                        <li><a class="dropdown-item" href="#">Feature Phones</a></li>
-                                                        <li><a class="dropdown-item" href="#">Mobile Covers</a></li>
-                                                    </ul> -->
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login |
+                                                Register</a> </li>
                                         </li>
                                     </ul>
                                 </div>
@@ -144,7 +141,7 @@
                             <h1>ተወዳጅ መጻሕፍት</h1>
                             <p style="color: white;">
                                 በአንባቢያን ዘንድ ተወዳጅነትና ተፈላጊነት ያላችውን መጻሕፍት ከኛ ዘንድ ያግኙ።</p>
-                            <a href="pages/metsahft.html">ወደ መጻህፍቱ</a>
+                            <a href="{% url 'books' %}">ወደ መጻህፍቱ</a>
                         </div>
 
                     </div>
@@ -352,8 +349,9 @@
                                                 <br>
                                                 <br>
                                                 <div class="add-to-cart">
-                                                    <a href="pages/book_detail.html" class="primary-btn order-submit"
-                                                        style="margin-top: 10px ;">ወደ መጽሃፉ
+                                                    <a href="{% url 'book_detail' book.id %}"
+                                                        class="primary-btn order-submit" style="margin-top: 10px ;">ወደ
+                                                        መጽሃፉ
                                                     </a>
                                                 </div>
                                             </div>
@@ -361,94 +359,6 @@
                                         {% endfor %}
 
                                     </div>
-
-
-
-                                    <!-- /product -->
-                                    <div class="col-6 col-md-4 col-lg-3">
-
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="static/img/yebrhan_enat.jpg" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">ነገረ ማርያም</p>
-                                                <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                                <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                                <h4 class="product-price">280.00 ብር <del
-                                                        class="product-old-price">350.00 ብር</del></h4>
-                                                <div class="product-rating">
-                                                </div>
-
-                                                <br>
-                                                <br>
-                                                <div class="add-to-cart">
-                                                    <a href="pages/book_detail.html" class="primary-btn order-submit"
-                                                        style="margin-top: 10px ;">ወደ መጽሃፉ
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- /product -->
-                                    <div class="col-6 col-md-4 col-lg-3">
-
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="static/img/yebrhan_enat.jpg" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">ነገረ ማርያም</p>
-                                                <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                                <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                                <h4 class="product-price">280.00 ብር <del
-                                                        class="product-old-price">350.00 ብር</del></h4>
-                                                <div class="product-rating">
-                                                </div>
-
-                                                <br>
-                                                <br>
-                                                <div class="add-to-cart">
-                                                    <a href="pages/book_detail.html" class="primary-btn order-submit"
-                                                        style="margin-top: 10px ;">ወደ መጽሃፉ
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- /product -->
-                                    <div class="col-6 col-md-4 col-lg-3">
-
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="static/img/yebrhan_enat.jpg" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">ነገረ ማርያም</p>
-                                                <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
-                                                <p class="product-category">በዲያቆን ሄኖክ ኅይሌ</p>
-                                                <h4 class="product-price">280.00 ብር <del
-                                                        class="product-old-price">350.00 ብር</del></h4>
-                                                <div class="product-rating">
-                                                </div>
-
-                                                <br>
-                                                <br>
-                                                <div class="add-to-cart">
-                                                    <a href="pages/book_detail.html" class="primary-btn order-submit"
-                                                        style="margin-top: 10px ;">ወደ መጽሃፉ
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- /product -->
                                 </div>
 
 

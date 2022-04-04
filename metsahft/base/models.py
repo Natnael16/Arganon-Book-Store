@@ -4,13 +4,14 @@ import uuid
 from django.db import models
 from django.forms import CharField
 from django.contrib.auth.models import User
-from multiselectfield import MultiSelectField
+from . import ethiopian_date
+import datetime
 # Create your models here.
 
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=13)
+    phone = models.CharField(max_length=13, unique=True)
     is_equbtegna = models.BooleanField()
 
     def __str__(self):
@@ -43,10 +44,19 @@ class Book(models.Model):
     categories = models.ManyToManyField(Category)
     description = models.TextField(null=False)
     about_author = models.TextField(null=True, blank=True)
-    image_front = models.ImageField(default="yebrhan_enat.jpg")
-    image_back = models.ImageField(default="yebrhan_back.jpg")
+    image_front = models.ImageField(null=False, default="yebrhan_enat.jpg")
+    image_back = models.ImageField(null=False, default="yebrhan_back.jpg")
     new_book = models.BooleanField(null=False)
     count = models.IntegerField(default=0)
+    created = models.DateTimeField(
+        auto_now_add=True)
+    popularity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created']
 
     def __str__(self):
         return self.title
@@ -78,6 +88,10 @@ class Review(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     comment = models.TextField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created",)
 
     def __str__(self):
         return self.comment[:49]
@@ -92,15 +106,80 @@ class Equbtegna(models.Model):
         return str(self.member)
 
 
+class EqubtegnaDetail(models.Model):
+
+    def current_year():
+        gc_time = datetime.date.today()
+        et_conv = ethiopian_date.EthiopianDateConverter()
+        et_time = et_conv.date_to_ethiopian(gc_time)
+        return et_time
+    YEAR_CHOICES = [(r, r) for r in range(2000, current_year()[0] + 1)]
+
+    MONTHS = (
+        ("መስከረም", "መስከረም"),
+        ("ጥቅምት", "ጥቅምት"),
+        ("ህዳር", "ህዳር"),
+        ("ታህሳስ", "ታህሳስ"),
+        ("ጥር", "ጥር"),
+        ("የካቲት", "የካቲት"),
+        ("መጋቢት", "መጋቢት"),
+        ("ሚያዚያ", "ሚያዚያ"),
+        ("ግንቦት", "ግንቦት"),
+        ("ሰኔ", "ሰኔ"),
+        ("ሐምሌ", "ሐምሌ"),
+        ("ነሐሴ", "ነሐሴ"),
+    )
+    equbtegna = models.ForeignKey(Equbtegna, on_delete=models.CASCADE)
+    paid_amount = models.FloatField()
+    year = models.IntegerField(choices=YEAR_CHOICES, default=current_year()[0])
+    month = models.CharField(max_length=200, default="መስከረም", choices=MONTHS)
+
+    def __str__(self):
+        return self.equbtegna.member.user.username
+
+
 class Order(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     price = models.IntegerField()
     books = models.ManyToManyField(Book)
+    delivery = models.BooleanField(default=False)
+    paid = models.BooleanField(null=False, default=False)
+
+    def __str__(self):
+        return self.member.user.username
 
 
 class Quantity(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
+
+class Winner(models.Model):
+
+    MONTHS = (
+        ("መስከረም", "መስከረም"),
+        ("ጥቅምት", "ጥቅምት"),
+        ("ህዳር", "ህዳር"),
+        ("ታህሳስ", "ታህሳስ"),
+        ("ጥር", "ጥር"),
+        ("የካቲት", "የካቲት"),
+        ("መጋቢት", "መጋቢት"),
+        ("ሚያዚያ", "ሚያዚያ"),
+        ("ግንቦት", "ግንቦት"),
+        ("ሰኔ", "ሰኔ"),
+        ("ሐምሌ", "ሐምሌ"),
+        ("ነሐሴ", "ነሐሴ"),
+    )
+    YEAR_CHOICES = [(r, r)
+                    for r in range(2000, ethiopian_date.current_year()[0] + 1)]
+
+    equbtegna = models.ForeignKey(Equbtegna, on_delete=models.CASCADE)
+    year = models.IntegerField(
+        choices=YEAR_CHOICES, default=ethiopian_date.current_year()[0])
+    month = models.CharField(max_length=200, default="መስከረም", choices=MONTHS)
+
+    def __str__(self):
+        return self.equbtegna.member.user.username

@@ -1,3 +1,4 @@
+from django.forms import ModelForm
 from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm
@@ -20,9 +21,30 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = "__all__"
+        exclude = ["popularity"]
 
 
 class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
         fields = ["phone"]
+
+
+class PackageForm(ModelForm):
+
+    class Meta:
+        model = Packages
+        fields = '__all__'
+
+
+class ReviewForm(forms.ModelForm):
+    አስተያየት = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        'placeholder': ' አስተያየቶን ይፃፉ',
+        'rows': "4",
+        'cols': '50'
+    }))
+
+    class Meta:
+        model = Review
+        fields = ['አስተያየት']
