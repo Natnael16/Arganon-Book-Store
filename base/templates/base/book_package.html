@@ -1,0 +1,200 @@
+<!DOCTYPE html>{% load static %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የመጻሕፍት ጥቅል</title>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+
+    <!-- Slick -->
+    <!-- <link type="text/css" rel="stylesheet" href="{% 'static/css/slick.css" />
+        <link type="text/css" rel="stylesheet" href="{% 'static/css/slick-theme.css" /> -->
+    <link href="{% static 'css/footer.css' %}" rel="stylesheet">
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+</head>
+
+<header>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- BRAND -->
+            <div class="row " style="width: 100%; padding-top: 10px; align-items: center;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="col-xs-6 col-sm-8 col-md-3">
+                    <a href="{% url 'home' %}">
+                        <h3 class="navbar-brand" href="{% url 'home' %}" style="font-size: 30px;">መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
+                    </a>
+                </div>
+                <div class="col-xs-9 col-sm-8 col-md-7">
+                    <div class="d-flex form-inputs"> <input class="form-control " type="text" placeholder="ፈልግ">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-2">
+                    <a href="{% url 'cart' %}">
+                        <div class="align-items-center" style="display: flex; align-items: center;"> <span class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2" style="display: flex; flex-direction: column; align-self: center;margin: 4%;"> <span class="qty">2
+                                    መጻሕፍት</span> <span class="fw-bold">230 ብር</span> </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div id="navbar" class="d-xs-none d-md-block col-xs-12">
+                    <div class="collapse navbar-collapse" id="alignment-example">
+
+                        <!-- Links -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="{% url 'equb-user' %}">እቁብ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'books' %}">መጻሕፍት</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'admin-orders' %}">አስተዳዳሪ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login | Register</a> </li>
+                        </ul>
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- COLLAPSIBLE NAVBAR -->
+
+
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h4>በዚ ጥቅል ውስጥ የተካተቱ መጽሃፍት</h4>
+                </div>
+                <!-- product -->
+                <div class="row">
+                    <!-- product -->
+                    {% for book in books %}
+                    <div class="col-md-3 col-xs-5">
+                        <a href="{% url 'book_detail' book.id %}">
+                            <div class="product">
+                                <div class="product-img">
+                                    
+                                    <img src="../../../images/{{book.image_front}}" alt="No image" height="300px">
+                                </div>
+                                <div class="product-body">
+                                    <p class="product-category">{{book.catagories}}</p>
+                                    <h3 class="product-name">{{book.title}}</h3>
+                                    <p class="product-category">{{book.author}}</p>
+                                    <h4 class="product-price">{{book.price}} </h4>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="col-md-5 order-details">
+
+
+            <div class="product">
+                <div class="product-body">
+                    <p>
+                        <i class="fa fa-exclamation-circle"> </i> {{ package.description }}</p>
+                    <p>
+                        <h4>አጠቃላይ ዋጋ</h4>
+                        <h4 class="product-price">{{package.discount}}<del class="product-old-price">{{package.price}}</del></h4>
+                    </p>
+                </div>
+            </div><a href="{% url 'add-to-cart' book.id %}" class="primary-btn order-submit">ይግዙ</a>
+        </div>
+
+    </div>
+
+</body>
+
+<footer class="footer-distributed ">
+
+    <div class="footer-left ">
+
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+
+        <p class="footer-links ">
+            <a href="{% url 'home' %} ">ዋና ገጽ</a> ·
+            <a href="{% url 'books' %} ">መጻሕፍት</a> ·
+            <a href="about-us.html ">ስለድርጅቱ</a> ·
+            <a href="{% url 'home' %} ">ተደጋጋሚ ጥያቄዎች</a> ·
+            <a href="{% url 'home' %} ">ያነጋግሩን</a>
+        </p>
+
+        <p class="footer-company-name ">መንፈሳዊ መጻሕፍት © 2014</p>
+    </div>
+
+    <div class="footer-center ">
+
+        <div>
+            <i class="fa fa-map-marker "></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone "></i>
+            <p>+251 925 421 700</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope "></i>
+            <p><a href="mailto:orthokiha@gmail.com ">orthokiha@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right ">
+
+
+
+        <div class="footer-icons ">
+
+            <a href="# "><i class="fa fa-facebook "></i></a>
+            <a href="https://www.t.me/BetMetsahfte "><i class="fa fa-telegram "></i></a>
+            <a href="# "><i class="fa fa-instagram "></i></a>
+            <a href="# "><i class="fa fa-youtube "></i></a>
+
+        </div>
+
+    </div>
+</footer>
+
+</html>

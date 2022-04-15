@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የመጻሕፍት ጥቅል</title>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static' css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+
+    <!-- Slick -->
+    <!-- <link type="text/css" rel="stylesheet" href="{% 'static/css/slick.css" />
+                <link type="text/css" rel="stylesheet" href="{% 'static/css/slick-theme.css" /> -->
+    <link href="{% static 'css/footer.css' %}" rel="stylesheet">
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+</head>
+<header>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- BRAND -->
+            <div class="row " style="width: 100%; padding-top: 10px; align-items: center;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="col-xs-6 col-sm-8 col-md-3">
+                    <a href="{% url 'home' %}">
+                        <h3 class="navbar-brand" href="{% url 'home' %}" style="font-size: 30px;">መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
+                    </a>
+                </div>
+                <div class="col-xs-9 col-sm-8 col-md-7">
+                    <div class="d-flex form-inputs"> <input class="form-control " type="text" placeholder="ፈልግ">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-2">
+                    <a href="{% url 'cart' %}">
+                        <div class="align-items-center" style="display: flex; align-items: center;"> <span class="shop-bag"><i class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2" style="display: flex; flex-direction: column; align-self: center;margin: 4%;"> <span class="qty">2
+                                    መጻሕፍት</span> <span class="fw-bold">230 ብር</span> </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div id="navbar" class="d-xs-none d-md-block col-xs-12">
+                    <div class="collapse navbar-collapse" id="alignment-example">
+
+                        <!-- Links -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"> <a class="nav-link active" aria-current="page" href="{% url 'equb-user' %}">እቁብ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'book' %}">መጻሕፍት</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'admin-orders' %}">አስተዳዳሪ</a> </li>
+                            <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login | Register</a> </li>
+                        </ul>
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- COLLAPSIBLE NAVBAR -->
+
+
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="breadcrumb-header">መጽሃፍ አስገባ</h2>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <!-- Vertical navbar -->
+                <div class="vertical-nav bg-white " id="sidebar ">
+                    <h2 class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0 ">ማውጫ</h2>
+
+                    <ul class="nav flex-column bg-white mb-0 ">
+                        <li class="nav-item ">
+                            <a href="{% url 'admin-orders' %}" class="nav-link text-dark font-italic bg-light ">
+                                <i class="fa fa-th-large mr-3 text-primary fa-fw "></i>ትእዛዞች
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{% url 'create_book' %}" class="nav-link text-dark font-italic ">
+                                <i class="fa fa-book mr-3 text-primary fa-fw "></i> መጽሃፍ አስገባ
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{% url 'list-of-users' %}" class="nav-link text-dark font-italic ">
+                                <i class="fa fa-cubes mr-3 text-primary fa-fw "></i> እቁብ
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{% url 'create-package' %}" class="nav-link text-dark font-italic ">
+                                <i class="fa fa-plus mr-3 text-primary fa-fw "></i> ጥቅል ፍጠር
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End vertical navbar -->
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    <div class="billing-details">
+                        <div class="payment-method">
+                            <div>
+                                <h3>የመጽሃፉ ምድብ</h3>
+                            </div>
+                            <div class="book-type">
+                                <div class="form-group">
+                                    <select class="form-control form-control-lg" name="new_book" id="category">
+                                        <option value="True" selected>አዲስ መጽሃፍ</option>
+                                        <option value="False">በቅርብ የሚመጣ ምጽሃፍ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-title">
+                            <h3 class="title">የመጽሃፉ ዝርዝሮች</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="categories">መደብ</label>
+                            <select class="form-control form-control-lg" name="categories" id="categories" required multiple>
+                                <!-- <option value=" " selected>ገድላትና ድርሳናት</option> -->
+                                {% for category in categories %}
+                                <option value="{{category.id}}">{{category}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="title" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="text" name="author" placeholder="Author">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="price" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="oldprice" placeholder="Old Price">
+                        </div>
+                        <div class="form-group">
+                            <input class="input" type="number" name="pages" placeholder="Pages">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" placeholder="Description" id="description" style="height: 100px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="about_author" placeholder="Information about author" id="about" style="height: 100px"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">የመጽሃፉን ምስል አስገባ</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="front">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFileMultiple" class="form-label">የመጽሃፉን ምስል አስገባ</label>
+                            <input class="form-control" type="file" id="formFileMultiple" name="back">
+                        </div>
+                    </div>
+                    <button class="primary-btn order-submit">መጽሃፉን አስገባ</button>
+                </div>
+            </form>
+            <br>
+            <div class="col-md-5 order-details">
+                <div class="section-title text-center">
+                    <h3 class="title">የታዘዙ መጻሕፍት</h3>
+                </div>
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">መጽሃፍ</th>
+                            <th scope="col">ጸሃፊ</th>
+                            <th scope="col">ታይቷል</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>የብርሃን እናት</td>
+                            <td>ዲያቆን ሄኖክ ሃይለ</td>
+
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>የብርሃን እናት</td>
+                            <td>ዲያቆን ሄኖክ ሃይለ</td>
+
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>የብርሃን እናት</td>
+                            <td>ዲያቆን ሄኖክ ሃይለ</td>
+
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>የብርሃን እናት</td>
+                            <td>ዲያቆን ሄኖክ ሃይለ</td>
+
+                            <td><a href="/delete"><i class="fa fa-check"></i></a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/slick.min.js"></script>
+    <script src="../static/js/nouislider.min.js"></script>
+    <script src="../static/js/jquery.zoom.min.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+<footer class="footer-distributed">
+    <div class="footer-left">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+        <p class="footer-links">
+            <a href="#">ዋና ገጽ</a> ·
+            <a href="#">መጻሕፍት</a> ·
+            <a href="about-us.html">ስለድርጅቱ</a> ·
+            <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+            <a href="#">ያነጋግሩን</a>
+        </p>
+
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fa fa-map-የብርሃን እናትer"></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>+251 925 421 700</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+
+
+        <div class="footer-icons">
+
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.t.me/BetMetsahfte"><i class="fa fa-telegram"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#"><i class="fa fa-youtube"></i></a>
+
+        </div>
+
+    </div>
+</footer>
+
+</html>
