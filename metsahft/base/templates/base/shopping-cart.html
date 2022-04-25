@@ -152,8 +152,9 @@
                                                                     <div class="pro-qty"><input type="number"
                                                                             id="points"
                                                                             name="amount{{forloop.counter0}}" step="1"
-                                                                            value="1" style="width: 50px;"
+                                                                            value="1" style="width: 50px;" min="0"
                                                                             max="{{book.count}}">
+                                                                    </div>
                                                                 </td>
                                                                 <td class="shoping__cart__item">
                                                                     <h5 style="float:right;">55 ብር</h5>
@@ -184,6 +185,60 @@
                                                                 </td>
                                                                 <td class="shoping__cart__item">
                                                                 </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+
+
+
+                                                    <br>
+                                                    <br>
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class=" shoping__product">ጥቅል</th>
+                                                                <th style="float:right">አጠቃላይ ዋጋ</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for package in packages %}
+                                                            <tr>
+                                                                <td class=" shoping__cart__item">
+                                                                    <div class="product-widget">
+                                                                        <div class="product-body">
+                                                                            <h3 class="product-name"><a
+                                                                                    href="#">{{package.title}}</a></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="shoping__cart__item" style="float:right;">
+                                                                    <h5>{{package.price}} ብር</h5>
+                                                                </td>
+                                                                <td class="shoping__cart__item">
+                                                                    <a href="{% url 'remove_package' package.id %}">
+                                                                        <h4><span><i class="fa fa-trash"
+                                                                                    aria-hidden="true"></i></span></h4>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                            <tr>
+                                                                <td class=" shoping__cart__item">
+                                                                    <div class="order-col">
+                                                                        <div><strong>ድምር</strong></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="shoping__cart__item">
+                                                                    <div>
+                                                                        <Strong style="float:right;"
+                                                                            class="order-total">500
+                                                                            ብር</Strong>
+                                                                    </div>
+                                                                </td>
+                                                                <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

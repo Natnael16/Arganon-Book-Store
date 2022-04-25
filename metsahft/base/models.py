@@ -1,5 +1,3 @@
-from email.policy import default
-from random import choices
 import uuid
 from django.db import models
 from django.forms import CharField
@@ -11,8 +9,12 @@ import datetime
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(
+        max_length=100)
     phone = models.CharField(max_length=13, unique=True)
-    is_equbtegna = models.BooleanField()
+    address = models.CharField(
+        max_length=255)
+    is_equbtegna = models.BooleanField(default=False, editable=True)
 
     def __str__(self):
         return self.user.username
@@ -44,8 +46,10 @@ class Book(models.Model):
     categories = models.ManyToManyField(Category)
     description = models.TextField(null=False)
     about_author = models.TextField(null=True, blank=True)
-    image_front = models.ImageField(null=False, default="yebrhan_enat.jpg")
-    image_back = models.ImageField(null=False, default="yebrhan_back.jpg")
+    image_front = models.ImageField(
+        null=False, default="yebrhan_enat.jpg")
+    image_back = models.ImageField(
+        null=False, default="yebrhan_back.jpg")
     new_book = models.BooleanField(null=False)
     count = models.IntegerField(default=0)
     created = models.DateTimeField(
@@ -73,12 +77,12 @@ class Equb(models.Model):
 
 
 class Packages(models.Model):
-
     title = models.CharField(max_length=400)
     discount = models.FloatField()
     price = models.FloatField()
     description = models.TextField()
     books = models.ManyToManyField(Book, related_name='books', blank=True)
+    amount = models.IntegerField(default=0, editable=True)
 
     def __str__(self) -> str:
         return self.title
@@ -142,10 +146,10 @@ class Order(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    price = models.IntegerField()
     books = models.ManyToManyField(Book)
-    delivery = models.BooleanField(default=False)
-    paid = models.BooleanField(null=False, default=False)
+    packages = models.ManyToManyField(Packages, null=True)
+    delivery = models.BooleanField(null=False, default=False, editable=True)
+    paid = models.BooleanField(null=False, default=False, editable=True)
 
     def __str__(self):
         return self.member.user.username
@@ -155,6 +159,18 @@ class Quantity(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
+    def __str__(self):
+        return str(self.order.id)
+
+
+class PackageQuantity(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    package = models.ForeignKey(Packages, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return str(self.order.id)
 
 
 class Winner(models.Model):

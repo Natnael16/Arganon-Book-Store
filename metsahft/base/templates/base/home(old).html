@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>ዋና ገጽ</title>
+
+    <!-- Google font -->
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="static/css/bootstrap.min1.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="static/css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <!-- <link type="text/css" rel="stylesheet" href="../static/css/nouislider.min.css" /> -->
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link type="text/css" rel="stylesheet" href="static/css/header.css" />
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="static/css/style.css" />
+
+    <link type="text/css" rel="stylesheet" href="static/css/footer.css" />
+
+
+
+</head>
+
+<body>
+
+    <header class="header-top">
+
+        <div class="bg-light mb-3" style="z-index: 3;">
+            <div class="container-fluid ">
+                <div class="row p-2 d-flex align-items-center">
+                    <a href="{% url 'home' %}">
+                        <div class="d-none d-md-block col-8 col-md-3">
+                            <h3>መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
+                        </div>
+                    </a>
+                    <!-- for mobile  -->
+                    <div class="d-block d-md-none col-12">
+
+                        <nav id="navbar2" class="navbar navbar-expand-md navbar-light">
+                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex"
+                                    href="{% url 'home' %}">
+                                    <h3>መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</span></h3>
+                                </a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                    aria-expanded="false" aria-label="Toggle navigation"> <span
+                                        class="navbar-toggler-icon"></span> </button>
+                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item"> <a class="nav-link active" aria-current="page"
+                                                href="{% url 'equb-user' %}">ዕቁብ</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'books' %}">መፃህፍት</a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" href="/admin">አስተዳዳሪ</a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login |
+                                                Register</a></li>
+
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </nav>
+
+                    </div>
+                    <div class="col-7 col-sm-8 col-md-7">
+                        <div class="d-flex form-inputs"> <input class="form-control " type="text"
+                                placeholder="Search Books..."> <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="col-5 col-sm-4 col-md-2">
+                        <div class="d-flex d-md-flex flex-row align-items-center"> <span class="shop-bag"><i
+                                    class="fa fa-shopping-cart"></i></span>
+                            <div class="d-flex flex-column ms-2"> <span class="qty">3 መጻሕፍት</span> <span
+                                    class="fw-bold">270 ብር</span> </div>
+                        </div>
+                    </div>
+                    <div class="d-none d-md-block col-12">
+
+                        <nav id="navbar" class="navbar navbar-expand-md navbar-light">
+                            <div class="container-fluid"> <a class="navbar-brand d-md-none d-md-flex"
+                                    href="{% url 'home' %}"></a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                    aria-expanded="false" aria-label="Toggle navigation"> <span
+                                        class="navbar-toggler-icon"></span> </button>
+                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item"> <a class="nav-link active" aria-current="page"
+                                                href="{% url 'equb-user' %}">እቁብ</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'books' %}">መጻሕፍት</a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" href="/admin">አስተዳዳሪ</a>
+                                        </li>
+                                        <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}">Login |
+                                                Register</a> </li>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </header>
+
+
+    <!-- SECTION -->
+    <section class="container catagories" style="margin-top: 150px; margin-bottom: 2em;">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-12 col-md-6 col-lg-6 p-0 top-tag">
+
+                    <div class="catagories_item" style="margin-bottom: 50px; margin-top: 20px;">
+                        <img src="static/img/kimberly-farmer-lUaaKCUANVI-unsplash.jpg" alt="" class="img-fluid"
+                            style="width: 100%;">
+                        <div class="fore-color">
+
+                        </div>
+                        <div class="catagories_text">
+                            <h1>ተወዳጅ መጻሕፍት</h1>
+                            <p style="color: white;">
+                                በአንባቢያን ዘንድ ተወዳጅነትና ተፈላጊነት ያላችውን መጻሕፍት ከኛ ዘንድ ያግኙ።</p>
+                            <a href="{% url 'books' %}">ወደ መጻህፍቱ</a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 p-0 top-tag">
+
+                    <div class="catagories_item" style="margin-bottom: 50px; margin-top: 20px;">
+                        <img src="static/img/kimberly-farmer-lUaaKCUANVI-unsplash.jpg" alt="" class="img-fluid"
+                            style="width: 100%;">
+                        <div class="fore-color">
+
+                        </div>
+                        <div class="catagories_text">
+                            <h1>የመጻሕፍት ጥቅል</h1>
+                            <p style="color: white;">የተለያየ ይዘትና ምድብ ያላቸውን ተወዳጅ መጻሕፍት በጥቅል ክናሽ እኛ ጋር ያገኛሉ።</p>
+                            <a href="pages/book_packages.html">ይግዙ</a>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- /SECTION -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h3 class="title">በመደብ መርጠው ይግዙ</h3>
+                        <div class="section-nav">
+                            <ul class="section-tab-nav tab-nav">
+                                <li class="active"><a data-toggle="tab" href="#tab1">ነገረ ማርያም</a></li>
+                                <li><a data-toggle="tab" href="#tab1">ነገረ ኢየሱስ</a></li>
+                                <li><a data-toggle="tab" href="#tab1">የአንድምታ ትርጓሜ</a></li>
+                                <li><a data-toggle="tab" href="#tab1">ትምህርተ ሃይማኖት</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /section title -->
+
+                <!-- Products tab & slick -->
+                <div class="col-12 col-lg-9">
+                    <div class="row bg-light rounded">
+
+
+                        <!-- product -->
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="static/img/yebrhan_enat.jpg" alt="">
+                                </div>
+                                <div class="product-body">
+
+                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
+                                    <p class="product-category">ነገረ ማርያም</p>
+
+
+                                    <br>
+                                    <br>
+                                    <div class="add-to-cart">
+                                        <a href="pages/book_detail.html" class="primary-btn order-submit"
+                                            style="margin-top: 10px ;">ይመልከቱ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /product -->
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="static/img/yebrhan_enat.jpg" alt="">
+                                </div>
+                                <div class="product-body">
+
+                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
+                                    <p class="product-category">ነገረ ማርያም</p>
+
+
+                                    <br>
+                                    <br>
+                                    <div class="add-to-cart">
+                                        <a href="pages/book_detail.html" class="primary-btn order-submit"
+                                            style="margin-top: 10px ;">ይመልከቱ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /product -->
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="static/img/yebrhan_enat.jpg" alt="">
+                                </div>
+                                <div class="product-body">
+
+                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
+                                    <p class="product-category">ነገረ ማርያም</p>
+
+
+                                    <br>
+                                    <br>
+                                    <div class="add-to-cart">
+                                        <a href="pages/book_detail.html" class="primary-btn order-submit"
+                                            style="margin-top: 10px ;">ይመልከቱ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- /product -->
+                        <div class="col-6 col-sm-4 col-lg-3">
+                            <div class="product">
+                                <div class="product-img">
+                                    <img src="static/img/yebrhan_enat.jpg" alt="">
+                                </div>
+                                <div class="product-body">
+
+                                    <h3 class="product-name"><a href="#">የብርሃን እናት</a></h3>
+                                    <p class="product-category">ነገረ ማርያም</p>
+
+
+                                    <br>
+                                    <br>
+                                    <div class="add-to-cart">
+                                        <a href="pages/book_detail.html" class="primary-btn order-submit"
+                                            style="margin-top: 10px ;">ይመልከቱ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /product -->
+
+
+
+                    </div>
+
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /SECTION -->
+
+            <!-- SECTION -->
+            <div class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+
+                        <!-- section title -->
+                        <div class="col-md-12">
+                            <div class="section-title">
+                                <h3 class="title">አዳዲስ መጻሕፍት</h3>
+
+                            </div>
+                        </div>
+                        <!-- /section title -->
+
+                        <!-- Products tab & slick -->
+                        <div class="col-12 col-lg-9">
+                            <div class="slideshow">
+
+                                <div class="row">
+                                    <!-- product -->
+                                    <div class="col-6 col-md-4 col-lg-3">
+
+                                        {% for book in books %}
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img src="{{book.image_front.url}}" alt="{{book.image_front}}">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="#">{{book.title}}</a></h3>
+                                                <p class="product-category">{{book.author}}</p>
+                                                <h4 class="product-price">{{book.price}} ብር <del
+                                                        class="product-old-price">{{book.oldprice}} ብር </del></h4>
+                                                <div class="product-rating">
+                                                </div>
+
+                                                <br>
+                                                <br>
+                                                <div class="add-to-cart">
+                                                    <a href="{% url 'book_detail' book.id %}"
+                                                        class="primary-btn order-submit" style="margin-top: 10px ;">ወደ
+                                                        መጽሃፉ
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <!-- /row -->
+                        </div>
+                        <!-- /container -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /SECTION -->
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+
+            <p class="footer-links">
+                <a href="#">ዋና ገጽ</a>
+                ·
+                <a href="#">መጻሕፍት</a>
+                ·
+                <a href="about-us.html">ስለድርጅቱ</a>
+                ·
+                <a href="#">ተደጋጋሚ ጥያቄዎች</a>
+                ·
+                <a href="#">ያነጋግሩን</a>
+            </p>
+
+            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>+251 925 421 700</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.t.me/BetMetsahfte"><i class="fa fa-telegram"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+    </footer>
+    <!-- jQuery Plugins -->
+    <script src="staticjs/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/slick.min.js"></script>
+    <script src="static/js/nouislider.min.js"></script>
+    <script src="static/js/jquery.zoom.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script src="static/js/header.js"></script>
+    <script src="static/js/homeslider.js"></script>
+    <script src="static/js/bootstrap.bundle.min1.js"></script>
+
+
+</body>
+
+</html>

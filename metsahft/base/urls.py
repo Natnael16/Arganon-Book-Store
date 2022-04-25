@@ -2,7 +2,7 @@ from django import views
 from django.contrib import admin
 from django.urls import path, include
 from .views import *
-
+from .utils import *
 
 urlpatterns = [
     path('', home, name="home"),
@@ -12,6 +12,11 @@ urlpatterns = [
     path("create_book/", create_book, name="create_book"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
+    path("add-package-to-cart/<str:pk>",
+         add_package_to_cart, name="add-package-to-cart"),
+    path("add-to-cart/<str:pk>", add_to_cart, name="add-to-cart"),
+    path("remove_package/<str:pk>",
+         delete_package_from_cart, name="remove_package"),
     path("remove_book/<str:pk>", delete_from_cart, name="remove_book"),
     path('equb-user', equb_user, name='equb-user'),
     path('equb-choice', equb_choice, name='equb-choice'),
@@ -28,5 +33,9 @@ urlpatterns = [
     path("detail-order/<str:pk>", detailOrder, name="detail-order"),
     path("user-profile/", userProfile, name="user-profile"),
     path("edit-profile/", editProfile, name="edit-profile"),
-    path("add-to-cart/<str:pk>", add_to_cart, name="add-to-cart"),
+    path('success/', success, name='success'),
+    path('cancel/', cancel, name='cancel'),
+    path('ipn/', ipn, name='ipn'),
+    path('book-package/<str:pk>', single_package, name='book-package'),
+    path("all-packages", all_packages, name="all-packages"),
 ]

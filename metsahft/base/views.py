@@ -1,4 +1,7 @@
+from collections import defaultdict
 from email import message
+from email.policy import default
+from http.client import HTTP_PORT
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -12,12 +15,19 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 from django.template.defaulttags import register
+import requests
+from .utils import *
 # Create your views here.
 
 
 def home(request):
+
     books = Book.objects.all()
-    return render(request, "home.html", {"books": books})
+    if books.count() > 4:
+        books = books[:4]
+
+    categories = Category.objects.all()
+    return render(request, "home.html", {"books": books, "categories": categories})
 
 
 def loginPage(request):
@@ -65,9 +75,8 @@ def registerPage(request):
                 login(request, User.objects.get(username=username))
                 return redirect("login")
         else:
-            return HttpResponse("{} {}".format(usr.errors, form.errors))
-            return HttpResponse("Here's the text of the web page.")
             messages.error(request, "An error occurred during registration")
+            return redirect("register")
     context = {
         "user": usr,
     }
@@ -116,10 +125,13 @@ def create_book(request):
             return redirect("home")
         else:
             print(form.errors)
-            return HttpResponse(request.POST.get("categories"))
-            messages.error(request, "")
             return redirect("create_book")
     return render(request, 'create-book.html', {'form': form, "categories": categories})
+
+
+@register.filter
+def get_(dictionary, key):
+    return dictionary.get(str(key))
 
 
 @login_required(login_url="/login")
@@ -127,6 +139,8 @@ def cart(request):
     user = User.objects.get(id=request.user.id)
     order = Order.objects.get(member=Member.objects.get(user=user))
     books = order.books.all()
+    packages = order.packages.all()
+    package_count = len(packages)
     count = len(books)
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
@@ -134,62 +148,141 @@ def cart(request):
         books = order.books.all()
         count = len(books)
 
-        amount_dict = {}
+        amount_dict = defaultdict(int)
         for index in range(count):
-            amount_dict[str(books[index].id)] = request.POST.get(
-                "amount{}".format(index))
-            # request.session[books[index].id] = request.POST.get(
-            #     "amount {index}")
+            amount_dict[str(books[index].id)] += int(request.POST.get(
+                "amount{}".format(index)))
+
+        for id in amount_dict:
+            if Book.objects.get(id=id).count < amount_dict[id]:
+                messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
+                    Book.objects.get(id=id).title, Book.objects.get(id=id).count, amount_dict[id]))
+                return redirect("cart")
+
+        for package in packages:
+            for book in package.books.all():
+                if amount_dict[str(book.id)] + 1 > book.count:
+                    messages.error(request,
+                                   "the amount of {} books left is lower than the amount of books you are currently specifying".format(book.title))
         print(amount_dict)
         request.session["cart"] = amount_dict
+        # request.session[""]
         return redirect("checkout")
-    return render(request, 'shopping-cart.html', {'books': books, "order": order, "count": count})
+    return render(request, 'shopping-cart.html', {'books': books, "order": order, "count": count, "packages": packages, "package_count": package_count})
 
 
-@login_required(login_url="/login")
-def add_to_cart(request, pk):
+@ login_required(login_url="/login")
+def add_package_to_cart(request, pk):
+    if not Packages.objects.get(id=pk):
+        return redirect("home")
+    if not Member.objects.get(user=request.user):
+        return redirect("login")
     user = User.objects.get(id=request.user.id)
     order, created = Order.objects.get_or_create(
         member=Member.objects.get(user=user))
+    order.paid = False
+    order.delivery = False
+    order.save()
     # return HttpResponse(order.books.get(id=pk))
-    if order.books.get(id=pk):
+    if order.packages.filter(id=pk):
+        return redirect("cart")
+    order.packages.add(Packages.objects.get(id=pk))
+    return redirect("cart")
+
+
+@ login_required(login_url="/login")
+def delete_package_from_cart(request, pk):
+    if not Packages.objects.get(id=pk):
+        return redirect("home")
+    if not Member.objects.get(user=request.user):
+        return redirect("login")
+    user = User.objects.get(id=request.user.id)
+    order = Order.objects.get(member=Member.objects.get(user=user))
+    order.packages.remove(Packages.objects.get(id=pk))
+    return redirect("cart")
+
+
+@ login_required(login_url="/login")
+def add_to_cart(request, pk):
+    if not Book.objects.get(id=pk):
+        return redirect("home")
+    if not Member.objects.get(user=request.user):
+        return redirect("login")
+    user = User.objects.get(id=request.user.id)
+    order, created = Order.objects.get_or_create(
+        member=Member.objects.get(user=user))
+    order.paid = False
+    order.delivery = False
+    order.save()
+    # return HttpResponse(order.books.get(id=pk))
+    if order.books.filter(id=pk):
         return redirect("cart")
     order.books.add(Book.objects.get(id=pk))
     return redirect("cart")
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def delete_from_cart(request, pk):
+    if not Book.objects.get(id=pk):
+        return redirect("home")
+    if not Member.objects.get(user=request.user):
+        return redirect("login")
     user = User.objects.get(id=request.user.id)
     order = Order.objects.get(member=Member.objects.get(user=user))
+    amount_dict = request.session.get("cart")
+
+    if amount_dict != None and str(pk) in amount_dict:
+        amount_dict.remove(str(pk))
     order.books.remove(Book.objects.get(id=pk))
     return redirect("cart")
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def checkout(request):
     user = User.objects.get(id=request.user.id)
     order = Order.objects.get(member=Member.objects.get(user=user))
+    packages = order.packages.all()
+    packages_count = len(packages)
     books = order.books.all()
 
     amount_dict = request.session["cart"]
     count = len(books)
-
     total = 0
     for book in books:
+        if Book.objects.get(id=book.id).count < int(amount_dict[str(book.id)]):
+            messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
+                book.title, book.count, amount_dict[str(book.id)]))
+            return redirect("cart")
         total += (int(book.price) *
                   int(amount_dict[str(book.id)]))
-        if Book.objects.get(id=book.id).count <= int(amount_dict[str(book.id)]):
-            messages.error("we only have {} books left".format(
-                Book.objects.get(id=book.id).count))
+
+    for package in packages:
+        value = 1
+        if str(book.id) in amount_dict:
+            value += amount_dict[str(book.id)]
+        if value > book.count:
+            messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
+                book.title, book.count, value))
             return redirect("cart")
+
+        total += (package.price - package.discount)
 
     if request.method == 'POST':
         for book in books:
-            if Book.objects.get(id=book.id).count <= int(amount_dict[str(book.id)]):
-                messages.error("we only have {} books left".format(
+            if Book.objects.get(id=book.id).count < int(amount_dict[str(book.id)]):
+                messages.error(request, "we only have {} books left".format(
                     Book.objects.get(id=book.id).count))
                 return redirect("cart")
+        for package in packages:
+            value = 1
+            if str(book.id) in amount_dict:
+                value += amount_dict[str(book.id)]
+            if value > book.count:
+                messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
+                    book.title, book.count, value))
+                return redirect("cart")
+
+            total += (package.price - package.discount)
         user = User.objects.get(id=request.user.id)
         order = Order.objects.get(member=Member.objects.get(user=user))
         order.delivery = request.POST.get("delivery")
@@ -197,9 +290,149 @@ def checkout(request):
         books = order.books.all()
         try:
             amount_dict = request.session["cart"]
+            if len(amount_dict) == 0 and len(order.packages.all()) == 0:
+                raise Exception("nothing in the cart")
         except:
-            messages.error("you have nothing in the cart")
+            messages.error(request, "you have nothing in the cart")
             return redirect("checkout")
+        items = []
+        for book in books:
+            items.append(
+                {
+                    "itemId": str(book.id),
+                    "itemName": str(book.title),
+                    "unitPrice": str(book.price),
+                    "quantity": str(amount_dict[str(book.id)])
+                }
+            )
+        for package in packages:
+            items.append(
+                {
+                    "itemId": str(package.id),
+                    "itemName": str(package.title),
+                    "unitPrice": str(package.price - package.discount),
+                    "quantity": 1
+                }
+            )
+        url = "https://testapi.yenepay.com/api/urlgenerate/getcheckouturl/"
+        data = {
+            "process": "Cart",
+            "successUrl": "http://localhost:8000/success",
+            "ipnUrl": "http://localhost:8000/ipn",
+            "cancelUrl": "http://localhost:8000/cancel",
+            "merchantId": "SB1475",
+            "merchantOrderId": str(order.id),
+            "expiresAfter": 0.4,
+            "items": items,
+            "totalItemsDeliveryFee": 0,
+            "totalItemsTax1": 0
+        }
+        response = requests.post(url=url, json=data)
+        print(response.status_code)
+        if response.status_code == 200:
+            for book in books:
+                Quantity.objects.get_or_create(
+                    order=order,
+                    book=book,
+                    quantity=amount_dict[str(book.id)]
+                )
+            for package in packages:
+                PackageQuantity.objects.get_or_create(
+                    order=order,
+                    package=package,
+                    quantity=1
+                )
+            result = response.json().get("result")
+            return redirect(result)
+        else:
+            message.error("Error has been encountered")
+            redirect("checkout")
+    context = {'books': books, "order": order, "count": count,
+               "amount": amount_dict, "total": total, "packages": packages}
+    return render(request, 'checkout.html', context)
+
+
+def success(request):
+    ii = request.GET.get('itemId')
+    total = request.GET.get('TotalAmount')
+    moi = request.GET.get('MerchantOrderId')
+    ti = request.GET.get('TransactionId')
+    status = request.GET.get('Status')
+    url = 'https://testapi.yenepay.com/api/verify/pdt/'
+    data = {
+        "requestType": "PDT",
+        "pdtToken": "GLxwJZFcC8SX4X",
+        "transactionId": ti,
+        "merchantOrderId": moi
+    }
+    response = requests.post(url, json=data)
+    if response.status_code == 200:
+        print("It's Paid")
+        order = Order.objects.get(id=moi)
+        books = order.books.all()
+        packages = order.packages.all()
+        for book in books:
+            specific = Quantity.objects.get(
+                order=order,
+                book=book
+            )
+            final_book = Book.objects.get(id=book.id)
+            final_book.count -= int(specific.quantity)
+            final_book.save()
+        for package in packages:
+            for book in package.books.all():
+                final_book = Book.objects.get(id=book.id)
+                final_book.count -= int(specific.quantity)
+                final_book.save()
+        order.paid = True
+        order.save()
+        # del request.session['cart']
+    else:
+        messages.error(request, "Payment incomplete")
+        redirect("checkout")
+        print('Invalid payment process')
+    return render(request, 'success.html', {'total': total, 'status': status, "id": ti})
+
+
+def cancel(request):
+    return redirect("cart")
+
+
+def ipn(request):
+    messages.success("the ipn request has been successful")
+    print("the ipn thing has been successful")
+    return HttpResponse("this is to tell you that the ipn notification is working")
+    url = "https://testapi.yenepay.com/api/verify/ipn/"
+    totalAmount = request.GET.get('totalAmount')
+    buyerId = request.GET.get('buyerId')
+    merchantOrderId = request.GET.get('merchantOrderId')
+    merchantId = request.GET.get('merchantId')
+    merchantCode = request.GET.get('merchantCode')
+    transactionId = request.GET.get('transactionId')
+    status = request.GET.get("status")
+    transactionCode = request.GET.get('transactionCode')
+    currency = request.GET.get('currency')
+    signature = request.GET.get('signature')
+
+    data = {
+        "totalAmount": totalAmount,
+        "buyerId": buyerId,
+        "merchantOrderId": merchantOrderId,
+        "merchantId": merchantId,
+        "merchantCode": merchantCode,
+        "transactionId": transactionId,
+        "status": status,
+        "transactionCode": transactionCode,
+        "currency": currency,
+        "signature": signature
+    }
+
+    response = requests.post(url, json=data)
+    if response.status_code == 200:
+        print("It's Paid")
+        order = Order.objects.get(id=merchantOrderId)
+        books = order.books.all()
+        amount_dict = request.session["cart"]
         for book in books:
             Quantity.objects.create(
                 order=order,
@@ -209,18 +442,50 @@ def checkout(request):
             final_book = Book.objects.get(id=book.id)
             final_book.count -= int(amount_dict[str(book.id)])
             final_book.save()
+        order.paid = True
+        order.save()
         del request.session['cart']
-        return HttpResponse(request.session["cart"])
-        return redirect("home")
-    return render(request, 'checkout.html', {'books': books, "order": order, "count": count, "amount": amount_dict, "total": total})
+    else:
+        print('Invalid payment process')
+    return render(request, 'ipn.html')
 
 
-@register.filter
+@ register.filter
 def get_value(dictionary, key):
     return dictionary.get(str(key))
 
 
-@login_required(login_url="/login")
+@register.filter()
+def subtract(value1, value2):
+    return value1 - value2
+
+
+def all_packages(request):
+    packages = Packages.objects.all()
+    # print(packages[0].books.all()[0].image_front)
+
+    return render(request, 'all-packages.html', {'packages': packages})
+
+
+def delete_request(request, pk):
+    if request.method == "POST":
+        req = Request.objects.get(id=pk)
+        req.delete()
+        return redirect('create_book')
+
+
+@ login_required(login_url="/login")
+def single_package(request, pk):
+
+    package = Packages.objects.get(id=pk)
+    books = package.books.all()
+    # print(books, 'all books in apackage')
+    context = {'package': package, 'books': books}
+
+    return render(request, 'book_package.html', context)
+
+
+@ login_required(login_url="/login")
 def equb_user(request):
     cur_year = ethiopian_date.EthiopianDateConverter(
     ).date_to_ethiopian(datetime.date.today())
@@ -241,7 +506,7 @@ def equb_user(request):
     return render(request, 'equb-single(back).html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def equb_choice(request):
     user = User.objects.get(id=request.user.id)
     member = Member.objects.get(user=user)
@@ -254,7 +519,7 @@ def equb_choice(request):
 # choosen_books = []
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def create_package(request):
     if not request.user.has_perm("admin"):
         return redirect("home")
@@ -318,7 +583,7 @@ def create_package(request):
     return render(request, 'create-package(back).html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def request_books(request):
     successful = 'False'
     if request.method == 'POST':
@@ -334,7 +599,7 @@ def request_books(request):
     return render(request, 'request_books.html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def single_package(request, pk):
 
     package = Packages.objects.get(id=pk)
@@ -344,7 +609,7 @@ def single_package(request, pk):
     return render(request, 'book_package.html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def books(request):
     def isInt(num):
 
@@ -406,7 +671,7 @@ def books(request):
     return render(request, "metsahft.html", context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def listOfUsers(request):
     if not request.user.has_perm("admin"):
         return redirect("home")
@@ -445,7 +710,7 @@ def listOfUsers(request):
     return render(request, "listOfUsers.html", context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def bookDetail(request, pk):
     book = Book.objects.get(id=pk)
     comments = Review.objects.filter(book=book)
@@ -478,7 +743,7 @@ def bookDetail(request, pk):
     return render(request, 'book_detail.html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def deleteComment(request, pk):
     comment = Review.objects.get(id=pk)
     if Member.objects.get(user=request.user) != comment.member:
@@ -490,7 +755,7 @@ def deleteComment(request, pk):
     return render(request, 'book_detail.html', {"comment": comment})
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def adminOrders(request):
     if not request.user.has_perm("admin"):
         return redirect("home")
@@ -511,7 +776,7 @@ def adminOrders(request):
     return render(request, 'admin-orders.html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def deleteOrder(request, pk):
     if not request.user.has_perm("admin"):
         return redirect("home")
@@ -524,7 +789,7 @@ def deleteOrder(request, pk):
     return render(request, 'admin-orders.html', context)
 
 
-@login_required(login_url="/login")
+@ login_required(login_url="/login")
 def detailOrder(request, pk):
     if not request.user.has_perm("admin"):
         return redirect("home")
