@@ -20,7 +20,7 @@
             $nav = $this.attr('data-nav');
 
         $this.slick({
-            slidesToShow: 2,
+            slidesToShow: 3,
             slidesToScroll: 1,
             autoplay: true,
             infinite: true,
@@ -31,7 +31,7 @@
             responsive: [{
                     breakpoint: 991,
                     settings: {
-                        slidesToShow: 2,
+                        slidesToShow: 3,
                         slidesToScroll: 1,
                     }
                 },
@@ -75,7 +75,7 @@
 
     // Product imgs Slick
     $('#product-imgs').slick({
-        slidesToShow: 2,
+        slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
         centerMode: false,

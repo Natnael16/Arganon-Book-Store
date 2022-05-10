@@ -1,0 +1,316 @@
+<!DOCTYPE html>{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>እቁብ</title>
+<link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
+
+<!-- font awesome cdn link  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- custom css file link  -->
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+<style> a { text-decoration: none;}</style></head>
+
+<!--Table-->
+<!-- header section starts  -->
+<header class="header">
+
+    <div class="header-1">
+
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
+                style="color:#228B22;">መጻሕፍት</a>
+        <form action="/books" name="filterForm" class="search-form">
+            <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
+            <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
+        </form>
+
+        <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <a href="{% url 'cart' %}" class="fas fa-shopping-cart"></a>
+            <a href="{% url 'edit-profile' %}" id="login-btn" class="fas fa-user"></a>
+            {% if perms.app_name %}
+            <a href="{% url 'admin-orders' %}" class="fas fa-users-cog"></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-2">
+        <nav class="navbar">
+            <a href="{% url 'books' %}">መጻሕፍት</a>
+            <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
+            <a href="{% url 'equb-user' %}">እቁብ</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+            {% else %}
+            <a href="{% url 'login' %}">Login | Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<!-- header section ends -->
+
+<!-- bottom navbar  -->
+
+<nav class="bottom-navbar">
+    <a href="{% url 'home' %}" class="fas fa-home"></a>
+    <a href="{% url 'books' %}" class="fas fa-book"></a>
+    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
+    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+    {% else %}
+    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    {% endif %}
+    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+</nav>
+<!-- login form  -->
+<body>
+    <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="breadcrumb-header">መጽሐፍ አስገባ</h2>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <div class="container" role="main">
+        <div class="row">
+            <div class="col-md-2">
+                <!-- Vertical navbar -->
+                <div class="vertical-nav bg-white" id="sidebar">
+                    <h2 class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">ማውጫ</h2>
+
+                    <ul class="nav flex-column bg-white mb-0">
+                        <li class="nav-item">
+                            <a href="{% url 'admin-orders' %}" class="nav-link text-dark font-italic ">
+                                <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>ትእዛዞች
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'create_book' %}" class="nav-link text-dark font-italic">
+                                <i class="fa fa-address-card mr-3 text-primary fa-fw"></i> መጽሐፍ አስገባ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'list-of-users' %}" class="nav-link text-dark font-italic">
+                                <i class="fa fa-cubes mr-3 text-primary fa-fw"></i> እቁብ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'create-package' %}" class="nav-link text-dark font-italic">
+                                <i class="fa fa-plus mr-3 text-primary fa-fw"></i> ጥቅል ፍጠር
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End vertical navbar -->
+            </div>
+            
+            <div class="col-md-6">
+                    <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="billing-details">
+                        <div class="payment-method">
+                            <p style="color: red;">{% if error %} {{error}} {% endif %}</p>
+                            <div>
+                                <h3>የመጽሐፉ ምድብ</h3>
+                            </div>
+                            <div class="book-type">
+                                <div class="form-group">
+                                    <select class="form-control form-control-lg" name="new_book" id="category">
+                                        <option value="False" selected>አዲስ መጽሐፍ</option>
+                                        <option value="True">በቅርብ የሚመጣ ምጽሃፍ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-title">
+                            <h3 class="title">የመጽሐፉ ዝርዝሮች</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="categories">መደብ</label>
+                            <select class="form-control form-control-lg" required name="categories" id="categories" multiple>
+                                <!-- <option value=" " selected>ገድላትና ድርሳናት</option> -->
+                                {% for category in categories %}
+                                <option value="{{category}}">{{category}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">ርዕስ</label> <span style="color:red;">*</span>
+            <input class="input" required type="text" name="title" placeholder="ርዕስ">
+    </div>
+    <div class="form-group">
+        <label for="">ደራሲ</label> <span style="color:red;">*</span>
+        <input class="input" required type="text" name="author" placeholder="ደራሲ">
+    </div>
+    <div class="form-group">
+        <label for="">ቅናሽ ዋጋ</label> <span style="color:red;">*</span>
+        <input class="input" required type="number" name="price" placeholder="ቅናሽ ዋጋ" min="0">
+    </div>
+    <div class="form-group">
+        <label for="">ቅናሽ ያልተደረገበት ዋጋ</label> <span style="color:red;">*</span>
+        <input class="input" required type="number" name="oldprice" placeholder="ቅናሽ ያልተደረገበት ዋጋ" min="0">
+    </div>
+    <div class="form-group">
+        <label for="">ገጽ ብዛት</label> <span style="color:red;">*</span>
+        <input class="input" required type="number" name="pages" placeholder="ገጽ ብዛት" min="0">
+    </div>
+    <div class="form-group">
+        <label for="">እጅ ላይ ያለ የመጽሐፉ ብዛት</label> <span style="color:red;">*</span>
+        <input class="input" required type="number" name="count" placeholder="እጅ ላይ ያለ የመጽሐፉ ብዛት " min="0">
+    </div>
+    <div class="form-group">
+        <label for="">የተወዳጅነት ልኬት</label>
+        <input class="input" type="number" name="popularity" placeholder="የተወዳጅነት ልኬት ( ከ 0 ቁጥር ጀሞሮ )" min="0">
+    </div>
+    <div class="form-group">
+        <label for="">ስለመጽሐፉ መግለጫ</label> <span style="color:red;">*</span>
+        <textarea class="form-control" name="description" required placeholder="ስለመጽሐፉ መግለጫ" id="description" style="height: 100px"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="">ስለ ደራሲው</label> <span style="color:red;">*</span>
+        <textarea class="form-control" name="about_author" placeholder="ስለ ደራሲው" id="about" style="height: 100px"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="image_front" class="form-label">የመጽሐፉን ምስል አስገባ</label> <span style="color:red;">*</span>
+        <input class="form-control" required type="file" id="image_front" name="image_front">
+    </div>
+    <div class="mb-3">
+        <label for="image_back" class="form-label">የመጽሐፉን ምስል አስገባ</label> <span style="color:red;">*</span>
+        <input class="form-control" required type="file" id="image_back" name="image_back">
+    </div>
+   
+    <script>
+        var frontuploadField = document.getElementById("image_front");
+        var backuploadField = document.getElementById("image_back");
+
+            frontuploadField.onchange = function () {
+                if (this.files[0].size > 2097152) {
+                    alert("Front Image File is too big!");
+                    this.value = "";
+                };
+            };
+            backuploadField.onchange = function () {
+                    if (this.files[0].size > 2097152) {
+                        alert("Back Image File is too big!");
+                        this.value = "";
+                    };
+                };
+    </script>
+    </div>
+    <button class="primary-btn order-submit">መጽሐፉን አስገባ</button>
+</form>
+            </div>
+    
+    <br>
+    <div class="col-md-3 order-details">
+        <div class="section-title text-center">
+            <h3 class="title">የታዘዙ መጻሕፍት</h3>
+        </div>
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">መጽሐፍ</th>
+                    <th scope="col">ጸሃፊ</th>
+                    <th scope="col">ታይቷል</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r_book in r_books %}
+                <tr>
+                    <th scope="row"></th>
+                    <td>{{r_book.title}}</td>
+                    <td>{{r_book.author}}</td>
+                    <form action="/delete_request/{{r_book.id}}" method="post">
+                        {% csrf_token %}
+                        <td><button type="submit"><i class="fa fa-check"></i></button></td>
+                    </form>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+    </div>
+    </div>
+
+
+    </div>
+
+
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/slick.min.js"></script>
+    <script src="../static/js/nouislider.min.js"></script>
+    <script src="../static/js/jquery.zoom.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    </body>
+    <footer class="footer-distributed">
+        <div class="footer-left">
+            <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+            <!-- <p class="footer-links">
+        <a href="#">ዋና ገጽ</a> ·
+        <a href="#">መጻሕፍት</a> ·
+        <a href="about-us.html">ስለድርጅቱ</a> ·
+        <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+        <a href="#">ያነጋግሩን</a>
+    </p> -->
+
+            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fas fa-map-marker"></i>
+                <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+            </div>
+
+            <div>
+                <i class="fas fa-phone"></i>
+                <p>+251 925 421 700</p>
+            </div>
+
+            <div>
+                <i class="fas fa-envelope"></i>
+                <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+
+            <div class="footer-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+    </footer>
+
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>{% load static %}
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የመጽሓፉዝርዝር</title>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/slick.css' %}" />
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/slick-theme.css' %}" />
+
+    <!-- Custom stlylesheet -->
+    <link rel="stylesheet" href=" {% static 'css/main.css' %}">
+    <link rel="stylesheet" href=" {% static 'css/style2.css' %}">
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/style.css' %}" />
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/footer.css' %}" />
+    <link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+<style> a { text-decoration: none;}</style></head>
+<!-- header section starts  -->
+<!-- header section starts  -->
+<header class="header">
+
+    <div class="header-1">
+
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
+                style="color:#228B22;">መጻሕፍት</a>
+        <form action="/books" name="filterForm" class="search-form">
+            <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
+            <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
+        </form>
+
+        <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <a href="{% url 'cart' %}" class="fas fa-shopping-cart"></a>
+            <a href="{% url 'edit-profile' %}" id="login-btn" class="fas fa-user"></a>
+            {% if perms.app_name %}
+            <a href="{% url 'admin-orders' %}" class="fas fa-users-cog"></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-2">
+        <nav class="navbar">
+            <a href="{% url 'books' %}">መጻሕፍት</a>
+            <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
+            <a href="{% url 'equb-user' %}">እቁብ</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+            {% else %}
+            <a href="{% url 'login' %}">Login | Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<!-- header section ends -->
+
+<!-- bottom navbar  -->
+
+<nav class="bottom-navbar">
+    <a href="{% url 'home' %}" class="fas fa-home"></a>
+    <a href="{% url 'books' %}" class="fas fa-book"></a>
+    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
+    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+    {% else %}
+    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    {% endif %}
+    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+</nav>
+<!-- login form  -->
+
+<!-- header section ends -->
+
+<!-- bottom navbar  -->
+
+<nav class="bottom-navbar">
+    <a href="#home" class="fas fa-home"></a>
+    <a href="#featured" class="fas fa-list"></a>
+    <a href="#arrivals" class="fas fa-tags"></a>
+    <a href="#reviews" class="fas fa-comments"></a>
+    <a href="#blogs" class="fas fa-blog"></a>
+</nav>
+
+<!-- login form  -->
+
+
+<body>
+
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- Product main img -->
+                <div class="col-md-5 col-md-push-2">
+                    <div id="product-main-img">
+                        <div class="product-preview">
+                            <img src="../../../images/{{book.image_front}}" alt="book-image">
+
+                        </div>
+
+                        <div class="product-preview">
+                            <img src="../../../images/{{book.image_back}}" alt="book-image">
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product main img -->
+
+                <!-- Product thumb imgs -->
+                <div class="col-md-2  col-md-pull-5">
+                    <div id="product-imgs">
+                        <div class="product-preview">
+                            <img src="../../../images/{{book.image_front}}" alt="">
+                        </div>
+
+                        <div class="product-preview">
+                            <img src="../../../images/{{book.image_back}}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product thumb imgs -->
+
+                <!-- Product details -->
+                <div class="col-md-5">
+                    <div class="product-details">
+                        <p class="book-id" hidden>{{book.id}}</p>
+                        <input type="text" class="package" value="false" hidden>
+
+                        <h2 class=" product-name">{{book.title}}</h2>
+                        <div>
+                            <p class="product-category">በ {{book.author}}</p>
+                            <p class="product-category">የገጽ ብዛት፡ {{book.pages}}</p>
+                            <ul class="product-links">
+                                <li>መደብ:</li>
+                                {% for cat in cats %}
+                                <li>
+                                    <p>{{cat}}፣</p>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="product-price">{{book.price}} ብር <del class="product-old-price">{{book.oldprice}} ብር</del></h3>
+                        </div>
+                        <p>{{book.description}} </p>
+                        <!-- <p>ብዛት፡ <input type="number" class="quantity" step="1" min="1" max="{{book.count}}" value="1"></p> -->
+
+                        <br>
+                        <div class="add-to-cart">
+                            <!-- this button will redirect to shoping cart after being added to the cart -->
+                            <a href=" {% url 'cart' %}"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>ወደ ዘንቢሎ
+                                    ይጨምሩ</button></a>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product details -->
+
+                <div class="col-md-12">
+
+                    <br><br><br>
+                    <h2>አስተያየቶች</h2>
+                    <div class="row">
+                        <!-- Reviews -->
+                        <div>
+                            <div id="reviews">
+                                <ul class="reviews">
+                                    {% for coment in page.object_list %}
+                                    <li>
+                                        <div class="review-heading">
+                                            <h5 class="name">{{coment.member.user.username}}</h5>
+                                            <p class="date">{{coment.created}}</p>
+                                        </div>
+                                        <div class="review-body">
+                                            <p>{{coment.አስተያየት}}</p>
+                                        </div>
+                                        {% if request.user.username == coment.member.user.username %}
+                                        <div style="position: absolute; top:0; right:0;">
+                                            <form method="POST" action="{% url 'delete_comment' coment.id %}">
+                                                {% csrf_token %}
+                                                <a>
+                                                    <button type="submit" style="background-color:transparent; border:none;"><i
+                                                            class="fa fa-trash"></i></button></a>
+                                            </form>
+                                        </div class="reviews-pagination">
+                                        {% endif %} {% empty %} &nbsp; &nbsp; &nbsp; &nbsp;ምንም አስተያየቶች አአልተፃፉም
+                                    </li>
+                                    {% endfor %}
+                                    <div style="float:right;">
+                                        {% if page.has_previous %}
+                                        <a href=" {% url 'book_detail' book.id %}?page={{ page.previous_page_number }}"><i
+                                                class="fa fa-arrow-left"></i> ተመለስ</a> {% endif %} &nbsp; &nbsp; {% if page.has_next %}
+                                        <a href="{% url 'book_detail' book.id %}?page={{ page.next_page_number }}">ተጨማሪ
+                                            አስተያየቶቸ <i class="fa fa-arrow-right"></i></a> {% endif %}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Reviews -->
+                    <br>
+                    <!-- Review Form -->
+                    <h3>የመጽሀፉን ምልከታዎን ያስቀምጡ</h3>
+                    <div class="row">
+                        <div id="review-form">
+                            <form method="POST" class="review-form">
+                                {% csrf_token %} {{comment_form.as_p}}
+                                <input type="submit" class="primary-btn" value="አስገባ">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Review Form -->
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="aside">
+            <div class="row">
+                <!-- section title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h3 class="aside-title">ተያያዥ መጻሕፍት</h3>
+                    </div>
+                </div>
+                <!-- /section title -->
+                <!-- Products tab & slick -->
+                <div class="col-md-12">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                {% for book in related_books%}
+                                <div class="product">
+                                    <a href="{% url 'book_detail' book.id %}">
+                                        <div class="product-img">
+                                            <img src="../../../images/{{book.image_front}}" alt="book-image" style="height:19vh; object-fit: contain; ">
+                                        </div>
+                                        <div class="product-body">
+                                            <p class="product-category">{{book.cat}}</p>
+                                            <h3 class="product-name"><a href="{% url 'book_detail' book.id %}">{{book.title}}</a></h3>
+                                            <p class="product-category">በ{{book.author}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- /product -->
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+                        <!-- Products tab & slick -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../../../static/js/add_to_cart.js" async></script>
+
+    <script src="../../../static/js/jquery.min.js"></script>
+    <script src="../../../static/js/bootstrap.min.js"></script>
+    <script src="../../../static/js/slick.min.js"></script>
+    <script src="../../../static/js/nouislider.min.js"></script>
+    <script src="../../../static/js/main_y.js"></script>
+
+
+
+</body>
+
+<footer class="footer-distributed">
+    <div class="footer-left">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+            <!-- <p class="footer-links">
+    <a href="#">ዋና ገጽ</a> ·
+    <a href="#">መጻሕፍት</a> ·
+    <a href="about-us.html">ስለድርጅቱ</a> ·
+    <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+    <a href="#">ያነጋግሩን</a>
+</p> -->
+
+            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fas fa-map-marker"></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+        </div>
+
+        <div>
+            <i class="fas fa-phone"></i>
+            <p>+251 925 421 700</p>
+        </div>
+
+        <div>
+            <i class="fas fa-envelope"></i>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+
+        <div class="footer-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+
+        </div>
+
+    </div>
+    </footer>
+
+</html>

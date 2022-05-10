@@ -73,11 +73,3 @@ body.my-login-page {
         padding: 15px;
     }
 }
-
-.form-group button {
-    background-color: #228B22;
-}
-
-.form-group button:hover {
-    background-color: #027930;
-}

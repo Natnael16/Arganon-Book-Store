@@ -1,0 +1,194 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap -->
+    <!-- Bootstrap -->
+    <!-- <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}" /> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min1.css' %}">
+    
+<style> a { text-decoration: none;}</style></head>
+<!-- header section starts  -->
+<header class="header">
+
+    <div class="header-1">
+
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
+                style="color:#228B22;">መጻሕፍት</a>
+        <form action="/books" name="filterForm" class="search-form">
+            <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
+            <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
+        </form>
+
+        <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <a href="{% url 'cart' %}" class="fas fa-shopping-cart"></a>
+            <a href="{% url 'edit-profile' %}" id="login-btn" class="fas fa-user"></a>
+            {% if perms.app_name %}
+            <a href="{% url 'admin-orders' %}" class="fas fa-users-cog"></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-2">
+        <nav class="navbar">
+            <a href="{% url 'books' %}">መጻሕፍት</a>
+            <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
+            <a href="{% url 'equb-user' %}">እቁብ</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+            {% else %}
+            <a href="{% url 'login' %}">Login | Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<!-- header section ends -->
+
+<!-- bottom navbar  -->
+
+<nav class="bottom-navbar">
+    <a href="{% url 'home' %}" class="fas fa-home"></a>
+    <a href="{% url 'books' %}" class="fas fa-book"></a>
+    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
+    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+    {% else %}
+    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    {% endif %}
+    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+</nav>
+<!-- login form  -->
+<body>
+    <div style="margin-top: 10vh;"></div>
+    <div class="container" style="zoom: 1.5;">
+        <h1></h1>
+        <div class="container-xl px-4 mt-4">
+            <!-- Account page navigation-->
+            <nav class="nav nav-borders">
+                <a class="nav-link active ms-0"
+                    href="{% url 'edit-profile' %}"
+                    target="__blank">Profile</a>
+                
+            </nav>
+            <hr class="mt-0 mb-4">
+            <div class="row">
+
+                <div class="col-xl-8">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header"> ግላዊ መረጃዎች</div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <!-- Form Group (username)-->
+                                <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputUsername">ልዩ ስም (ይህ ስም በድረ-ገጹ የእርሶ ልዩ መለያ
+                                        ነው) </label>
+                                    <input disabled class="form-control" id="inputUsername" type="text" name="username" placeholder="ልዩ ስም ያስገቡ" value="{{user.username}}">
+                                </div></div>
+                                <!-- Form Row-->
+                                <div class="row  mb-3">
+                                    <!-- Form Group (first name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputFirstName" >ሙሉ ስም <span style="color: red;">*</span></label>
+            <input required class="form-control" id="inputFirstName" name="name" type="text" placeholder="ሙሉ ስሞን ያስገቡ" value="{{member.name}}">
+    </div>
+    <!-- Form Group (last name)-->
+
+
+    </div>
+    <!-- Form Row        -->
+    <div class="row  mb-3">
+        <!-- Form Group (organization name)-->
+        <!-- Form Group (location)-->
+        <div class="col-md-6">
+            <label class="small mb-1" for="inputLocation">መኖርያ አድራሻ <span style="color: red;">*</span></label>
+            <input required class="form-control" id="inputLocation" type="text" name="address" placeholder="የሚኖሩበትን ስፍራ ያስገብ" value="{{member.address}}">
+        </div>
+    </div>
+
+    <!-- Form Row-->
+    <div class="row  mb-3">
+        <!-- Form Group (phone number)-->
+        <div class="col-md-6">
+            <label class="small mb-1" for="inputPhone">ስልክ ቁጥር <span style="color: red;" value = "member.phone">*</span></label>
+            <input required class="form-control" id="inputPhone" name="phone" type="tel" placeholder="+251911121314" value="{{ member.phone }}">
+        </div>
+        <!-- Form Group (birthday)-->
+
+    </div>
+    <!-- Save changes button-->
+    <button class="btn btn-primary" type="submit" style="background-color: #228B22;">Save changes</button> {% if success == 'success' %}
+    <h2 class="alert alert-success" role="alert"> ለውጦች በተሳካ ሁኔታ ተመዝግበዋል! </h2>
+    {% endif %}
+
+    </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    </body>
+    <footer class="footer-distributed">
+        <div class="footer-left">
+            <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+            <!-- <p class="footer-links">
+        <a href="#">ዋና ገጽ</a> ·
+        <a href="#">መጻሕፍት</a> ·
+        <a href="about-us.html">ስለድርጅቱ</a> ·
+        <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+        <a href="#">ያነጋግሩን</a>
+    </p> -->
+
+            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fas fa-map-marker"></i>
+                <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+            </div>
+
+            <div>
+                <i class="fas fa-phone"></i>
+                <p>+251 925 421 700</p>
+            </div>
+
+            <div>
+                <i class="fas fa-envelope"></i>
+                <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+
+            <div class="footer-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+    </footer>
+
+</html>
