@@ -10,17 +10,49 @@ function ready() {
         // purcahse = document.getElementsByClassName()
     for (let i = 0; i < cart.length; i++) {
         var cart_item = cart[i];
-        addItemToCart(cart_item.title, cart_item.price, cart_item.image, cart_item.qty, cart_item.package);
+        addItemToCart(cart_item.title, cart_item.price, cart_item.image, cart_item.qty, cart_item.package, cart_item.count);
         updateTotal()
     }
 
 }
 
-function addItemToCart(title, price, img, qty, package) {
+function addItemToCart(title, price, img, qty, package, count) {
     var cartRow = document.createElement('tr')
     cartRow.classList.add('cart-row')
     var cartItems = document.getElementsByClassName('orders')[0]
-    var cartRowContents = `
+    if (package == "true") {
+        var cartRowContents = `
+        <td>
+        <div class="product-widget">
+            <div class="product-img"><img src="${img}" alt="metsahft" height="70">
+            </div>
+            <div class="product-body">
+                <h3 class="product-name"><a href="#">${title}</a></h3>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div>
+            <h5 class="price">${price} ብር</h5>
+        </div>
+    </td>
+    
+    <td>
+        <div>
+            <input type="number" class="qty"  value="1" style=" width: 40px" disabled>
+        </div>
+    </td>
+    <td>
+        <h5 class="total-price" style="float:right; ">55</h5>
+    </td>
+    <td>
+        <a href="">
+            <h4><span class="remove"><i class="fa fa-trash " aria-hidden="true "></i></span></h4>
+        </a>
+    </td>`
+
+    } else {
+        var cartRowContents = `
     <td>
     <div class="product-widget">
         <div class="product-img"><img src="${img}" alt="metsahft" height="70">
@@ -38,7 +70,7 @@ function addItemToCart(title, price, img, qty, package) {
 
 <td>
     <div>
-        <input type="number" class="qty" name="amount{{forloop.counter0}}" step="1" value="${qty}" style=" width: 40px " max="{{book.count}}" {{if package}}>
+        <input type="number" class="qty"  step="1" value="${qty}" style=" width: 40px " max="${count}">
     </div>
 </td>
 <td>
@@ -49,11 +81,12 @@ function addItemToCart(title, price, img, qty, package) {
         <h4><span class="remove"><i class="fa fa-trash " aria-hidden="true "></i></span></h4>
     </a>
 </td>`
-    cartRow.innerHTML = cartRowContents
-    cartItems.append(cartRow)
-    qty = cartRow.getElementsByClassName("qty")[0].value
+    }
+    cartRow.innerHTML = cartRowContents;
+    cartItems.append(cartRow);
+    qty = cartRow.getElementsByClassName("qty")[0].value;
     cartRow.getElementsByClassName('remove')[0].addEventListener('click', removeCartItem);
-    cartRow.getElementsByClassName('qty')[0].addEventListener('change', quantityChanged)
+    cartRow.getElementsByClassName('qty')[0].addEventListener('change', quantityChanged);
 }
 
 function removeCartItem(event) {
