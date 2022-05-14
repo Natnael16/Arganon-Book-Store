@@ -39,7 +39,7 @@ class UserForm(UserCreationForm):
         fields = ["username", "password1", "password2"]
 
 
-class ResetForm(UserForm):
+class ResetForm(UserCreationForm):
     class Meta:
         model = User
         fields = [ "password1", "password2"]

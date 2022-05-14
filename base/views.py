@@ -101,7 +101,7 @@ def resetPassword(request, uidb64=None, token=None):
     password = None
 
     if request.method == "POST":
-        usr = UserForm()
+        usr = ResetForm()
         if usr.is_valid():
             password = request.POST.get("newpassword1")
             user = None
