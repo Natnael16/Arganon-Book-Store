@@ -51,13 +51,14 @@
             color: white;
             background-color: #27ae60;
         }
+        
         @media only screen and (max-width: 1080px) {
             #btnnew {
                 padding: 20px;
                 font-size: 16px;
             }
-
         }
+        
         @media only screen and (max-width: 580px) {
             .radio {
                 margin: 4px;
@@ -78,17 +79,21 @@
             }
         }
     </style>
-<style> a { text-decoration: none;}</style></head>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
 
 <body>
 
-<!-- header section starts  -->
-<header class="header">
+    <!-- header section starts  -->
+    <header class="header">
 
-    <div class="header-1">
+        <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
-                style="color:#228B22;">መጻሕፍት</a>
+            <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
             <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
@@ -377,7 +382,8 @@
                         <input type="text" required name="title" placeholder="የመጽሐፉ ርዕስ" id="" class="box">
                         <input type="text" name="author" placeholder="የመጽሐፉ ደራሲ" id="" class="box">
 
-                        <input type="submit" value="ይዘዙ" class="btn">
+                        <button type="submit" id="btnnew" style=" border-radius: 5px;background-color: #27ae60; margin: 15px; color: aliceblue; padding: 4px; position: relative; top: -6px; left: 10px;" class="radio__label">ይዘዙ</button>
+
                     </form>
 
                 </section>

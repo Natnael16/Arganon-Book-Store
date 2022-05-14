@@ -71,6 +71,8 @@ def loginPage(request):
 
     if request.method == "POST":
         phone = request.POST.get("phone")
+        pre = len(phone) - 9
+        phone = phone[pre:]
         password = request.POST.get("password")
         try:
             user = Member.objects.get(phone=phone).user
@@ -157,7 +159,8 @@ def registerPage(request):
             member = form.save(commit=False)
             
             member.is_equbtegna = False
-            toBeVerified.add(request.POST.get("phone"), {'member': member, 'user': user}, 600 )
+            phone = request.POST.get("phone")[-9:]
+            toBeVerified.add(phone, {'member': member, 'user': user}, 600 )
             # login(request, User.objects.get(username=username))
             return redirect('https://t.me/menfesawi_metsahft_bot')
 
@@ -165,9 +168,6 @@ def registerPage(request):
             # #print(usr, form)
 
             return render(request, "register.html", { 'user_error': usr.errors , 'form_error' : form.errors})
-            return HttpResponse("{} {}".format(usr.errors, form.errors))
-            return HttpResponse("Here's the text of the web page.")
-            messages.error(request, "An error occurred during registration")
     context = {
         "user": usr,
     }
@@ -223,9 +223,10 @@ def create_book(request):
 
 @login_required(login_url="/login")
 def cart(request):
+    book = Book.objects.all()
     if request.method == "POST":
         return redirect("checkout")
-    return render(request, 'shopping-cart.html', {'books': books})
+    return render(request, 'shopping-cart.html', {'book': book})
 
 
 @ login_required(login_url="/login")
@@ -836,7 +837,8 @@ def deleteOrder(request,pk):
         return redirect("home")
     order1 = Order.objects.get(id = pk)
     if request.method == "POST":
-        order1.delete()
+        order1.sold = True
+        order1.save()
         return redirect("admin-orders")  
     
     context={"order1":order1}

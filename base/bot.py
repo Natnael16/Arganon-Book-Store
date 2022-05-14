@@ -14,8 +14,8 @@ from base.utils import TokenGenerator
 
 basicConfig(level=INFO)
 log = getLogger()
-Bot = Bot('5373042983:AAE_AOo-hPkelbC4Z0-LOAtr5s1F51LzOIQ')
-updater = Updater(token='5373042983:AAE_AOo-hPkelbC4Z0-LOAtr5s1F51LzOIQ', use_context=True)
+Bot = Bot('5304666865:AAG8LL8ESGwQVkMgvecRPzGETwP_Tt7qPgQ')
+updater = Updater(token='5304666865:AAG8LL8ESGwQVkMgvecRPzGETwP_Tt7qPgQ', use_context=True)
 dispatcher = updater.dispatcher
 def start(update, context: CallbackQuery):
 

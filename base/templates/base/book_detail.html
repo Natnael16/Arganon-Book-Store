@@ -29,15 +29,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
-<style> a { text-decoration: none;}</style></head>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
 <!-- header section starts  -->
 <!-- header section starts  -->
 <header class="header">
 
     <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
-                style="color:#228B22;">መጻሕፍት</a>
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
             <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
@@ -141,6 +145,7 @@
                 <div class="col-md-5">
                     <div class="product-details">
                         <p class="book-id" hidden>{{book.id}}</p>
+                        <p class="count" hidden>{{book.count}}</p>
                         <input type="text" class="package" value="false" hidden>
 
                         <h2 class=" product-name">{{book.title}}</h2>
