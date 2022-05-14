@@ -97,22 +97,28 @@ def logoutUser(request):
 
 def resetPassword(request, uidb64=None, token=None):
     password = None
+
     if request.method == "POST":
-        password = request.POST.get("newpassword1")
-        user = None
-        try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            #print(uid)
-            user = Member.objects.get(phone=uid).user
+        usr = UserForm()
+        if usr.is_valid():
+            password = request.POST.get("newpassword1")
+            user = None
+            try:
+                uid = force_str(urlsafe_base64_decode(uidb64))
+                #print(uid)
+                user = Member.objects.get(phone=uid).user
 
-        except Exception as e:
-            return HttpResponse("<h1>ደንበኛው አልተገኘም</h1>")
+            except Exception as e:
+                return HttpResponse("<h1>ደንበኛው አልተገኘም</h1>")
 
-        
-        if user and TokenGenerator.check_token(user, token):
-            user.password = password
-            return render(request, "login.html")
-        return HttpResponse("password Reset Failed")
+            
+            if user and TokenGenerator.check_token(user, token):
+                user.password = password
+                return render(request, "login.html")
+            return HttpResponse("password Reset Failed")
+        else:
+            return render(request, "register.html", { 'user_error': usr.errors , 'form_error' : form.errors})
+            
     context = {"uidb64": uidb64, "token": token}
     return render(request, "resetpassword.html",context)
 
