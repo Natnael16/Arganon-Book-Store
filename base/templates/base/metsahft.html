@@ -309,6 +309,7 @@
 
                         <div class="swiper-wrapper">
                             {% for package in packages %}
+                            <a href="{% url 'book-package' package.id %}">
                             <div class="swiper-slide box">
 
                                 <div class="image">
@@ -318,9 +319,9 @@
                                 <div class="content">
                                     <h3>{{package.title}}</h3>
                                     <div class="price">{{package.discount}} ብር <span> {{package.price}} ብር</span></div>
-                                    <a href="{% url 'book-package' package.id %}" class="btn" style="background-color:#27ae60 ; color: white;">ይመልከቱ</a>
+                                    <a href="{% url 'book-package' package.id %}" class="btn" style="background-color:#27ae60 ; color: white;font-size: 13px; padding: 10px;">ይመልከቱ</a>
                                 </div>
-                            </div>
+                            </div></a>
                             {% endfor %}
 
 

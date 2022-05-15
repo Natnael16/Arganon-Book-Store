@@ -56,7 +56,7 @@ def messageHandler(update, context):
            [InlineKeyboardButton("Go to MenfesawiBooks Website", url='http://127.0.0.1:8000/')]
         ]
         
-        msg = str("Fuck You *"+ str(update.message.chat.first_name) +"* \n\n*"+ str(update.message.contact.phone_number) +"* has not been registered on our website or you have not been registered on MenfesawiBooks.com please follow this link and register first!")
+        msg = str("Sorry *"+ str(update.message.chat.first_name) +"* \n\n*"+ str(update.message.contact.phone_number) +"* has not been registered on our website or you have not been registered on MenfesawiBooks.com please follow this link and register first!")
         context.bot.send_message(chat_id=update.effective_chat.id,
         text = msg,
         reply_markup = InlineKeyboardMarkup(buttons,  resize_keyboard=True), parse_mode= "Markdown")

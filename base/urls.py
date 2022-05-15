@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin-orders/delete-order/<str:pk>", deleteOrder, name="delete-order"),
     path("detail-order/<str:pk>", detailOrder, name="detail-order"),
     path("edit-profile/", editProfile, name="edit-profile"),
-    path("all-packages" , all_packages , name = "all-packages"),
+
     path('delete_request/<str:pk>' , delete_request , name = 'delete_request'),
     path("verify/<uidb64>/<token>", verify, name="verify"),
     path("resetPassword/<uidb64>/<token>", resetPassword, name="resetPassword"),
@@ -36,7 +36,7 @@ urlpatterns = [
     path('logout', logout),
      path("add-equbtegna" , addEqubtegna , name= "add-equbtegna" ) , 
     path('book-package/<str:pk>', single_package, name='book-package'),
-    path("all-packages", all_packages, name="all-packages"),
+
     path('equbreset' , reset , name='equb-reset' )
 ]
 

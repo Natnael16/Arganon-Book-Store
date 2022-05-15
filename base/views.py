@@ -5,6 +5,7 @@ import random
 
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.forms import CharField
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
@@ -24,9 +25,9 @@ from collections import defaultdict
 from .wait import toBeVerified
 from .bot import main, sendmessage
 from collections import defaultdict
-from email import message
-from email.policy import default
-from http.client import HTTP_PORT
+# from email import message
+# from email.policy import default
+# from http.client import HTTP_PORT
 from django.template.defaulttags import register
 import requests
 from .utils import *
@@ -68,23 +69,37 @@ def verify(request, uidb64, token):
     return HttpResponse("login")
 
 def loginPage(request):
-
+    
     if request.method == "POST":
         phone = request.POST.get("phone")
         password = request.POST.get("password")
+        if len(phone) < 9 or len(phone)> 13:
+            errors ="Phone Number or password is wrong"
+            return render(request, "login.html", {"errors": errors})
+
+        pre = len(phone) - 9
+        phone = phone[pre:]
+        phone = "+251" + phone
+        user = None
         try:
-            user = Member.objects.get(phone=phone).user
-           
+            member = Member.objects.get(phone=phone)
+            # return HttpResponse(member.user.username)
+            user = authenticate(
+                username=member.user.username, password=password)
         except:
             user = None
-            messages.error(request, "phone Number is wrong")
-            
+            errors ="Phone Number or password is wrong"
+            print('errros 1' , errors)
+            return render(request, "login.html", {"errors": errors})
+
         #print(user, 'I am user')
         if user:
             login(request, user)
             return redirect("home")
         else:
-            messages.error(request, "password is incorrect")
+            errors = "Phone Number or password is wrong"
+            print('errors 2')
+            return render(request, "login.html", {"errors": errors})
     return render(request, "login.html")
 
 
@@ -98,27 +113,37 @@ def logoutUser(request):
 def resetPassword(request, uidb64=None, token=None):
     password = None
     if request.method == "POST":
-        password = request.POST.get("newpassword1")
-        user = None
-        try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            #print(uid)
-            user = Member.objects.get(phone=uid).user
-
-        except Exception as e:
-            return HttpResponse("<h1>ደንበኛው አልተገኘም</h1>")
-
-        
-        if user and TokenGenerator.check_token(user, token):
-            user.password = password
-            return render(request, "login.html")
-        return HttpResponse("password Reset Failed")
+        usr = ResetForm(request.POST)
+        # usr = ResetForm()
+        if usr.is_valid():
+            password = request.POST.get("password1")
+            user = None
+            try:
+                uid = force_str(urlsafe_base64_decode(uidb64))
+                #print(uid)
+                user = Member.objects.get(phone=uid).user
+            except Exception as e:
+                return HttpResponse("<h1>ደንበኛው አልተገኘም</h1>")
+            
+            if user and TokenGenerator.check_token(user, token):
+                user.set_password(password)
+                user.save()
+                # usr.save()
+                return redirect("login")
+            return HttpResponse("password Reset Failed")
+        else:
+            # return HttpResponse(str(usr.errors))
+            return render(request, "resetpassword.html", { 'user_error': usr.errors})
+            
     context = {"uidb64": uidb64, "token": token}
     return render(request, "resetpassword.html",context)
 
 def sendreset(request):
     if request.method == "POST":
         phone = request.POST.get("resetphone")
+        pre = len(phone) - 9
+        phone = phone[pre:]
+        phone = '+251' + phone
         member = Member.objects.get(phone=phone)
         user = member.user
         uidb64 = urlsafe_base64_encode(force_bytes(phone)) 
@@ -130,7 +155,7 @@ def sendreset(request):
         sendmessage(member.chat_id,message)
 
         # HttpResponse("password link sent to your telegram account")
-        return redirect('/t.me/menfesawi_metsahft_bot')
+        return redirect('https://t.me/menfesawi_metsahft_bot')
     return render(request, "forgot.html")
 
 
@@ -151,7 +176,9 @@ def registerPage(request):
             member = form.save(commit=False)
             
             member.is_equbtegna = False
-            toBeVerified.add(request.POST.get("phone"), {'member': member, 'user': user}, 600 )
+            phone = request.POST.get("phone")[-9:]
+            phone  = "+251" + phone
+            toBeVerified.add(phone, {'member': member, 'user': user}, 600 )
             # login(request, User.objects.get(username=username))
             return redirect('https://t.me/menfesawi_metsahft_bot')
 
@@ -215,7 +242,6 @@ def create_book(request):
     r_books = Request.objects.all()
     return render(request, 'create-book.html', {'form': form, "categories": categories , 'r_books' : r_books})
 
-@login_required(login_url="/login")
 def cart(request):
     if request.method == "POST":
         return redirect("checkout")
@@ -315,7 +341,7 @@ def checkout(request):
             "cancelUrl": "http://localhost:8000/cancel",
             "merchantId": "SB1475",
             "merchantOrderId": str(order.id),
-            "expiresAfter": 0.4,
+            "expiresAfter": 2,
             "items": items,
             "totalItemsDeliveryFee": 0,
             "totalItemsTax1": 0
@@ -341,7 +367,7 @@ def checkout(request):
             redirect("checkout")
     return render(request, 'checkout.html')
 
-
+@login_required(login_url="/login")
 def success(request):
     ii = request.GET.get('itemId')
     total = request.GET.get('TotalAmount')
@@ -557,8 +583,9 @@ def request_books(request):
         title = request.POST.get('title')
         author = request.POST.get('author')
         if title:
-            requested_book = Request.objects.get_or_create(title = title , author = author)
-            successful = "True"
+            if Request.objects.count() <= 40000:
+                requested_book = Request.objects.get_or_create(title = title , author = author)
+                successful = "True"
             return redirect('books')
     
     context = {'successful':successful}
@@ -566,7 +593,7 @@ def request_books(request):
 
 
 
-@login_required(login_url="/login")
+
 def single_package(request,pk):
     
     package = Packages.objects.get(id = pk)
@@ -659,8 +686,8 @@ def books(request):
     newBooks = Book.objects.filter(new_book = True)
     category = Category.objects.all()
     #### testing 
-    books = books * 100
-    newBooks = list(newBooks)* 100
+    books = books
+    newBooks = list(newBooks)
     page = request.GET.get('p', 1)
 
     paginator = Paginator(books, 40)
@@ -671,14 +698,24 @@ def books(request):
         books = paginator.page(1)
     except EmptyPage:
         books = paginator.page(paginator.num_pages)
-    books1 = books[:len(books)//4]
-    books2 = books[len(books)//4 : len(books)//2]
-    books3 = books[len(books)//2 : (len(books)*3)//4]
-    books4 = books[(len(books)*3)//4 : len(books)]
+    books1 = list(set(books[:len(books)//4]))
+    books2 = list(set(books[len(books)//4 : len(books)//2]))
+    books3 = set(books[len(books)//2 : (len(books)*3)//4])
+    books4 = set(books[(len(books)*3)//4 : len(books)])
+    print(books1 , books2)
     context = {"books": books,"books4": books4,"books3": books3,"books2": books2,"books1": books1, 'p': p,"strp": str(p),'paginator':paginator, 
     "newBooks": newBooks, "minprice": pr[0], 'maxprice': pr[1], 'category':category, 
     'bNo':booksbycategory, 'checkedBox': c, 'sort': sort, 'q':q}
-    packages = list(Packages.objects.all())
+    packages = set(Packages.objects.all())
+    exclude = []
+    for package in packages:
+        for singleBook in list(package.books.all()):
+            if singleBook.count <= 0:
+                exclude.append(package)
+    for ex in exclude:
+        packages.discard(ex)
+    exclude = []
+
     context['packages'] = packages
     #print(packages)
     return render(request, "metsahft.html", context)
@@ -711,6 +748,8 @@ def reset(request):
 
 @login_required(login_url="/login")
 def listOfUsers(request):
+    if not request.user.has_perm("admin"):
+        return redirect("home")
     context = {}
     level = request.GET.get("l") if request.GET.get("l") else ''
     ##print(level)
@@ -775,7 +814,7 @@ def listOfUsers(request):
     return render(request, "listOfUsers.html", context)
         
 
-@login_required(login_url="/login")
+
 def bookDetail(request,pk):
     book = Book.objects.get(id=pk)
     comments = book.review.all()
@@ -839,13 +878,11 @@ def deleteOrder(request,pk):
 
 
 
-def all_packages(request):
-    packages = list(Packages.objects.all()) *100
-    ##print(packages[0].books.all()[0].image_front)
 
-    return render(request , 'all-packages.html' , {'packages' : packages })
-
+@login_required(login_url='login')
 def delete_request(request , pk):
+    if not request.user.has_perm("admin"):
+        return redirect("home")
     if request.method == "POST":
         req = Request.objects.get(id = pk)
         req.delete()

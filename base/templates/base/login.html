@@ -21,12 +21,17 @@
                     </div>
                     <div class="card fat">
                         <div class="card-body">
+                            {% if errors %}
+                            <div class="alert alert-danger" role="alert" style="text-align:center ;">
+                                <p>{{errors}}</p>      
+                            </div>
+                            {% endif %}
                             <h4 class="card-title">Login</h4>
-                            <form method="POST" class="my-login-validation" novalidate="">
+                            <form method="POST" class="my-login-validation">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">ስልክ ቁጥር</label>
-                                    <input id="phone" type="text" class="form-control" name="phone" value="" required autofocus>
+                                    <input id="phone" type="tel" class="form-control" required name="phone">
                                 </div>
 
                                 <div class="mb-3">

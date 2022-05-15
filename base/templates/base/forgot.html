@@ -25,7 +25,7 @@
                     <div class="card fat">
                         <div class="card-body">
                             <h4 class="card-title">Forgot Password</h4>
-                            <form method="POST" action="{% url 'sendreset' %}" class="my-login-validation" novalidate="">
+                            <form method="POST" action="{% url 'sendreset' %}" class="my-login-validation">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                          <label for="phone" class="form-label">ስልክ ቁጥር</label>

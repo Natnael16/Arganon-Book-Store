@@ -37,8 +37,8 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "password1", "password2"]
-
-    def save(self, commit=True):
-        user = super(UserForm, self).save(commit=False)
-        user.save()
-        return user
+class ResetForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = [ "password1", "password2"]
+        exclude = ["username"]
