@@ -34,15 +34,15 @@ window.onload = () =>{
     document.querySelector('.header .header-2').classList.remove('active');
   }
 
-  fadeOut();
+  // fadeOut();
 
 }
 
 
 
-function fadeOut(){
-  setTimeout(loader, 4000);
-}
+// function fadeOut(){
+//   setTimeout(loader, 4000);
+// }
 
 var swiper = new Swiper(".books-slider", {
   loop:true,

@@ -29,7 +29,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
-<style> a { text-decoration: none;}</style></head>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
 <!-- header section starts  -->
 <!-- header section starts  -->
 <header class="header">
@@ -69,6 +74,11 @@
 <!-- header section ends -->
 
 <!-- bottom navbar  -->
+<div id="close-login-btn"></div>
+
+<!-- header section ends -->
+
+<!-- bottom navbar  -->
 
 <nav class="bottom-navbar">
     <a href="{% url 'home' %}" class="fas fa-home"></a>
@@ -89,17 +99,23 @@
 <!-- bottom navbar  -->
 
 <nav class="bottom-navbar">
-    <a href="#home" class="fas fa-home"></a>
-    <a href="#featured" class="fas fa-list"></a>
-    <a href="#arrivals" class="fas fa-tags"></a>
-    <a href="#reviews" class="fas fa-comments"></a>
-    <a href="#blogs" class="fas fa-blog"></a>
+    <a href="{% url 'home' %}" class="fas fa-home"></a>
+    <a href="{% url 'books' %}" class="fas fa-book"></a>
+    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
+    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+    {% else %}
+    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    {% endif %}
+    <!-- <a href="#blogs" class="fas fa-user"></a> -->
 </nav>
 
 <!-- login form  -->
 
 
 <body>
+    <br>
 
 
     <!-- SECTION -->
@@ -112,12 +128,12 @@
                 <div class="col-md-5 col-md-push-2">
                     <div id="product-main-img">
                         <div class="product-preview">
-                            <img src="../../../images/{{book.image_front}}" alt="book-image">
+                            <img src="{{book.image_front.url}}" alt="book-image">
 
                         </div>
 
                         <div class="product-preview">
-                            <img src="../../../images/{{book.image_back}}" alt="book-image">
+                            <img src="{{book.image_back.url}}" alt="book-image">
                         </div>
                     </div>
                 </div>
@@ -127,11 +143,11 @@
                 <div class="col-md-2  col-md-pull-5">
                     <div id="product-imgs">
                         <div class="product-preview">
-                            <img src="../../../images/{{book.image_front}}" alt="">
+                            <img src="{{book.image_front.url}}" alt="">
                         </div>
 
                         <div class="product-preview">
-                            <img src="../../../images/{{book.image_back}}" alt="">
+                            <img src="{{book.image_back.url}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -141,6 +157,7 @@
                 <div class="col-md-5">
                     <div class="product-details">
                         <p class="book-id" hidden>{{book.id}}</p>
+                        <p class="count" hidden>{{book.count}}</p>
                         <input type="text" class="package" value="false" hidden>
 
                         <h2 class=" product-name">{{book.title}}</h2>
@@ -157,7 +174,8 @@
                             </ul>
                         </div>
                         <div>
-                            <h3 class="product-price">{{book.price}} ብር <del class="product-old-price">{{book.oldprice}} ብር</del></h3>
+                            <h3 class="product-price">{{book.price}} ብር <del class="product-old-price">{{book.oldprice}}
+                                    ብር</del></h3>
                         </div>
                         <p>{{book.description}} </p>
                         <!-- <p>ብዛት፡ <input type="number" class="quantity" step="1" min="1" max="{{book.count}}" value="1"></p> -->
@@ -165,7 +183,8 @@
                         <br>
                         <div class="add-to-cart">
                             <!-- this button will redirect to shoping cart after being added to the cart -->
-                            <a href=" {% url 'cart' %}"> <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>ወደ ዘንቢሎ
+                            <a href=" {% url 'cart' %}"> <button class="add-to-cart-btn"><i
+                                        class="fa fa-shopping-cart"></i>ወደ ዘንቢሎ
                                     ይጨምሩ</button></a>
 
                         </div>
@@ -196,7 +215,8 @@
                                             <form method="POST" action="{% url 'delete_comment' coment.id %}">
                                                 {% csrf_token %}
                                                 <a>
-                                                    <button type="submit" style="background-color:transparent; border:none;"><i
+                                                    <button type="submit"
+                                                        style="background-color:transparent; border:none;"><i
                                                             class="fa fa-trash"></i></button></a>
                                             </form>
                                         </div class="reviews-pagination">
@@ -206,9 +226,11 @@
                                     <div style="float:right;">
                                         {% if page.has_previous %}
                                         <a href=" {% url 'book_detail' book.id %}?page={{ page.previous_page_number }}"><i
-                                                class="fa fa-arrow-left"></i> ተመለስ</a> {% endif %} &nbsp; &nbsp; {% if page.has_next %}
+                                                class="fa fa-arrow-left"></i> ተመለስ</a> {% endif %} &nbsp; &nbsp;
+                                                 {% if page.has_next %}
                                         <a href="{% url 'book_detail' book.id %}?page={{ page.next_page_number }}">ተጨማሪ
-                                            አስተያየቶቸ <i class="fa fa-arrow-right"></i></a> {% endif %}
+                                            አስተያየቶቸ <i class="fa fa-arrow-right"></i></a>
+                                             {% endif %}
                                     </div>
                             </div>
                         </div>
@@ -252,11 +274,13 @@
                                 <div class="product">
                                     <a href="{% url 'book_detail' book.id %}">
                                         <div class="product-img">
-                                            <img src="../../../images/{{book.image_front}}" alt="book-image" style="height:19vh; object-fit: contain; ">
+                                            <img src="{{book.image_front.url}}" alt="book-image"
+                                                style="height:19vh; object-fit: contain; ">
                                         </div>
                                         <div class="product-body">
                                             <p class="product-category">{{book.cat}}</p>
-                                            <h3 class="product-name"><a href="{% url 'book_detail' book.id %}">{{book.title}}</a></h3>
+                                            <h3 class="product-name"><a
+                                                    href="{% url 'book_detail' book.id %}">{{book.title}}</a></h3>
                                             <p class="product-category">በ{{book.author}}</p>
                                         </div>
                                     </a>
@@ -276,14 +300,14 @@
     </div>
 
 
-    <script src="../../../static/js/add_to_cart.js" async></script>
+    <script src="{% static 'js/add_to_cart.js' %}" async></script>
 
-    <script src="../../../static/js/jquery.min.js"></script>
-    <script src="../../../static/js/bootstrap.min.js"></script>
-    <script src="../../../static/js/slick.min.js"></script>
-    <script src="../../../static/js/nouislider.min.js"></script>
-    <script src="../../../static/js/main_y.js"></script>
-
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- <script src="{% static 'js/bootstrap.min.js"></script> -->
+    <script src="{% static 'js/slick.min.js' %}"></script>
+ 
+    <script src="{% static 'js/main_y.js' %}"></script>
+    <script src="{% static 'js/script2.js' %} "></script>
 
 
 </body>
@@ -291,7 +315,7 @@
 <footer class="footer-distributed">
     <div class="footer-left">
         <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
-            <!-- <p class="footer-links">
+        <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
     <a href="about-us.html">ስለድርጅቱ</a> ·
@@ -299,7 +323,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">
@@ -333,6 +357,6 @@
         </div>
 
     </div>
-    </footer>
+</footer>
 
 </html>

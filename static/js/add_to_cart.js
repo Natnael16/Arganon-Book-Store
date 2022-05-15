@@ -21,10 +21,12 @@ function addToCartClicked(event) {
 
     var button = event.target
     var shopItem = button.parentElement.parentElement.parentElement
-    // console.log(shopItem.getElementsByClassName("book-id")[0].innerText)
+        // console.log(shopItem.getElementsByClassName("book-id")[0].innerText)
     var title = shopItem.getElementsByClassName("product-name")[0].innerText
     var price = parseInt(shopItem.getElementsByClassName("product-price")[0].innerText)
     var book = shopItem.getElementsByClassName("book-id")[0].innerText
+    var book_count = shopItem.getElementsByClassName("count")[0].innerText
+
     var image = shopItem.parentElement.parentElement.getElementsByClassName("product-preview")[0].firstElementChild.src
     var package = shopItem.getElementsByClassName("package")[0].value
     console.log(package)
@@ -43,7 +45,8 @@ function addToCartClicked(event) {
             price: price,
             qty: 1,
             image: image,
-            package: package
+            package: package,
+            count: book_count
         })
 
     } else {
@@ -53,7 +56,8 @@ function addToCartClicked(event) {
             price: price,
             qty: 1,
             image: image,
-            package: package
+            package: package,
+            count: book_count
         })
     }
     console.log(val)
