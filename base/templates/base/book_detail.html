@@ -200,7 +200,7 @@
                         <!-- Reviews -->
                         <div>
                             <div id="reviews">
-                                <ul class="reviews">
+                                <ul class="reviews" style="display:flex ; flex-wrap: wrap;">
                                     {% for coment in page.object_list %}
                                     <li>
                                         <div class="review-heading">
@@ -211,7 +211,7 @@
                                             <p>{{coment.አስተያየት}}</p>
                                         </div>
                                         {% if request.user.username == coment.member.user.username %}
-                                        <div style="position: absolute; top:0; right:0;">
+                                        <div style="position: absolute; top:0; right:-8%;">
                                             <form method="POST" action="{% url 'delete_comment' coment.id %}">
                                                 {% csrf_token %}
                                                 <a>

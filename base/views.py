@@ -819,7 +819,7 @@ def bookDetail(request,pk):
     book = Book.objects.get(id=pk)
     comments = book.review.all()
     all_books = Book.objects.all()
-    comment_paginator = Paginator(comments, 2)
+    comment_paginator = Paginator(comments, 4)
     page_num = request.GET.get("page")
     page =  comment_paginator.get_page(page_num)
     cats = list(book.categories.all())
