@@ -979,6 +979,7 @@ def addEqubtegna(request):
                 e.save()
             
             return redirect('list-of-users')
+        return HttpResponse('<h1>የተሳሳተ ስልክ ቁጥር አስገብተዋል</h1>')
 
 @register.filter
 def get_value(dictionary, key):
