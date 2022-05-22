@@ -19,8 +19,8 @@ class Member(models.Model):
     is_equbtegna = models.BooleanField(default=False, editable=True)
     chat_id = models.CharField(default=None, editable=True, null=True, blank= True, max_length=100)
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user.name
 
 
 class Request(models.Model):
@@ -48,18 +48,29 @@ class Book(models.Model):
     categories = models.ManyToManyField(Category)
     description = models.TextField()
     about_author = models.TextField(null=True, blank=True)
-    image_front = models.ImageField(null= True ,  default="yebrhan_enat.jpg")
-    image_back = models.ImageField(null = True, default="yebrhan_enat.jpg")
+    image_front = models.ImageField(null=True, default="yebrhan_enat.jpg")
+    image_back = models.ImageField(null=True, default="yebrhan_enat.jpg")
     new_book = models.BooleanField()
-    created = models.DateTimeField(auto_now_add = True)
-    popularity = models.IntegerField(default=0 , null = True , blank= True)
+    created = models.DateTimeField(auto_now_add=True)
+    popularity = models.IntegerField(default=0, null=True, blank=True)
     count = models.IntegerField(default=0)
-
+    rating_sum = models.IntegerField(null= True , blank=True, default=5)
+    rating_count = models.IntegerField(default=1 , null=True , blank=True)
 
     def __str__(self):
         return self.title
+
     class Meta:
         ordering = ['-created']
+
+
+class Rating(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.rating)
 
     
 

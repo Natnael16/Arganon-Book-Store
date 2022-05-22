@@ -10,7 +10,7 @@ def time_expire_remove(queue, key, timelimit, starttime):
     if key in queue and queue[key]['timestamp'] - starttime >= 599:
         queue.pop(key)
 
-class ToBeVerified(dict):
+class ToBeVerified():
     def __init__(self):
         self.tobeverified = {}
 

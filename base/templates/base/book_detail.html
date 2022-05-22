@@ -8,25 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>የመጽሓፉዝርዝር</title>
     <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
 
     <!-- Bootstrap -->
 
     <link type="text/css" rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}" />
 
-    <!-- Slick -->
+
     <link type="text/css" rel="stylesheet" href=" {% static 'css/slick.css' %}" />
-    <link type="text/css" rel="stylesheet" href=" {% static 'css/slick-theme.css' %}" />
+    <!-- <link type="text/css" rel="stylesheet" href=" {% static 'css/slick-theme.css' %}" /> -->
 
     <!-- Custom stlylesheet -->
-    <link rel="stylesheet" href=" {% static 'css/main.css' %}">
+
+    <!-- <link rel="stylesheet" href=" {% static 'css/main.css' %}"> -->
     <link rel="stylesheet" href=" {% static 'css/style2.css' %}">
     <link type="text/css" rel="stylesheet" href=" {% static 'css/style.css' %}" />
     <link type="text/css" rel="stylesheet" href=" {% static 'css/footer.css' %}" />
     <link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
 
     <style>
@@ -41,7 +41,7 @@
 
     <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
                 style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -61,7 +61,7 @@
         <nav class="navbar">
             <a href="{% url 'books' %}">መጻሕፍት</a>
             <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
-            <a href="{% url 'equb-user' %}">እቁብ</a>
+            <!-- <a href="{% url 'equb-user' %}">እቁብ</a> -->
             {% if request.user.is_authenticated %}
             <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
             {% else %}
@@ -74,17 +74,11 @@
 <!-- header section ends -->
 
 <!-- bottom navbar  -->
-<div id="close-login-btn"></div>
-
-<!-- header section ends -->
-
-<!-- bottom navbar  -->
-
 <nav class="bottom-navbar">
     <a href="{% url 'home' %}" class="fas fa-home"></a>
     <a href="{% url 'books' %}" class="fas fa-book"></a>
     <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
     {% if request.user.is_authenticated %}
     <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
     {% else %}
@@ -94,28 +88,21 @@
 </nav>
 <!-- login form  -->
 
+<!-- login form  -->
+
+    <div id="close-login-btn"></div>
+
+
+<!-- login form  -->
+
 <!-- header section ends -->
 
 <!-- bottom navbar  -->
-
-<nav class="bottom-navbar">
-    <a href="{% url 'home' %}" class="fas fa-home"></a>
-    <a href="{% url 'books' %}" class="fas fa-book"></a>
-    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-    {% else %}
-    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
-    {% endif %}
-    <!-- <a href="#blogs" class="fas fa-user"></a> -->
-</nav>
 
 <!-- login form  -->
 
 
 <body>
-    <br>
 
 
     <!-- SECTION -->
@@ -188,6 +175,16 @@
                                     ይጨምሩ</button></a>
 
                         </div>
+                        <div>
+                            <h5>ይህንን መጽሐፍ ያጋሩ</h5>
+                            <a onclick="Share.facebook('{{book.id}}')"><i class="fab fa-facebook-f fa-2x"
+                                    style="color:#3b5998;"></i></a>&nbsp;&nbsp;
+                            <a onclick="Share.twitter('{{book.id}}')"> <i class="fab fa-twitter fa-2x"
+                                    style="color:rgb(0, 172, 238);"></i></a>&nbsp;&nbsp;
+                            <a onclick="Share.telegram('{{book.id}}')"> <i class="fab fa-telegram fa-2x"
+                                    style="color: #229ED9"></i></a>&nbsp;&nbsp;
+                        </div>
+                     
                     </div>
                 </div>
                 <!-- /Product details -->
@@ -200,7 +197,7 @@
                         <!-- Reviews -->
                         <div>
                             <div id="reviews">
-                                <ul class="reviews" style="display:flex ; flex-wrap: wrap;">
+                                <ul class="reviews">
                                     {% for coment in page.object_list %}
                                     <li>
                                         <div class="review-heading">
@@ -211,13 +208,13 @@
                                             <p>{{coment.አስተያየት}}</p>
                                         </div>
                                         {% if request.user.username == coment.member.user.username %}
-                                        <div style="position: absolute; top:0; right:-8%;">
+                                        <div style="position: absolute; top:0; right:0;">
                                             <form method="POST" action="{% url 'delete_comment' coment.id %}">
                                                 {% csrf_token %}
                                                 <a>
                                                     <button type="submit"
                                                         style="background-color:transparent; border:none;"><i
-                                                            class="fa fa-trash"></i></button></a>
+                                                            class="fas fas-trash"></i></button></a>
                                             </form>
                                         </div class="reviews-pagination">
                                         {% endif %} {% empty %} &nbsp; &nbsp; &nbsp; &nbsp;ምንም አስተያየቶች አአልተፃፉም
@@ -226,11 +223,11 @@
                                     <div style="float:right;">
                                         {% if page.has_previous %}
                                         <a href=" {% url 'book_detail' book.id %}?page={{ page.previous_page_number }}"><i
-                                                class="fa fa-arrow-left"></i> ተመለስ</a> {% endif %} &nbsp; &nbsp;
-                                                 {% if page.has_next %}
+                                                class="fa fa-arrow-left"></i> ተመለስ</a> {% endif %} &nbsp; &nbsp; 
+                                                {% if page.has_next %}
                                         <a href="{% url 'book_detail' book.id %}?page={{ page.next_page_number }}">ተጨማሪ
-                                            አስተያየቶቸ <i class="fa fa-arrow-right"></i></a>
-                                             {% endif %}
+                                            አስተያየቶቸ <i class="fa fa-arrow-right"></i></a> 
+                                            {% endif %}
                                     </div>
                             </div>
                         </div>
@@ -238,7 +235,49 @@
                     <!-- /Reviews -->
                     <br>
                     <!-- Review Form -->
-                    <h3>የመጽሀፉን ምልከታዎን ያስቀምጡ</h3>
+                    <h3>የዚህን መጽሐፍ ምልከታ ያስቀምጡ</h3>
+                    <form action="/create-rating/{{ book.id }}" method="post">
+                        {% csrf_token %}
+                    <div class="stars" style="zoom: 2; padding-left: 5%;">
+                  
+                            <i class="fa fa-star-o" id= "star1" onclick="rate(1)" style="color:#27ae60;"></i>
+                            <i class="fa fa-star-o" id= "star2" onclick="rate(2)" style="color:#27ae60;"></i>
+                            <i class="fa fa-star-o" id= "star3" onclick="rate(3)" style="color:#27ae60;"></i>
+                            <i class="fa fa-star-o" id= "star4" onclick="rate(4)" style="color:#27ae60;"></i>
+                            <i class="fa fa-star-o" id= "star5" onclick="rate(5)" style="color:#27ae60;"></i>
+                            <input name="rating" id = "rate_number" type="hidden" value="5">
+                            
+                            <button class="btn-primary" style ="padding: 5px; margin-left: 6px; zoom: 0.7; border-radius: 10px; background-color: #27ae60; ">Rate</button>
+                    </div>
+                    <script>
+    
+                        function rate(a) {
+                            rating = document.getElementById('rate_number')
+                            rating.value = a;
+                            console.log(rating.value)
+
+                            for (let index= a + 1; index <= 5 ; index++) {
+                                // console.log(index)
+                                elem = document.getElementById('star'+index.toString()) 
+                                elem.className = 'fa fa-star-o'
+
+                                // console.log(elem)                             
+                            }
+                            for (; a > 0; a--){
+                                elem = document.getElementById('star' + a.toString())
+                                // console.log(elem) 
+                                elem.className = 'fa fa-star'
+                                
+                            }
+
+                        }
+
+                            
+                            
+
+                    </script>
+                    
+                </form>
                     <div class="row">
                         <div id="review-form">
                             <form method="POST" class="review-form">
@@ -253,68 +292,83 @@
         </div>
 
     </div>
-    <div class="container">
-        <div class="aside">
-            <div class="row">
-                <!-- section title -->
-                <div class="col-md-12">
-                    <div class="section-title">
-                        <h3 class="aside-title">ተያያዥ መጻሕፍት</h3>
+<section class="featured" id="featured">
+
+    <h1 class="heading"> <span>ተያያዥ መጻሕፍት</span> </h1>
+
+    <div class="swiper featured-slider">
+
+        <div class="swiper-wrapper">
+            {% for book in related_books %}
+            <a href="{% url 'book_detail' book.id %}">
+                <div class="swiper-slide box">
+
+                    <div class="image">
+                        <img src={{book.image_front.url}} alt="">
                     </div>
-                </div>
-                <!-- /section title -->
-                <!-- Products tab & slick -->
-                <div class="col-md-12">
-                    <div class="products-tabs">
-                        <!-- tab -->
-                        <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                {% for book in related_books%}
-                                <div class="product">
-                                    <a href="{% url 'book_detail' book.id %}">
-                                        <div class="product-img">
-                                            <img src="{{book.image_front.url}}" alt="book-image"
-                                                style="height:19vh; object-fit: contain; ">
-                                        </div>
-                                        <div class="product-body">
-                                            <p class="product-category">{{book.cat}}</p>
-                                            <h3 class="product-name"><a
-                                                    href="{% url 'book_detail' book.id %}">{{book.title}}</a></h3>
-                                            <p class="product-category">በ{{book.author}}</p>
-                                        </div>
-                                    </a>
-                                </div>
+                    <div class="content">
+                        <h3>{{book.title}}</h3>
+                        <div class="stars">
 
-                                <!-- /product -->
-                                {% endfor %}
+                            {% if book.rating_sum|rating_ratio:book.rating_count >= 0.2 %}<i class="fas fa-star"
+                                style="color: #228B22;"> </i>
+                            {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
 
-                            </div>
+                            {% if book.rating_sum|rating_ratio:book.rating_count >= 0.4 %}<i class="fas fa-star"
+                                style="color: #228B22;"> </i>
+                            {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                            {% if book.rating_sum|rating_ratio:book.rating_count >= 0.6 %}<i class="fas fa-star"
+                                style="color: #228B22;"> </i>
+                            {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                            {% if book.rating_sum|rating_ratio:book.rating_count >= 0.8 %}<i class="fas fa-star"
+                                style="color: #228B22;"> </i>
+                            {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                            {% if book.rating_sum|rating_ratio:book.rating_count >= 1 %}<i class="fas fa-star"
+                                style="color: #228B22;"> </i>
+                            {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
                         </div>
+                        <div class="price"> {{book.price}} ብር <span> {{book.oldprice}} ብር</span></div>
 
-                        <!-- Products tab & slick -->
+
+                        <a href="{% url 'book_detail' book.id %}" class="btn">ይመልከቱ</a>
                     </div>
                 </div>
-            </div>
+            </a>
+            {% endfor %}
+
+
         </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
     </div>
 
+</section>
 
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'js/add_to_cart.js' %}" async></script>
-
     <script src="{% static 'js/jquery.min.js' %}"></script>
-    <!-- <script src="{% static 'js/bootstrap.min.js"></script> -->
     <script src="{% static 'js/slick.min.js' %}"></script>
- 
     <script src="{% static 'js/main_y.js' %}"></script>
     <script src="{% static 'js/script2.js' %} "></script>
+    <script src="{% static 'js/share.js' %}"></script>
+    <script src="{% static 'js/fontawsome.js' %}"></script>
+    
+    <script>
+
+    </script>
+
+
 
 
 </body>
-
-<footer class="footer-distributed">
+<footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
+        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -323,7 +377,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">
@@ -348,11 +402,11 @@
     <div class="footer-right">
 
 
-        <div class="footer-icons">
+        <div class="footer-icons"style="zoom: 1.6;">
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+            <!-- <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a> -->
 
         </div>
 

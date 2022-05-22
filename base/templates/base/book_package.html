@@ -13,8 +13,7 @@
     <!-- Bootstrap -->
 <link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
 
-<!-- font awesome cdn link  -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
 <!-- custom css file link  -->
 <link rel="stylesheet" href="{% static 'css/style2.css' %}">
@@ -28,7 +27,7 @@
 
     <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
+        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
                 style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -48,7 +47,7 @@
         <nav class="navbar">
             <a href="{% url 'books' %}">መጻሕፍት</a>
             <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
-            <a href="{% url 'equb-user' %}">እቁብ</a>
+            <!-- <a href="{% url 'equb-user' %}">እቁብ</a> -->
             {% if request.user.is_authenticated %}
             <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
             {% else %}
@@ -66,7 +65,7 @@
     <a href="{% url 'home' %}" class="fas fa-home"></a>
     <a href="{% url 'books' %}" class="fas fa-book"></a>
     <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
+    <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
     {% if request.user.is_authenticated %}
     <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
     {% else %}
@@ -147,10 +146,10 @@
     </script>
 </body>
 
-<footer class="footer-distributed">
+<footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
-            <!-- <p class="footer-links">
+        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
     <a href="about-us.html">ስለድርጅቱ</a> ·
@@ -158,7 +157,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-            <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">
@@ -183,16 +182,17 @@
     <div class="footer-right">
 
 
-        <div class="footer-icons">
+        <div class="footer-icons" style="zoom: 1.6;">
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+            <!-- <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a> -->
 
         </div>
 
     </div>
-    </footer>
+</footer>
     <script src="{% static 'js/script2.js' %} "></script>
+    <script src="{% static 'js/fontawsome.js' %}"></script>
 
 </html>

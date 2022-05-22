@@ -1,4 +1,5 @@
 <!DOCTYPE html> {% load static %} {% load urlFilter %}
+
 <html lang="en">
 
 <head>
@@ -9,7 +10,7 @@
 
     <link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
     <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
@@ -25,11 +26,11 @@
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
             margin: 20px;
         }
-        
+
         .radio__input {
             display: none;
         }
-        
+
         .radio__label {
             border: 1px solid #228B22;
             border-radius: 5px;
@@ -41,251 +42,344 @@
             cursor: pointer;
             transition: background 0.1s;
         }
-        
+
         .radio__label:not(:last-of-type) {
             border-right: 1px solid #27ae60;
         }
-        
+
         .radio__input:checked+.radio__label {
             border-right: 1px solid white;
             color: white;
             background-color: #27ae60;
         }
+
         @media only screen and (max-width: 1080px) {
             #btnnew {
                 padding: 20px;
                 font-size: 16px;
             }
-
         }
+
         @media only screen and (max-width: 580px) {
             .radio {
                 margin: 4px;
             }
+
             .radio__label {
                 padding: 3px 6px;
                 font-size: 11px;
             }
         }
-        
+
         @media only screen and (max-width: 450px) {
             .radio {
                 margin: 2px;
             }
+
             .radio__label {
                 padding: 1px 4px;
                 font-size: 10px;
             }
         }
     </style>
-<style> a { text-decoration: none;}</style></head>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
 
 <body>
 
-<!-- header section starts  -->
-<header class="header">
+    <!-- header section starts  -->
+    <header class="header">
 
-    <div class="header-1">
+        <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> መንፈሳዊ-<span
-                style="color:#228B22;">መጻሕፍት</a>
-        <form action="/books" name="filterForm" class="search-form">
-            <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
-            <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
-        </form>
+            <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+                    style="color:#228B22;">መጻሕፍት</a>
+            <form action="/books" name="filterForm" class="search-form">
+                <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
+                <label for="search-box"><button type="submit" class="fas fa-search"></button></label>
+            </form>
 
-        <div class="icons">
-            <div id="search-btn" class="fas fa-search"></div>
-            <a href="{% url 'cart' %}" class="fas fa-shopping-cart"></a>
-            <a href="{% url 'edit-profile' %}" id="login-btn" class="fas fa-user"></a>
-            {% if perms.app_name %}
-            <a href="{% url 'admin-orders' %}" class="fas fa-users-cog"></a>
-            {% endif %}
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <a href="{% url 'cart' %}" class="fas fa-shopping-cart"></a>
+                <a href="{% url 'edit-profile' %}" id="login-btn" class="fas fa-user"></a>
+                {% if perms.app_name %}
+                <a href="{% url 'admin-orders' %}" class="fas fa-users-cog"></a>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="header-2">
-        <nav class="navbar">
-            <a href="{% url 'books' %}">መጻሕፍት</a>
-            <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
-            <a href="{% url 'equb-user' %}">እቁብ</a>
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-            {% else %}
-            <a href="{% url 'login' %}">Login | Register</a>
-            {% endif %}
-        </nav>
-    </div>
-</header>
+        <div class="header-2">
+            <nav class="navbar">
+                <a href="{% url 'books' %}">መጻሕፍት</a>
+                <a href="{% url 'books' %}#packages">የመጻሕፍት ጥቅል</a>
+                <!-- <a href="{% url 'equb-user' %}">እቁብ</a> -->
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+                {% else %}
+                <a href="{% url 'login' %}">Login | Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
 
-<!-- header section ends -->
+    <!-- header section ends -->
 
-<!-- bottom navbar  -->
-        <div id="close-login-btn"></div>
+    <!-- bottom navbar  -->
+    <div id="close-login-btn"></div>
 
-<nav class="bottom-navbar">
-    <a href="{% url 'home' %}" class="fas fa-home"></a>
-    <a href="{% url 'books' %}" class="fas fa-book"></a>
-    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a>
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-    {% else %}
-    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
-    {% endif %}
-    <!-- <a href="#blogs" class="fas fa-user"></a> -->
-</nav>
-<!-- login form  -->
+    <nav class="bottom-navbar">
+        <a href="{% url 'home' %}" class="fas fa-home"></a>
+        <a href="{% url 'books' %}" class="fas fa-book"></a>
+        <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
+        <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
+        {% else %}
+        <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+        {% endif %}
+        <!-- <a href="#blogs" class="fas fa-user"></a> -->
+    </nav>
+    <!-- login form  -->
     <!-- login form  -->
 
 
 
-        <form action="/books" name="form">
-            <div class="container">
+    <form action="/books" name="form">
+        <div class="container">
 
-                <h3>በመደብ ይምረጡ፡</h3>
-                <input type="hidden" name="q" value={{q}}>
-                <div class="radio">
-                    {% for c in category %}
-                    <input type="checkbox" value="{{c}}" {% if c.name in checkedBox %} id="{{c}}" checked {% else %} id="{{c}}" {% endif %} name="category" class="radio__input">
-                    <label class="radio__label" for="{{c}}">{{c}} ({{ bNo|get_item:c }})</label> {% endfor %}
+            <h3>በመደብ ይምረጡ፡</h3>
+            <input type="hidden" name="q" value={{q}}>
+            <div class="radio">
+                {% for c in category %}
+                <input type="checkbox" value="{{c}}" {% if c.name in checkedBox %} id="{{c}}" checked {% else %}
+                    id="{{c}}" {% endif %} name="category" class="radio__input">
+                <label class="radio__label" for="{{c}}">{{c}} ({{ bNo|get_item:c }})</label> {% endfor %}
+            </div>
+            <button type="submit" id="btnnew"
+                style=" border-radius: 5px;background-color: #27ae60; margin: 15px; color: aliceblue; padding: 4px; position: relative; top: -6px; left: 10px;"
+                class="radio__label">አጣራ</button>
+        </div>
+
+        <!-- home section starts  -->
+
+        <section class="arrivals" id="arrivals">
+            <div class="container">
+                <h4>
+                    መርጠህ አሳይ፡
+                    <select style="background-color: rgb(216, 221, 215);" class="select" name="sort"
+                        onchange="form.submit()">
+                        <option value="1" type="submit" {% if sort == 1 %} selected {% endif %}>ተወዳጅ መጻሕፍት</option>
+                        <option value="2" type="submit" {% if sort == 2 %} selected {% endif %}>የቅርብ ጊዜ መጻሕፍት</option>
+                    </select>
+                </h4>
+            </div>
+            <br><br>
+
+            <h1 class="heading"> <span>መጻሕፍት</span> </h1>
+
+            <div class="swiper arrivals-slider">
+
+                <div class="swiper-wrapper">
+                    {% for book1 in books1 %}
+                    <a href="{% url 'book_detail' book1.id %}" class="swiper-slide box">
+                        <div class="image">
+                            <img src="images/{{book1.image_front}}" alt="{{book1.image_front}}">
+                        </div>
+                        <div class="content">
+                            <h3>{{book1.title}}</h3>
+                            
+                            <div class="price" style="color:#228B22;">{{book1.price}} ብር <span>{{book1.oldprice}}
+                                    ብር</span></div>
+                            
+                            <div class="stars" style="color:black; font-size:medium;">
+                                በ {{book1.author}}
+                            </div>
+                            <div class="stars">
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.2 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.4 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.6 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.8 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 1 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            </div>
+
+                        </div>
+                        <h6 style=" position:absolute; top: 1px;; right:5px;">{{book1.count}} In Stock</h6>
+                    </a>
+                    {% endfor %}
                 </div>
-                <button type="submit" id="btnnew" style=" border-radius: 5px;background-color: #27ae60; margin: 15px; color: aliceblue; padding: 4px; position: relative; top: -6px; left: 10px;" class="radio__label">አጣራ</button>
+
+
+
+
             </div>
 
-            <!-- home section starts  -->
+            <div class="swiper arrivals-slider">
 
-            <section class="arrivals" id="arrivals">
-                <div class="container">
-                    <h4>
-                        መርጠህ አሳይ፡
-                        <select style="background-color: rgb(216, 221, 215);" class="select" name="sort" onchange="form.submit()">
-                    <option value="1" type="submit" {% if sort == 1 %} selected {% endif %}>ተወዳጅ መጻሕፍት</option>
-                    <option value="2" type="submit" {% if sort == 2 %} selected {% endif %}>የቅርብ ጊዜ መጻሕፍት</option>
-                </select>
-                    </h4>
-                </div>
-                <br><br>
+                <div class="swiper-wrapper">
 
-                <h1 class="heading"> <span>መጻሕፍት</span> </h1>
-
-                <div class="swiper arrivals-slider">
-
-                    <div class="swiper-wrapper">
-                        {% for book1 in books1 %}
-                        <a href="{% url 'book_detail' book1.id %}" class="swiper-slide box">
-                            <div class="image">
-                                <img src="images/{{book1.image_front}}" alt="{{book1.image_front}}">
+                    {% for book in books2 %}
+                    <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
+                        <div class="image">
+                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                        </div>
+                        <div class="content">
+                            <h3>{{book.title}}</h3>
+                        
+                            <div class="price" style="color:#228B22;">{{book.price}} ብር <span>{{book.oldprice}}
+                                    ብር</span></div>
+                            <div class="stars" style="color:black; font-size:medium;">
+                                በ {{book.author}}
                             </div>
-                            <div class="content">
-                                <h3>{{book1.title}}</h3>
-                                <div class="price">{{book1.price}} ብር <span>{{book1.oldprice}} ብር</span></div>
-                                <div class="stars">
-                                    በ {{book1.author}}
-                                </div>
+                            
+                            <div class="stars">
+                                
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.1 %}<i class="fas fa-star" style="color: #228B22;"> </i> {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.3 %}<i class="fas fa-star" style="color: #228B22;"> </i> 
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.5 %}<i class="fas fa-star" style="color: #228B22;"> </i> 
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.7 %}<i class="fas fa-star" style="color: #228B22;"> </i> 
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.9 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
                             </div>
-                        </a>
-                        {% endfor %}
+
+                        </div>
+                        <h6 style="position:absolute; top: 1px;; right:5px;">{{book.count}} In Stock</h6>
+                    </a>
+                    {% endfor %}
 
 
-
-                    </div>
-
-                </div>
-
-                <div class="swiper arrivals-slider">
-
-                    <div class="swiper-wrapper">
-
-                        {% for book in books2 %}
-                        <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
-                            <div class="image">
-                                <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
-                            </div>
-                            <div class="content">
-                                <h3>{{book.title}}</h3>
-                                <div class="price">{{book.price}} ብር <span>{{book.oldprice}} ብር</span></div>
-                                <div class="stars">
-                                   በ {{book.author}}
-                                </div>
-                            </div>
-                        </a>
-                        {% endfor %}
-
-
-
-                    </div>
 
                 </div>
 
-                <div class="swiper arrivals-slider">
+            </div>
 
-                    <div class="swiper-wrapper">
+            <div class="swiper arrivals-slider">
 
-                        {% for book in books3 %}
-                        <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
-                            <div class="image">
-                                <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                <div class="swiper-wrapper">
+
+                    {% for book in books3 %}
+                    <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
+                        <div class="image">
+                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                        </div>
+                        <div class="content">
+                            <h3>{{book.title}}</h3>
+                            <div class="price" style="color:#228B22;">{{book.price}} ብር <span>{{book.oldprice}}
+                                    ብር</span></div>
+                            <div class="stars" style="color:black; font-size:medium;">
+                                በ {{book.author}}
                             </div>
-                            <div class="content">
-                                <h3>{{book.title}}</h3>
-                                <div class="price">{{book.price}} ብር <span>{{book.oldprice}} ብር</span></div>
-                                <div class="stars">
-                                    በ {{book.author}}
-                                </div>
+                            <div class="stars">
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.2 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.4 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.6 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.8 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 1 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
                             </div>
-                        </a>
-                        {% endfor %}
+                        </div>
+                        <h6 style="position:absolute; top: 1px;; right:5px;">{{book.count}} In Stock</h6>
+                    </a>
+                    {% endfor %}
 
-
-                    </div>
 
                 </div>
-                <div class="swiper arrivals-slider">
 
-                    <div class="swiper-wrapper">
+            </div>
+            <div class="swiper arrivals-slider">
 
-                        {% for book in books4 %}
-                        <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
-                            <div class="image">
-                                <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                <div class="swiper-wrapper">
+
+                    {% for book in books4 %}
+                    <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
+                        <div class="image">
+                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                        </div>
+                        <div class="content">
+                            <h3>{{book.title}}</h3>
+                            <div class="price" style="color:#228B22;">{{book.price}} ብር <span>{{book.oldprice}}
+                                    ብር</span></div>
+                            <div class="stars" style="color:black; font-size:medium;">
+                                በ {{book.author}}
                             </div>
-                            <div class="content">
-                                <h3>{{book.title}}</h3>
-                                <div class="price">{{book.price}} ብር<span>{{book.oldprice}} ብር</span></div>
-                                <div class="stars">
-                                    በ {{book.author}}
-                                </div>
+                            <div class="stars">
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.2 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.4 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.6 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 0.8 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
+                            
+                                {% if book.rating_sum|rating_ratio:book.rating_count >= 1 %}<i class="fas fa-star" style="color: #228B22;"> </i>
+                                {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
                             </div>
-                        </a>
-                        {% endfor %}
-
-                    </div>
+                        </div>
+                        <h6 style="position:absolute; top: 1px;; right:5px;">{{book.count}} In Stock</h6>
+                    </a>
+                    {% endfor %}
 
                 </div>
-                </section>
-                </form>
-                <section class="container">
-                    <div class="store-filter clearfix">
-                        <span class="store-qty">የተገኙ መጻሕፍት ብዛት፡ {{paginator.count}}</span> {% if books.has_other_pages %}
-                        <ul class="store-pagination" style="display:flex; flex-wrap: wrap; justify-content: center;">
 
-                            {% if books.has_previous %}
-                            <li><a href="{{ request.get_full_path|removeP:p }}p={{ books.previous_page_number }}">&laquo;</a></li>
-                            {% else %}
-                            <li class="disabled"><span>&laquo;</span></li>
-                            {% endif %} {% for i in books.paginator.page_range %} {% if books.number == i %}
-                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
-                            </li>
-                            {% else %}
-                            <li><a href="{{ request.get_full_path|removeP:p }}p={{i}}">{{i}} </a> </li>
-                            {% endif %} {% endfor %} {% if books.has_next %}
-                            <li><a href="{{ request.get_full_path|removeP:p }}p={{ books.next_page_number }}">&raquo;</a></li>
-                            {% else %}
-                            <li class="disabled"><span>&raquo;</span></li>
-                            {% endif %}
-                        </ul>
-                        {% endif %}
-                        <!-- {% for i in pages %}
+            </div>
+        </section>
+    </form>
+    <section class="container">
+        <div class="store-filter clearfix">
+            <span class="store-qty">የተገኙ መጻሕፍት ብዛት፡ {{paginator.count}}</span> {% if books.has_other_pages %}
+            <ul class="store-pagination" style="display:flex; flex-wrap: wrap; justify-content: center;">
+
+                {% if books.has_previous %}
+                <li><a href="{{ request.get_full_path|removeP:p }}p={{ books.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+                {% endif %} {% for i in books.paginator.page_range %} {% if books.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                </li>
+                {% else %}
+                <li><a href="{{ request.get_full_path|removeP:p }}p={{i}}">{{i}} </a> </li>
+                {% endif %} {% endfor %} {% if books.has_next %}
+                <li><a href="{{ request.get_full_path|removeP:p }}p={{ books.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+            <!-- {% for i in pages %}
             								<li {% if forloop.counter  == p %} class="active"{% endif %}> 
             
                                                 
@@ -297,169 +391,173 @@
                                             
             								{% endfor %}  -->
 
-                        <!-- <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            <!-- <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
             							</ul> -->
+        </div>
+    </section>
+    <section class="featured" id="featured">
+
+        <h1 class="heading" id="packages"> <span>የመጻሕፍት ጥቅል</span> </h1>
+
+        <div class="swiper featured-slider">
+
+            <div class="swiper-wrapper">
+                {% for package in packages %}
+                <a href="{% url 'book-package' package.id %}">
+                <div class="swiper-slide box">
+
+                    <div class="image">
+                        {% for i in package.books.all|slice:':1' %}
+                        <img src="images/{{ i.image_front }}" alt=""> {% endfor %}
                     </div>
-                </section>
-                <section class="featured" id="featured">
-
-                    <h1 class="heading" id="packages"> <span>የመጻሕፍት ጥቅል</span> </h1>
-
-                    <div class="swiper featured-slider">
-
-                        <div class="swiper-wrapper">
-                            {% for package in packages %}
-                            <a href="{% url 'book-package' package.id %}">
-                            <div class="swiper-slide box">
-
-                                <div class="image">
-                                    {% for i in package.books.all|slice:':1' %}
-                                    <img src="images/{{ i.image_front }}" alt=""> {% endfor %}
-                                </div>
-                                <div class="content">
-                                    <h3>{{package.title}}</h3>
-                                    <div class="price">{{package.discount}} ብር <span> {{package.price}} ብር</span></div>
-                                    <a href="{% url 'book-package' package.id %}" class="btn" style="background-color:#27ae60 ; color: white;font-size: 13px; padding: 10px;">ይመልከቱ</a>
-                                </div>
-                            </div></a>
-                            {% endfor %}
-
-
-
-                        </div>
-
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-
+                    <div class="content">
+                        <h3>{{package.title}}</h3>
+                        <div class="price">{{package.discount}} ብር <span> {{package.price}} ብር</span></div>
+                        <a href="{% url 'book-package' package.id %}" class="btn"
+                            style="background-color:#27ae60 ; color: white;">ይመልከቱ</a>
                     </div>
-
-                </section>
-                <section class="featured" id="featured">
-
-                    <h1 class="heading"> <span>በቅርብ የሚወጡ</span> </h1>
-
-                    <div class="swiper featured-slider">
-
-                        <div class="swiper-wrapper">
-                            {% for book in newBooks %}
-                            <div class="swiper-slide box">
-
-                                <div class="image">
-                                    <img src="images/{{ book.image_front }}" alt="">
-                                </div>
-                                <div class="content">
-                                    <h3>{{book.title}}</h3>
-                                    <div class="price">በ {{book.author}}</div>
-
-                                </div>
-                            </div>
-                            {% endfor %}
+                </div></a>
+                {% endfor %}
 
 
 
-                        </div>
+            </div>
 
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+        </div>
+
+    </section>
+    <section class="featured" id="featured">
+
+        <h1 class="heading"> <span>በቅርብ የሚወጡ</span> </h1>
+
+        <div class="swiper featured-slider">
+
+            <div class="swiper-wrapper">
+                {% for book in newBooks %}
+                <div class="swiper-slide box">
+
+                    <div class="image">
+                        <img src="images/{{ book.image_front }}" alt="">
+                    </div>
+                    <div class="content">
+                        <h3>{{book.title}}</h3>
+                        <div class="price">በ {{book.author}}</div>
 
                     </div>
-
-                </section>
-
-                <!-- featured section ends -->
-
-                <!-- newsletter section starts -->
-
-                <section class="newsletter">
-
-                    <form action="request-books" method="post">
-                        {% csrf_token %}
-                        <h3>መጻሕፍት ይዘዙ</h3>
-                        <input type="text" required name="title" placeholder="የመጽሐፉ ርዕስ" id="" class="box">
-                        <input type="text" name="author" placeholder="የመጽሐፉ ደራሲ" id="" class="box">
-
-                        <input type="submit" value="ይዘዙ" class="btn" style="background-color:#27ae60 ; color: white;font-size: 13px; padding: 10px;">
-                    </form>
-
-                </section>
-
-                <!-- newsletter section ends -->
-
-                <!-- arrivals section starts  -->
+                </div>
+                {% endfor %}
 
 
 
-                <!-- arrivals section ends -->
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+        </div>
+
+    </section>
+
+    <!-- featured section ends -->
+
+    <!-- newsletter section starts -->
+
+    <section class="newsletter">
+
+        <form action="request-books" method="post">
+            {% csrf_token %}
+            <h3>መጻሕፍት ይዘዙ</h3>
+            <input type="text" required name="title" placeholder="የመጽሐፉ ርዕስ" id="" class="box">
+            <input type="text" name="author" placeholder="የመጽሐፉ ደራሲ" id="" class="box">
+
+            <button type="submit" id="btnnew"
+                style=" border-radius: 5px;background-color: #27ae60; margin: 15px; color: aliceblue; padding: 4px; position: relative; top: -6px; left: 10px;"
+                class="radio__label">ይዘዙ</button>
+
+        </form>
+
+    </section>
+
+    <!-- newsletter section ends -->
+
+    <!-- arrivals section starts  -->
 
 
-                <!-- blogs section ends -->
 
-                <!-- footer section starts  -->
-
-                <footer class="footer-distributed">
-                    <div class="footer-left">
-                        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
-                        <!-- <p class="footer-links">
-                    <a href="#">ዋና ገጽ</a> ·
-                    <a href="#">መጻሕፍት</a> ·
-                    <a href="about-us.html">ስለድርጅቱ</a> ·
-                    <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
-                    <a href="#">ያነጋግሩን</a>
-                </p> -->
-
-                        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
-                    </div>
-
-                    <div class="footer-center">
-
-                        <div>
-                            <i class="fas fa-map-marker"></i>
-                            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
-                        </div>
-
-                        <div>
-                            <i class="fas fa-phone"></i>
-                            <p>+251 925 421 700</p>
-                        </div>
-
-                        <div>
-                            <i class="fas fa-envelope"></i>
-                            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
-                        </div>
-
-                    </div>
-
-                    <div class="footer-right">
+    <!-- arrivals section ends -->
 
 
-                        <div class="footer-icons">
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+    <!-- blogs section ends -->
 
-                        </div>
+    <!-- footer section starts  -->
 
-                    </div>
-                </footer>
+<footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
+    <div class="footer-left">
+        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <!-- <p class="footer-links">
+    <a href="#">ዋና ገጽ</a> ·
+    <a href="#">መጻሕፍት</a> ·
+    <a href="about-us.html">ስለድርጅቱ</a> ·
+    <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
+    <a href="#">ያነጋግሩን</a>
+</p> -->
+
+        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fas fa-map-marker"></i>
+            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+        </div>
+
+        <div>
+            <i class="fas fa-phone"></i>
+            <p>+251 925 421 700</p>
+        </div>
+
+        <div>
+            <i class="fas fa-envelope"></i>
+            <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
 
 
-                <!-- footer section ends -->
+        <div class="footer-icons" style="zoom: 1.6;">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
+            <!-- <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a> -->
 
-                <!-- loader  -->
+        </div>
 
-                <!-- <div class="loader-container ">
-        <img src="{% static 'img/loader-img.gif' %} " alt=" ">
+    </div>
+</footer>
+
+
+    <!-- footer section ends -->
+
+    <!-- loader  -->
+
+    <!-- <div class="loader-container">
+        <img src="{% static 'img/loader-img.gif' %}" alt="">
     </div> -->
 
 
 
 
 
-                <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
-
-                <!-- custom js file link  -->
-                <script src="{% static 'js/script2.js' %} "></script>
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/fontawsome.js' %}"></script>
+    <!-- custom js file link  -->
+    <script src="{% static 'js/script2.js' %}"></script>
 
 </body>
 

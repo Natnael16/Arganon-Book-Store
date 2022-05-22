@@ -37,6 +37,9 @@ urlpatterns = [
      path("add-equbtegna" , addEqubtegna , name= "add-equbtegna" ) , 
     path('book-package/<str:pk>', single_package, name='book-package'),
 
-    path('equbreset' , reset , name='equb-reset' )
+    path('equbreset' , reset , name='equb-reset' ) ,
+    path('create-rating/<str:pk>' , create_rating , name='create-rating'),
+    path('edit-rating/<str:pk>', create_rating , name='edit-rating'),
+
 ]
 

@@ -33,6 +33,10 @@ import requests
 from .utils import *
 # Create your views here.
 
+from django import template
+
+
+
 main()
 
 def home(request):
@@ -59,6 +63,7 @@ def verify(request, uidb64, token):
         member = toBeVerified.get(uid)['member']
         user.save()
         member.user = user
+        member.phone = '251' + member.phone[-9:]
         member.chat_id = toBeVerified.get(uid)['chat_id']
         member.save()
         
@@ -79,7 +84,7 @@ def loginPage(request):
 
         pre = len(phone) - 9
         phone = phone[pre:]
-        phone = "+251" + phone
+        phone = "251" + phone
         user = None
         try:
             member = Member.objects.get(phone=phone)
@@ -141,9 +146,7 @@ def resetPassword(request, uidb64=None, token=None):
 def sendreset(request):
     if request.method == "POST":
         phone = request.POST.get("resetphone")
-        pre = len(phone) - 9
-        phone = phone[pre:]
-        phone = '+251' + phone
+        phone = '251' + phone[-9:]
         member = Member.objects.get(phone=phone)
         user = member.user
         uidb64 = urlsafe_base64_encode(force_bytes(phone)) 
@@ -167,18 +170,20 @@ def registerPage(request):
 
         usr = UserForm(request.POST)
         form = MemberForm(request.POST)
-        # form.user = usr
-        #print(usr.is_valid(), form.is_valid())
-        #print(form, "this is the form" , usr)
+
         if usr.is_valid() and form.is_valid():
             user = usr.save(commit=False)
             username = request.POST.get("username")
             member = form.save(commit=False)
-            
+
             member.is_equbtegna = False
-            phone = request.POST.get("phone")[-9:]
-            phone  = "+251" + phone
-            toBeVerified.add(phone, {'member': member, 'user': user}, 600 )
+            phone = request.POST.get("phone")
+            if len(phone) < 9: return render(request, "register.html", { 'user_error': usr.errors , 'form_error' : 'Invalid phone number'})
+            phone = "251"+ phone[-9:]
+            print(phone, "from user")
+            toBeVerified.add(phone, {'member': member, 'user': user}, 2000 )
+
+            # print(toBeVerified.get(phone))
             # login(request, User.objects.get(username=username))
             return redirect('https://t.me/menfesawi_metsahft_bot')
 
@@ -367,7 +372,7 @@ def checkout(request):
             redirect("checkout")
     return render(request, 'checkout.html')
 
-@login_required(login_url="/login")
+# @login_required(login_url="/login")
 def success(request):
     ii = request.GET.get('itemId')
     total = request.GET.get('TotalAmount')
@@ -986,5 +991,45 @@ def get_value(dictionary, key):
     return dictionary.get(key)
 
 
+@register.filter(name= 'rating_ratio')
+def rating_ratio(r_sum, r_count):
+    if not r_sum: return 
+    val = (r_sum / r_count) * (1 / 5)
+    return val
+
+register2 = template.Library()
+register2.filter('rating_ratio' , rating_ratio )
 
 
+
+
+@login_required(login_url="/login")
+def create_rating(request, pk):
+    if request.method == "POST":
+        member = Member.objects.get(user=request.user)
+        book = Book.objects.get(id=pk)
+        rating = int(request.POST.get("rating"))
+        if member and book and rating:
+            book.rating_sum += rating
+            book.rating_count += 1
+            book.save()
+            Rating.objects.create(member=member, book=book, rating=rating)
+            # return HttpResponse('success')
+            return redirect("book_detail", pk=pk)
+        return redirect("book_detail", pk=pk)
+
+
+@login_required(login_url="/login")
+def edit_rating(request, pk):
+    if request.method == "POST":
+        try:
+            member = Member.objects.get(user=request.user)
+            book = Book.objects.get(id=pk)
+            rated = Rating.objects.get(member=member, book=book)
+            rating = int(request.POST.get("rating"))
+            if member and book and rating:
+                book.rating_sum += (rating - rated)
+                book.save()
+                return redirect("book_detail", pk=pk)
+        except:
+            return redirect("book_detail", pk=pk)

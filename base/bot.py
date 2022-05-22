@@ -41,12 +41,16 @@ def start(update, context: CallbackQuery):
 
 
 def messageHandler(update, context):
+    # print(toBeVerified.tobeverified)
+    phone = None
     try:
-        
-        # user = toBeVerified.get(update.message.contact.phone_number)['user']
-        member = toBeVerified.get(update.message.contact.phone_number)['member']
-        msg = send_verification(member.phone, update.effective_chat.id)
-        toBeVerified.get(update.message.contact.phone_number)['chat_id'] = update.effective_chat.id
+        phone = update.message.contact.phone_number
+        phone = '251' + phone[-9:]
+        # user = toBeVerified.get(phone)['user']
+        print(toBeVerified.get(phone))
+        member = toBeVerified.get(phone)['member']
+        msg = send_verification(phone, update.effective_chat.id)
+        toBeVerified.get(phone)['chat_id'] = update.effective_chat.id
         
         context.bot.send_message(chat_id=update.effective_chat.id,text = msg, parse_mode="Markdown")
         
@@ -56,7 +60,7 @@ def messageHandler(update, context):
            [InlineKeyboardButton("Go to MenfesawiBooks Website", url='http://127.0.0.1:8000/')]
         ]
         
-        msg = str(" *"+ str(update.message.chat.first_name) +"* \n\n*"+ str(update.message.contact.phone_number) +"* has not been registered on our website or you have not been registered on MenfesawiBooks.com please follow this link and register first!")
+        msg = str(" *"+ str(update.message.chat.first_name) +"* \n\n*"+ str(phone) +"* has not been registered on our website or you have not been registered on MenfesawiBooks.com please follow this link and register first!")
         context.bot.send_message(chat_id=update.effective_chat.id,
         text = msg,
         reply_markup = InlineKeyboardMarkup(buttons,  resize_keyboard=True), parse_mode= "Markdown")
@@ -68,7 +72,7 @@ def help(update, context):
         parse_mode="markdown")
 
 def main():
-    
+    print("running")
 
     start_handler = CommandHandler("start", start)
     help_handler = CommandHandler("help", help)
@@ -87,6 +91,7 @@ def send_verification(phone, cid):
     uidb64 = urlsafe_base64_encode(force_bytes(phone)) 
     
     cid = urlsafe_base64_encode(force_bytes(cid)) 
+    print(phone)
     link = reverse('verify', kwargs={'uidb64': uidb64,'token': TokenGenerator.make_token(toBeVerified.get(phone)['user'])})
     
     activate_url = 'http://127.0.0.1:8000'+ link
