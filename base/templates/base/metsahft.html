@@ -96,7 +96,7 @@
 
         <div class="header-1">
 
-            <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+            <a href="{% url 'home' %}" class="logo"> <img src="{% static 'img/logoo.png' %}" width="50vw" /> መንፈሳዊ-<span
                     style="color:#228B22;">መጻሕፍት</a>
             <form action="/books" name="filterForm" class="search-form">
                 <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -152,10 +152,31 @@
         <div class="container">
 
             <h3>በመደብ ይምረጡ፡</h3>
-            <input type="hidden" name="q" value={{q}}>
             <div class="radio">
+                
+        </div>
+            <script>
+                function checkAll()
+                {
+                all = document.getElementById("all1")
+                radios = document.getElementsByClassName("radio__input")
+                console.log(all.checked)
+                if (all.checked) {
+                    for(let radio of radios){
+                        radio.checked = true;
+                    }
+                } 
+
+                }
+                
+            </script>
+            <div class="radio">
+                <input onclick="checkAll()" id="all1" type="checkbox" value="all" name="category" class="radio__input"{% if lenchecked == lencategory %}  checked {% endif %} >
+                <label for="all1" class="radio__label">All</label>
+                
                 {% for c in category %}
-                <input type="checkbox" value="{{c}}" {% if c.name in checkedBox %} id="{{c}}" checked {% else %}
+
+                <input type="checkbox" value="{{c}}" {% if c.name in checkedBox and lenchecked != lencategory   %} id="{{c}}"  checked {% else %}
                     id="{{c}}" {% endif %} name="category" class="radio__input">
                 <label class="radio__label" for="{{c}}">{{c}} ({{ bNo|get_item:c }})</label> {% endfor %}
             </div>
@@ -187,7 +208,7 @@
                     {% for book1 in books1 %}
                     <a href="{% url 'book_detail' book1.id %}" class="swiper-slide box">
                         <div class="image">
-                            <img src="images/{{book1.image_front}}" alt="{{book1.image_front}}">
+                            <img src="{{book1.image_front.url}}" alt="{{book1.image_front}}">
                         </div>
                         <div class="content">
                             <h3>{{book1.title}}</h3>
@@ -197,7 +218,9 @@
                             
                             <div class="stars" style="color:black; font-size:medium;">
                                 በ {{book1.author}}
+                                
                             </div>
+                            
                             <div class="stars">
                             
                                 {% if book.rating_sum|rating_ratio:book.rating_count >= 0.2 %}<i class="fas fa-star" style="color: #228B22;"> </i>
@@ -234,7 +257,7 @@
                     {% for book in books2 %}
                     <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
                         <div class="image">
-                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                            <img src="{{book.image_front.url}}" alt="{{book.image_front}}">
                         </div>
                         <div class="content">
                             <h3>{{book.title}}</h3>
@@ -243,6 +266,7 @@
                                     ብር</span></div>
                             <div class="stars" style="color:black; font-size:medium;">
                                 በ {{book.author}}
+                                <br>
                             </div>
                             
                             <div class="stars">
@@ -280,7 +304,7 @@
                     {% for book in books3 %}
                     <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
                         <div class="image">
-                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                            <img src="{{book.image_front.url}}" alt="{{book.image_front}}">
                         </div>
                         <div class="content">
                             <h3>{{book.title}}</h3>
@@ -288,6 +312,7 @@
                                     ብር</span></div>
                             <div class="stars" style="color:black; font-size:medium;">
                                 በ {{book.author}}
+                                <br>
                             </div>
                             <div class="stars">
                             
@@ -322,7 +347,7 @@
                     {% for book in books4 %}
                     <a href="{% url 'book_detail' book.id %}" class="swiper-slide box">
                         <div class="image">
-                            <img src="images/{{book.image_front}}" alt="{{book.image_front}}">
+                            <img src="{{book.image_front.url}}" alt="{{book.image_front}}">
                         </div>
                         <div class="content">
                             <h3>{{book.title}}</h3>
@@ -330,6 +355,7 @@
                                     ብር</span></div>
                             <div class="stars" style="color:black; font-size:medium;">
                                 በ {{book.author}}
+                                <br>
                             </div>
                             <div class="stars">
                             
@@ -379,20 +405,7 @@
                 {% endif %}
             </ul>
             {% endif %}
-            <!-- {% for i in pages %}
-            								<li {% if forloop.counter  == p %} class="active"{% endif %}> 
             
-                                                
-                                                <a href="{{ request.get_full_path|removeP:p }}p={{i}}" >{{i}} </a> 
-                                                
-                                            
-                                              
-                                            </li>
-                                            
-            								{% endfor %}  -->
-
-            <!-- <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-            							</ul> -->
         </div>
     </section>
     <section class="featured" id="featured">
@@ -408,7 +421,7 @@
 
                     <div class="image">
                         {% for i in package.books.all|slice:':1' %}
-                        <img src="images/{{ i.image_front }}" alt=""> {% endfor %}
+                        <img src="{{ i.image_front.url }}" alt=""> {% endfor %}
                     </div>
                     <div class="content">
                         <h3>{{package.title}}</h3>
@@ -496,7 +509,8 @@
 
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -505,7 +519,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">

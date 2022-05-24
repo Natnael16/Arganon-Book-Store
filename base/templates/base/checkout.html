@@ -24,7 +24,7 @@
 
     <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+        <a href="{% url 'home' %}" class="logo"> <img src="{% static 'img/logoo.png' %}" width="50vw" /> መንፈሳዊ-<span
                 style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -136,40 +136,42 @@
     <br>
     <!-- <tr class="table-active"> -->
 
-    <!-- <h1>የክፍያ አማራጮች</h1>
-    <div class="row-md-5">
-        <div class="payment-method">
-            <div class="input-radio">
-                <input type="radio" name="payment" id="payment-1" value="bank">
-                <label for="payment-1">
-                                        <span></span>
-                                        በባንክ መክፈል
-                                    </label>
-                <div class="caption">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="input-radio">
-                <input type="radio" name="payment" id="payment-2" value="telebirr">
-                <label for="payment-2">
-                                        <span></span> በቴሌብር
-                                    </label>
-                <div class="caption">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="input-radio">
-                <input type="radio" name="payment" id="payment-3" value="yenepay">
-                <label for="payment-3">
-                                        <span></span>
-                                        የኔፔይ
-                                    </label>
-                <div class="caption">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
+<h1>የክፍያ አማራጮች</h1>
+<div class="row-md-5">
+    <div class="payment-method">
+        <div class="input-radio">
+            <input type="radio" name="payment" id="payment-1" value="bank" checked>
+            <label for="payment-1">
+                <span></span>
+                የኔፔይ
+            </label>
+        </div>
+
+        <div class="input-radio">
+            <input type="radio" name="payment" id="payment-2" value="telebirr">
+            <label for="payment-2">
+                <span></span> በባንክ መክፈል
+            </label>
+            <div class="caption">
+                <p>ከታች ባሉት አማራጮች ውስጥ ክፍያዎን ከፈፀሙ በኋላ ክፍያውን መጨረሶን የሚያሳይ (screenshot) ይላኩ፡፡</p>
+                <br>
+                <h4>የአካውንቱ ባለቤት፡ KIFLOM HAILU AMBAYE</h4>
+                <br>
+                <h4><img src="{% static 'img/cbe.png' %}" alt="" width="50px">&nbsp; &nbsp;1000088945407 </h4>
+                <p style="padding-left: 5%;">*889# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>
+                <h4><img src="{% static 'img/abyssinia.jpg' %}" alt="" width="50px">&nbsp;&nbsp; 26830184</h4>
+                <p style="padding-left: 5%;">*815# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>&nbsp;
+                <h4><img src="{% static 'img/wegagen.png' %}" alt="" width="50px">&nbsp;&nbsp; 0039046730101</h4>
+                <p style="padding-left: 5%;">*866# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>&nbsp;
+                <h4><img src="{% static 'img/cbebirr1.jpg' %}" alt="" width="50px">&nbsp;&nbsp; 0910531176 </h4>
+                <p style="padding-left: 5%;">*847# ላይ በመደወል ከላይ ወደተፃፈው ስልክ ቁጥር ክፍያዎን ይላኩ፡፡</p>
+
+
+
             </div>
         </div>
-    </div> -->
+    </div>
+</div>
     </div>
     </div>
     <div class="col-md-5 order-details">
@@ -207,7 +209,8 @@
     </body>
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -216,7 +219,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">

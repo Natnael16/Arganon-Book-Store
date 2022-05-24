@@ -1,4 +1,5 @@
-
+import os
+from dotenv import load_dotenv
 from random import randint, random
 from telegram import Bot, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 import telegram
@@ -12,8 +13,11 @@ from django.urls import reverse
 from .wait import toBeVerified
 from base.utils import TokenGenerator
 
+
+load_dotenv()
 basicConfig(level=INFO)
 log = getLogger()
+tok = os.getenv('TOKEN')
 Bot = Bot('5373042983:AAE_AOo-hPkelbC4Z0-LOAtr5s1F51LzOIQ')
 updater = Updater(token='5373042983:AAE_AOo-hPkelbC4Z0-LOAtr5s1F51LzOIQ', use_context=True)
 dispatcher = updater.dispatcher

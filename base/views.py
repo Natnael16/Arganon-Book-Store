@@ -338,7 +338,8 @@ def checkout(request):
             messages.error(request, "There are no Items in your cart")
             redirect("checkout")
         #print("items are", items)
-        url = "https://testapi.yenepay.com/api/urlgenerate/getcheckouturl/"
+        url = "https://endpoints.yenepay.com/api/urlgenerate/getcheckouturl/"
+        
         data = {
             "process": "Cart",
             "successUrl": "http://localhost:8000/success",
@@ -379,7 +380,7 @@ def success(request):
     moi = request.GET.get('MerchantOrderId')
     ti = request.GET.get('TransactionId')
     status = request.GET.get('Status')
-    url = 'https://testapi.yenepay.com/api/verify/pdt/'
+    url = 'https://endpoints.yenepay.com/api/verify/pdt/'
     data = {
         "requestType": "PDT",
         "pdtToken": "GLxwJZFcC8SX4X",
@@ -422,7 +423,7 @@ def ipn(request):
     messages.success("the ipn request has been successful")
     #print("the ipn thing has been successful")
     return HttpResponse("this is to tell you that the ipn notification is working")
-    url = "https://testapi.yenepay.com/api/verify/ipn/"
+    url = "https://endpoints.yenepay.com/api/verify/ipn"
     totalAmount = request.GET.get('totalAmount')
     buyerId = request.GET.get('buyerId')
     merchantOrderId = request.GET.get('merchantOrderId')
@@ -449,22 +450,22 @@ def ipn(request):
 
     response = requests.post(url, json=data)
     if response.status_code == 200:
-        # print("It's Paid")
-        order = Order.objects.get(id=merchantOrderId)
-        books = order.books.all()
-        amount_dict = request.session["cart"]
-        for book in books:
-            Quantity.objects.create(
-                order=order,
-                book=book,
-                quantity=amount_dict[str(book.id)]
-            )
-            final_book = Book.objects.get(id=book.id)
-            final_book.count -= int(amount_dict[str(book.id)])
-            final_book.save()
-        order.paid = True
-        order.save()
-        del request.session['cart']
+        print("It's Paid")
+        # order = Order.objects.get(id=merchantOrderId)
+        # books = order.books.all()
+        # amount_dict = request.session["cart"]
+        # for book in books:
+        #     Quantity.objects.create(
+        #         order=order,
+        #         book=book,
+        #         quantity=amount_dict[str(book.id)]
+        #     )
+        #     final_book = Book.objects.get(id=book.id)
+        #     final_book.count -= int(amount_dict[str(book.id)])
+        #     final_book.save()
+        # order.paid = True
+        # order.save()
+        # del request.session['cart']
     else:
         print('Invalid payment process')
     return render(request, 'ipn.html')
@@ -640,7 +641,7 @@ def books(request):
     q = request.GET.get('q') if request.GET.get('q') else ''
     sort = request.GET.get('sort', 1) if isInt(request.GET.get('sort', 1)) and int(request.GET.get('sort', 1)) in order else 1
 
-    c = request.GET.getlist('category') if request.GET.getlist('category') else category
+    c = request.GET.getlist('category') if request.GET.getlist('category') and 'all' not in request.GET.getlist('category')  else category
     pr = [request.GET.get('price-min') if isFloat(request.GET.get('price-min')) else 0, request.GET.get('price-max') if isFloat(request.GET.get('price-max')) else 5000]
     p = request.GET.get('p') if isInt(request.GET.get('p')) else 1
     c = set(map(str, c))
@@ -708,9 +709,13 @@ def books(request):
     books3 = set(books[len(books)//2 : (len(books)*3)//4])
     books4 = set(books[(len(books)*3)//4 : len(books)])
     print(books1 , books2)
+    
     context = {"books": books,"books4": books4,"books3": books3,"books2": books2,"books1": books1, 'p': p,"strp": str(p),'paginator':paginator, 
-    "newBooks": newBooks, "minprice": pr[0], 'maxprice': pr[1], 'category':category, 
+    "newBooks": newBooks, "minprice": pr[0], 'maxprice': pr[1], 'category':category, 'lencategory': len(category), 'lenchecked': len(c),
     'bNo':booksbycategory, 'checkedBox': c, 'sort': sort, 'q':q}
+
+    print(len(category), 'this is the length of the category')
+    print(len(c), 'this is the len of checked')
     packages = set(Packages.objects.all())
     exclude = []
     for package in packages:
@@ -852,6 +857,14 @@ def bookDetail(request,pk):
                 "comment_form":comment_form, "page":page,
                 "cats":cats, "related_books":related_books
                }
+    try:
+        rated = Rating.objects.get(member=Member.objects.get(user = request.user), book=book)
+        context['rated'] = rated.rating
+    except:
+        rated = None
+        context['rated'] = None
+    
+
     return render(request,'book_detail.html', context)
   
     
@@ -867,7 +880,6 @@ def deleteComment(request,pk):
     return render(request, 'book_detail.html', {"comment":comment})
 
 
-
 @login_required(login_url="/login")
 def deleteOrder(request,pk):
     if not request.user.has_perm("admin"):
@@ -879,10 +891,6 @@ def deleteOrder(request,pk):
     
     context={"order1":order1}
     return render(request, 'admin-orders.html', context)
-
-
-
-
 
 @login_required(login_url='login')
 def delete_request(request , pk):
@@ -1008,10 +1016,26 @@ def create_rating(request, pk):
     if request.method == "POST":
         member = Member.objects.get(user=request.user)
         book = Book.objects.get(id=pk)
+        try:
+            rated = Rating.objects.get(member=member, book=book)
+        except:
+            rated = None
+            
+        
         rating = int(request.POST.get("rating"))
         if member and book and rating:
+            if rated:
+                book.rating_sum += (rating - rated.rating)
+                rated.rating = rating
+                rated.save()
+                book.save()
+                
+                # return HttpResponse('edit')
+                return redirect("book_detail", pk=pk)
+            
             book.rating_sum += rating
             book.rating_count += 1
+                
             book.save()
             Rating.objects.create(member=member, book=book, rating=rating)
             # return HttpResponse('success')

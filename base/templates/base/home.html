@@ -6,20 +6,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ጣይቱ የንባብ ቤተሰብ</title>
+    <title>መንፈሳዊ የንባብ ቤተሰብ</title>
 
     <link rel="stylesheet" href="{% static 'js/swiper-bundle.min.css' %}" />
 
     <!-- font awesome cdn link  -->
-
-
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <style>
-        a {
+    a {
             text-decoration: none;
         }
     </style>
@@ -32,7 +30,7 @@
 
         <div class="header-1">
 
-            <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+            <a href="{% url 'home' %}" class="logo"> <img src="{% static 'img/logoo.png' %}" width="50vw"/>&nbsp; መንፈሳዊ-<span
                     style="color:#228B22;">መጻሕፍት</a>
             <form action="/books" name="filterForm" class="search-form">
                 <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -92,16 +90,17 @@
         <div class="row">
 
             <div class="content">
-                <h3>የጣይቱ መጻሕፍት ንባብ ቤተሰብ</h3>
-                <p>በአንባቢያን ዘንድ ተወዳጅነትና ተፈላጊነት ያላችውን መጻሕፍት ከኛ ዘንድ ያግኙ!</p>
+                <h3>የመንፈሳዊ መጻሕፍት ንባብ ቤተሰብ</h3>
+                <p style="font-size:larger">በአንባቢያን ዘንድ ተወዳጅነትና ተፈላጊነት ያላችውን መጻሕፍት ከእኛ ዘንድ በታላቅ ቅናሽ ያግኙ!</p>
                 <a href="{% url 'books' %}" class="btn">ይመልከቱ</a>
             </div>
 
             <div class="swiper books-slider">
                 <div class="swiper-wrapper">
-                    <a href="#" class="swiper"><img src="{% static 'img/logo.jpg' %}" alt=""></a>
-
+                    <img class="swiper" src="{% static 'img/logo.jpg' %}" alt="" width="500vw">
+                        
                 </div>
+            
                 <img src="{% static 'img/stand.png' %}" class="stand" alt="">
             </div>
 
@@ -173,7 +172,7 @@
 
     <section class="reviews" id="reviews">
 
-        <h1 class="heading"> <span>Why Us?</span> </h1>
+        <h1 class="heading"> <span>ከእኛ ምን ያገኛሉ?</span> </h1>
 
         <div class="swiper reviews-slider">
 
@@ -184,9 +183,8 @@
                     <div class="icons">
                         <div><i class="fas fa-solid fa-box"></i></div>
                         <div class="content">
-                            <h3>Packages</h3>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi assumenda ipsum alias
-                                nisi error eos officia suscipit,</p>
+                            <h3>በአይነቱ ለየት ያለ የመጻሕፍት ፓኬጅ</h3>
+                            <p style="font-size:larger ;">በእያንዳንዱ መጻሕፍት ላይ ከ30% - 100% ቅናሽ ተደርጎ በጥቅል መልክ ቀርቧል </p>
                         </div>
                     </div>
 
@@ -198,9 +196,8 @@
                     <div class="icons">
                         <div><i class="fas fa-shipping-fast"></i></div>
                         <div class="content">
-                            <h3>Cheap</h3>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi assumenda ipsum alias
-                                nisi error eos officia suscipit,</p>
+                            <h3>የ Delivery አገልግሎት</h3>
+                            <p style="font-size:larger ;"> አዲስ አበባ ለሚገኙ ደንበኞች መጻሕፍትን ባዘዙ በጥቂት ሰዓት ውስጥ ያሉበት ቦታ ድረስ እናደርሳለን </p>
                         </div>
                     </div>
                 </div>
@@ -210,9 +207,8 @@
                     <div class="icons">
                         <div><i class="fas fa-shipping-fast"></i></div>
                         <div class="content">
-                            <h3>Cheap</h3>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi assumenda ipsum alias
-                                nisi error eos officia suscipit,</p>
+                            <h3>ከአመት እስከ አመት ታላቅ ቅናሽ</h3>
+                            <p style="font-size:larger ;">አላማችን መንፈሳዊ መጻሕፍትን በዓላማ፤በእቅድ እንድናነባቸው፤እንድናስነብባቸው በሕይወታችን ትርጉም እንዲኖራቸው ማድረግ ነው። የመጻሕፍት ውድነት ይህን አላማችንን እንዳይገታ መጽሐፍትን በታላቅ ቅናሽ ከእኛ ዘንድ ያገኛሉ </p>
                         </div>
                     </div>
 
@@ -248,6 +244,10 @@
                     </div>
                     <div class="content">
                         <h3>{{nb.title}}</h3>
+                        <div class="stars" style="color:black; font-size:medium;">
+                            በ {{nb.author}}
+                        </div>
+                        <div class="price"> {{nb.price}} ብር <span> {{nb.oldprice}} ብር</span></div>
                         <div class="stars">
                 
                     {% if nb.rating_sum|rating_ratio:nb.rating_count >= 0.2 %}<i class="fas fa-star" style="color: #228B22;"> </i>
@@ -265,7 +265,8 @@
                     {% if nb.rating_sum|rating_ratio:nb.rating_count >= 1 %}<i class="fas fa-star" style="color: #228B22;"> </i>
                     {% else %} <i class="fas fa-star" style="color: rgb(192, 189, 189);"> </i> {% endif %}
                 </div>
-                        <div class="price"> {{nb.price}} ብር <span> {{nb.oldprice}} ብር</span></div>
+                        
+                        <h6 style="position:absolute; top: 1px;; right:5px;">{{nb.count}} In Stock</h6>
 
                     </div>
                 </a>
@@ -315,7 +316,8 @@
 
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -324,7 +326,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">

@@ -50,7 +50,7 @@
     
         <div class="header-1">
     
-            <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+            <a href="{% url 'home' %}" class="logo"> <img src="{% static 'img/logoo.png' %}" width="50vw" /> መንፈሳዊ-<span
                     style="color:#228B22;">መጻሕፍት</a>
             <form action="/books" name="filterForm" class="search-form">
                 <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -165,7 +165,8 @@
 <div style="height: 100px;"></div>
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -174,7 +175,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">

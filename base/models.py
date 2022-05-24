@@ -70,7 +70,7 @@ class Rating(models.Model):
     rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.rating)
+        return str(self.member.user)
 
     
 

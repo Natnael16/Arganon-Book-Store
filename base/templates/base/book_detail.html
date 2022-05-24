@@ -41,7 +41,7 @@
 
     <div class="header-1">
 
-        <a href="{% url 'home' %}" class="logo"> <i class="fas fa-book"></i> ጣይቱ-<span
+        <a href="{% url 'home' %}" class="logo"> <img src="{% static 'img/logoo.png' %}" width="50vw" /> መንፈሳዊ-<span
                 style="color:#228B22;">መጻሕፍት</a>
         <form action="/books" name="filterForm" class="search-form">
             <input type="search" name="q" placeholder="መጻሕፍትን ፈልግ" id="search-box">
@@ -143,6 +143,10 @@
                 <!-- Product details -->
                 <div class="col-md-5">
                     <div class="product-details">
+                        {% if perms.app_name %}
+                        <a href="../../admin/base/book/{{book.id}}">EDIT BOOK</a>
+                        <br><br>
+                        {% endif %}
                         <p class="book-id" hidden>{{book.id}}</p>
                         <p class="count" hidden>{{book.count}}</p>
                         <input type="text" class="package" value="false" hidden>
@@ -197,7 +201,7 @@
                         <!-- Reviews -->
                         <div>
                             <div id="reviews">
-                                <ul class="reviews">
+                                <ul class="reviews" style="display:flex ; flex-wrap: wrap;">
                                     {% for coment in page.object_list %}
                                     <li>
                                         <div class="review-heading">
@@ -208,14 +212,11 @@
                                             <p>{{coment.አስተያየት}}</p>
                                         </div>
                                         {% if request.user.username == coment.member.user.username %}
-                                        <div style="position: absolute; top:0; right:0;">
+                                        <div style="position: absolute; top:0; right:-22px;">
                                             <form method="POST" action="{% url 'delete_comment' coment.id %}">
                                                 {% csrf_token %}
-                                                <a>
-                                                    <button type="submit"
-                                                        style="background-color:transparent; border:none;"><i
-                                                            class="fas fas-trash"></i></button></a>
-                                            </form>
+                                                
+                                    <button type="submit" style="background-color:transparent; border:none;"><i class="fa fa-trash"></i></button>                                            </form>
                                         </div class="reviews-pagination">
                                         {% endif %} {% empty %} &nbsp; &nbsp; &nbsp; &nbsp;ምንም አስተያየቶች አአልተፃፉም
                                     </li>
@@ -238,9 +239,11 @@
                     <h3>የዚህን መጽሐፍ ምልከታ ያስቀምጡ</h3>
                     <form action="/create-rating/{{ book.id }}" method="post">
                         {% csrf_token %}
+
+                    {% if rated %} <input type="hidden" value="{{rated}}" id="fromBackend">{% else %} <input type="hidden" value="1" id="fromBackend"> {% endif %}
                     <div class="stars" style="zoom: 2; padding-left: 5%;">
                   
-                            <i class="fa fa-star-o" id= "star1" onclick="rate(1)" style="color:#27ae60;"></i>
+                            <i class="fa fa-star" id= "star1" onclick="rate(1)" style="color:#27ae60;"></i>
                             <i class="fa fa-star-o" id= "star2" onclick="rate(2)" style="color:#27ae60;"></i>
                             <i class="fa fa-star-o" id= "star3" onclick="rate(3)" style="color:#27ae60;"></i>
                             <i class="fa fa-star-o" id= "star4" onclick="rate(4)" style="color:#27ae60;"></i>
@@ -250,8 +253,11 @@
                             <button class="btn-primary" style ="padding: 5px; margin-left: 6px; zoom: 0.7; border-radius: 10px; background-color: #27ae60; ">Rate</button>
                     </div>
                     <script>
-    
+                        rate_from_backend = document.getElementById("fromBackend")
+                        rate(rate_from_backend.value)
+                        
                         function rate(a) {
+                            console.log("called")
                             rating = document.getElementById('rate_number')
                             rating.value = a;
                             console.log(rating.value)
@@ -368,7 +374,8 @@
 </body>
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
-        <h3>ጣይቱ-<span>መጻሕፍት</span></h3>
+        <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
+        <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
         <!-- <p class="footer-links">
     <a href="#">ዋና ገጽ</a> ·
     <a href="#">መጻሕፍት</a> ·
@@ -377,7 +384,7 @@
     <a href="#">ያነጋግሩን</a>
 </p> -->
 
-        <p class="footer-company-name">ጣይቱ መጻሕፍት © 2014</p>
+        <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
 
     <div class="footer-center">
