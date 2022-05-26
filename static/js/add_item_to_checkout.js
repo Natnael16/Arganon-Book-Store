@@ -11,13 +11,13 @@ function ready() {
     for (let i = 0; i < cart.length; i++) {
         var cart_item = cart[i];
         total += parseInt(cart_item.qty) * parseInt(cart_item.price)
-        addItemToCart(cart_item.title, cart_item.price, cart_item.qty)
+        addItemToCheckout(cart_item.title, cart_item.price, cart_item.qty)
 
     }
     document.getElementsByClassName("order-total")[0].innerText = total + " ብር"
 }
 
-function addItemToCart(title, price, qty) {
+function addItemToCheckout(title, price, qty) {
     var Row = document.createElement('div')
     Row.classList.add("order-col")
     var Item = document.getElementsByClassName('order-products')[0]
@@ -27,6 +27,11 @@ function addItemToCart(title, price, qty) {
     <div>${parseInt(qty) * parseInt(price)} </div>
 
     `
+
     Row.innerHTML = RowContents
+    console.log(qty);
+    console.log(price)
     Item.append(Row)
+    
+    
 }

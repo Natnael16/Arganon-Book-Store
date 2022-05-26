@@ -20,7 +20,7 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
-<style> a { text-decoration: none;}</style></head>
+<style> a { text-decoration: none;}</style><link rel="icon" href="{% static 'img/logoo.png' %}"></head>
 
 <!--Table-->
 <!-- header section starts  -->
@@ -64,15 +64,14 @@
 
 <nav class="bottom-navbar">
     <a href="{% url 'home' %}" class="fas fa-home"></a>
-    <a href="{% url 'books' %}" class="fas fa-book"></a>
-    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
+    <a href="{% url 'books' %}" class="fas fa-book">&nbsp;መጻሓፍት</a>
+
     {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-    {% else %}
-    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt">&nbsp;Logout</a>
+    {% else %};
+    <a href="{% url 'login' %}" class="" id="close-login-btn" style="font-family:sans-serif;">&nbsp;Login</a>
     {% endif %}
-    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+   
 </nav>
 <!-- login form  -->
 <body>
@@ -285,7 +284,7 @@
 
             <div>
                 <i class="fas fa-map-marker"></i>
-                <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+                <p><span>5 ኪሎ ሸዋ ዳቦ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
             </div>
 
             <div>

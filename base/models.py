@@ -178,6 +178,8 @@ class Order(models.Model):
     delivery = models.BooleanField(null=False, default=False, editable=True)
     paid = models.BooleanField(null=False, default=False, editable=True)
     sold = models.BooleanField(null=False, default=False, editable=True)
+    bank_payment = models.BooleanField(null = False, default= True, editable=True)
+    transaction_id = models.CharField(null = True,blank = True,max_length=50)
 
     def __str__(self):
         return self.member.user.username

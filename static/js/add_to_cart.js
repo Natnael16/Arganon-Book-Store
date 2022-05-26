@@ -60,7 +60,6 @@ function addToCartClicked(event) {
             count: book_count
         })
     }
-    console.log(val)
     cart.setItem("cart", JSON.stringify(val))
 
 }

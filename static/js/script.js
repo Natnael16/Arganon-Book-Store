@@ -140,11 +140,9 @@ function updateTotal() {
         // document.getElementsByClassName("quantity")[0].innerText = amount + " መጻሕፍት"
 }
 
-function purchaseClicked() {
-    alert('Thank you for your purchase')
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
-    }
+function removeCart() {
+    alert('መጽሐፉን ሲረከቡ ክፍያ የፈፀሙበትን ደረሰኝ ይያዙ!')
+    cart = sessionStorage.getItem('cart')
+    sessionStorage.clear()
     updateCartTotal()
 }

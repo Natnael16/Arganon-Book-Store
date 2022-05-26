@@ -11,7 +11,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'css/my-login.css' %}">
 
-<style> a { text-decoration: none;}</style></head>
+<style> a { text-decoration: none;}</style><link rel="icon" href="{% static 'img/logoo.png' %}"></head>
 
 <body class="my-login-page">
   <section class="">
@@ -19,13 +19,13 @@
       <div class="row justify-content-md-center">
         <div class="card-wrapper">
           <div class="brand">
-            <img src="{% static 'img/new_logo.jpg' %}" alt="logo">
+            <img src="{% static 'img/logoo.png' %}" alt="logo">
           </div>
           <div class="card fat">
             <div class="card-body">
               <h4 class="card-title">ክፍያዎ በተሳካ ሁኔታ ተፈጽሟል!</h4>
             </div>
-            <p>user is {{request.user}}</p>
+            <!-- <p>user is {{request.user}}</p> -->
                           <a href="{% url 'home' %}" class="btn-primary"
                             style="color: rgb(255, 255, 255); background-color: rgb(25, 177, 25); width: 100px; border-radius: 3px; text-align: center; text-decoration: none; position: relative; right: -100px; padding: 5px;"> ወደ ድረገጹ
                             ይመለሱ</a>

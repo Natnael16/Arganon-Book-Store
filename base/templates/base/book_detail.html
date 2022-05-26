@@ -34,7 +34,7 @@
             text-decoration: none;
         }
     </style>
-</head>
+<link rel="icon" href="{% static 'img/logoo.png' %}"></head>
 <!-- header section starts  -->
 <!-- header section starts  -->
 <header class="header">
@@ -76,15 +76,14 @@
 <!-- bottom navbar  -->
 <nav class="bottom-navbar">
     <a href="{% url 'home' %}" class="fas fa-home"></a>
-    <a href="{% url 'books' %}" class="fas fa-book"></a>
-    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
+    <a href="{% url 'books' %}" class="fas fa-book">&nbsp;መጻሓፍት</a>
+
     {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-    {% else %}
-    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt">&nbsp;Logout</a>
+    {% else %};
+    <a href="{% url 'login' %}" class="" id="close-login-btn" style="font-family:sans-serif;">&nbsp;Login</a>
     {% endif %}
-    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+   
 </nav>
 <!-- login form  -->
 
@@ -376,13 +375,7 @@
     <div class="footer-left">
         <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
         <h3>መንፈሳዊ-<span>መጻሕፍት</span></h3>
-        <!-- <p class="footer-links">
-    <a href="#">ዋና ገጽ</a> ·
-    <a href="#">መጻሕፍት</a> ·
-    <a href="about-us.html">ስለድርጅቱ</a> ·
-    <a href="#">ተደጋጋሚ ጥያቄዎች</a> ·
-    <a href="#">ያነጋግሩን</a>
-</p> -->
+
 
         <p class="footer-company-name">መንፈሳዊ መጻሕፍት © 2014</p>
     </div>
@@ -390,17 +383,17 @@
     <div class="footer-center">
 
         <div>
-            <i class="fas fa-map-marker"></i>
-            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+            <i style="background-color: transparent;" class="fas fa-map-marker"></i>
+            <p><span>5 ኪሎ ሸዋ ዳቦ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
         </div>
 
         <div>
-            <i class="fas fa-phone"></i>
+            <i style="background-color: transparent;" class="fas fa-phone"></i>
             <p>+251 925 421 700</p>
         </div>
 
         <div>
-            <i class="fas fa-envelope"></i>
+            <i class="fas fa-envelope" style="background-color: transparent;"></i>
             <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
         </div>
 
@@ -409,11 +402,11 @@
     <div class="footer-right">
 
 
-        <div class="footer-icons"style="zoom: 1.6;">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
-            <!-- <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a> -->
+        <div class="footer-icons" style="zoom: 1.6;">
+            <a style="background-color: transparent;" href="#"><i class="fab fa-facebook"></i></a>
+            <a style="background-color: transparent;" href="https://www.t.me/BetMetsahfte"><i
+                    class="fab fa-telegram"></i></a>
+
 
         </div>
 

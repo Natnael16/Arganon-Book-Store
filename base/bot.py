@@ -45,13 +45,13 @@ def start(update, context: CallbackQuery):
 
 
 def messageHandler(update, context):
-    # print(toBeVerified.tobeverified)
+    # #print(toBeVerified.tobeverified)
     phone = None
     try:
         phone = update.message.contact.phone_number
         phone = '251' + phone[-9:]
         # user = toBeVerified.get(phone)['user']
-        print(toBeVerified.get(phone))
+        #print(toBeVerified.get(phone))
         member = toBeVerified.get(phone)['member']
         msg = send_verification(phone, update.effective_chat.id)
         toBeVerified.get(phone)['chat_id'] = update.effective_chat.id
@@ -76,7 +76,7 @@ def help(update, context):
         parse_mode="markdown")
 
 def main():
-    print("running")
+    #print("running")
 
     start_handler = CommandHandler("start", start)
     help_handler = CommandHandler("help", help)
@@ -95,7 +95,7 @@ def send_verification(phone, cid):
     uidb64 = urlsafe_base64_encode(force_bytes(phone)) 
     
     cid = urlsafe_base64_encode(force_bytes(cid)) 
-    print(phone)
+    #print(phone)
     link = reverse('verify', kwargs={'uidb64': uidb64,'token': TokenGenerator.make_token(toBeVerified.get(phone)['user'])})
     
     activate_url = 'http://127.0.0.1:8000'+ link

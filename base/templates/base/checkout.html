@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <!-- <link type="text/css" rel="stylesheet" href="../static/css/style.css" /> -->
     <link rel="stylesheet" href=" {% static 'css/style.css' %}">
-<style> a { text-decoration: none;}</style></head>
+<style> a { text-decoration: none;}</style><link rel="icon" href="{% static 'img/logoo.png' %}"></head>
 <!-- header section starts  -->
 <header class="header">
 
@@ -60,15 +60,15 @@
 
 <nav class="bottom-navbar">
     <a href="{% url 'home' %}" class="fas fa-home"></a>
-    <a href="{% url 'books' %}" class="fas fa-book"></a>
-    <a href="{% url 'books' %}#packages" class="fas fa-box-open"></a>
-    <!-- <a href="{% url 'equb-user' %}" class="fas fa-money-check-alt"></a> -->
+    <a href="{% url 'books' %}" class="fas fa-book">&nbsp;መጻሓፍት</a>
+
     {% if request.user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt"></a>
-    {% else %}
-    <a href="{% url 'login' %}" class="fas fa-sign-in-alt" id="close-login-btn"></a>
+    <a href="{% url 'logout' %}" class="fas fa-sign-out-alt">&nbsp;Logout</a>
+    {% else %};
+    <a href="{% url 'login' %}" class="" id="close-login-btn"
+        style="font-family:sans-serif;">&nbsp;Login</a>
     {% endif %}
-    <!-- <a href="#blogs" class="fas fa-user"></a> -->
+
 </nav>
 <!-- login form  -->
 
@@ -140,31 +140,74 @@
 <div class="row-md-5">
     <div class="payment-method">
         <div class="input-radio">
-            <input type="radio" name="payment" id="payment-1" value="bank" checked>
+            <input type="radio" name="bank_payment" id="payment-1" value="False" checked onclick="checkit()">
             <label for="payment-1">
                 <span></span>
                 የኔፔይ
             </label>
         </div>
+        <script>
+            checkit()
+            function checkit(){
 
+                payment_method = document.getElementById('payment-2')
+                payment_1 = document.getElementById('payment-1')
+            if (payment_1.checked){
+                transid = document.getElementById('transId')
+                console.log(transid)
+                transid.required = false;
+            }
+            if (payment_method.checked){
+                btn = document.getElementById('registerYenepay_btn')
+                caution = document.getElementById('registerYenepay')
+                transid = document.getElementById('transId')
+                
+                transid.required = true;
+                btn.hidden = true;
+                caution.hidden = true;
+            }
+            else {
+                btn = document.getElementById('registerYenepay_btn')
+                caution = document.getElementById('registerYenepay')
+                transid = document.getElementById('transId')
+                transid.required = false;
+                btn.hidden = false;
+                caution.hidden = false;
+
+                console.log(btn)
+                console.log(caution)
+
+            }
+
+            }
+
+        </script>
         <div class="input-radio">
-            <input type="radio" name="payment" id="payment-2" value="telebirr">
+            <input type="radio" name="bank_payment" id="payment-2" value="True" onclick="checkit()"  >
             <label for="payment-2">
                 <span></span> በባንክ መክፈል
             </label>
             <div class="caption">
-                <p>ከታች ባሉት አማራጮች ውስጥ ክፍያዎን ከፈፀሙ በኋላ ክፍያውን መጨረሶን የሚያሳይ (screenshot) ይላኩ፡፡</p>
+                
                 <br>
                 <h4>የአካውንቱ ባለቤት፡ KIFLOM HAILU AMBAYE</h4>
                 <br>
-                <h4><img src="{% static 'img/cbe.png' %}" alt="" width="50px">&nbsp; &nbsp;1000088945407 </h4>
+                <h4><img src="{% static 'img/cbe.jpg' %}" alt="" width="50px">&nbsp; &nbsp;1000088945407 </h4>
                 <p style="padding-left: 5%;">*889# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>
                 <h4><img src="{% static 'img/abyssinia.jpg' %}" alt="" width="50px">&nbsp;&nbsp; 26830184</h4>
                 <p style="padding-left: 5%;">*815# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>&nbsp;
-                <h4><img src="{% static 'img/wegagen.png' %}" alt="" width="50px">&nbsp;&nbsp; 0039046730101</h4>
+                <h4><img src="{% static 'img/wegagen.jpg' %}" alt="" width="50px">&nbsp;&nbsp; 0039046730101</h4>
                 <p style="padding-left: 5%;">*866# ላይ በመደወል ከላይ ወደተፃፈው አካካውንት ክፍያዎን ይላኩ፡፡</p>&nbsp;
                 <h4><img src="{% static 'img/cbebirr1.jpg' %}" alt="" width="50px">&nbsp;&nbsp; 0910531176 </h4>
                 <p style="padding-left: 5%;">*847# ላይ በመደወል ከላይ ወደተፃፈው ስልክ ቁጥር ክፍያዎን ይላኩ፡፡</p>
+                <strong><p>ከታች ባሉት አማራጮች ውስጥ ክፍያዎን ከፈፀሙ በኋላ ክፍያውን መጨረሶን የሚያሳውቅ የከፈሉበትን Transaction Id ከታች ባለው ሳጥን ውስጥ ያስገቡ፡፡</p></strong>
+                <div style="padding: 20px;" >
+                    <label for="transId">Transaction ID</label><span style="color: red;" >*</span>
+                    <input type="text" name="transaction_id" id="transId" placeholder="Transaction Id" class="form-control"  width="20px" >
+
+
+                    <button style="margin: 10px;" class="primary-btn cart-btn" type="submit" onclick="removeCart()">ያረጋግጡ</button>
+                </div>
 
 
 
@@ -189,10 +232,10 @@
                 <div><strong>ድምር</strong></div>
                 <div><strong class="order-total"></strong></div>
             </div>
-<div class="alert alert-warning" role="alert">
-    <a style="text-decoration:dashed" href="https://auth.yenepay.com/Account/registerwithphone">የየኔ ፔይ አካውንት ከሌሎት መጀመሪያ የየኔ ፔይ አካውንት  ይክፈቱ </a> <a class="btn" href="https://auth.yenepay.com/Account/registerwithphone"> አካውንት የለኝም</a>
+<div class="alert alert-warning" role="alert" id="registerYenepay">
+    <a style="text-decoration:dashed" target="_blank" href="https://auth.yenepay.com/Account/registerwithphone">የየኔ ፔይ አካውንት ከሌሎት መጀመሪያ የየኔ ፔይ አካውንት  ይክፈቱ </a> <a class="btn" href="https://auth.yenepay.com/Account/registerwithphone"> አካውንት የለኝም</a>
 </div>
-            <button class="primary-btn cart-btn" type="submit">በየኔ ፔይ ይግዙ</button>
+            <span id="registerYenepay_btn"><button class="primary-btn cart-btn" type="submit"  >በየኔ ፔይ ይግዙ</button></span>
         </div>
     </div>
     </form>
@@ -203,10 +246,12 @@
 
 
     <script src="{% static 'js/script2.js' %} "></script>
+    <script src="{% static 'js/script.js' %} "></script>
     <script src="{% static 'js/add_item_to_checkout.js' %}"></script>
     <script src="{% static 'js/fontawsome.js' %}"></script>
 
     </body>
+
 <footer class="footer-distributed" style="background-image: linear-gradient(to top, #caffca , white)">
     <div class="footer-left">
         <img src="{% static 'img/logoo.png' %}" alt="" width="200vw">
@@ -225,17 +270,17 @@
     <div class="footer-center">
 
         <div>
-            <i class="fas fa-map-marker"></i>
-            <p><span>5 ኪሎ ማህበረ-ቅዱሳን ህንጻ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
+            <i style="background-color: transparent;" class="fas fa-map-marker"></i>
+            <p><span>5 ኪሎ ሸዋ ዳቦ ፊት ለፊት</span> አዲስ አበባ, ኢትዮጵያ </p>
         </div>
 
         <div>
-            <i class="fas fa-phone"></i>
+            <i style="background-color: transparent;" class="fas fa-phone"></i>
             <p>+251 925 421 700</p>
         </div>
 
         <div>
-            <i class="fas fa-envelope"></i>
+            <i class="fas fa-envelope" style="background-color: transparent;" ></i>
             <p><a href="mailto:orthokiha@gmail.com">orthokiha@gmail.com</a></p>
         </div>
 
@@ -245,8 +290,8 @@
 
 
         <div class="footer-icons" style="zoom: 1.6;">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
+            <a style="background-color: transparent;"  href="#"><i class="fab fa-facebook" ></i></a>
+            <a style="background-color: transparent;"  href="https://www.t.me/BetMetsahfte"><i class="fab fa-telegram"></i></a>
             <!-- <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a> -->
 

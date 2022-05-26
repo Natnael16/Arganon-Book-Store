@@ -94,7 +94,7 @@ def loginPage(request):
         except:
             user = None
             errors ="Phone Number or password is wrong"
-            print('errros 1' , errors)
+            #print('errros 1' , errors)
             return render(request, "login.html", {"errors": errors})
 
         #print(user, 'I am user')
@@ -103,7 +103,7 @@ def loginPage(request):
             return redirect("home")
         else:
             errors = "Phone Number or password is wrong"
-            print('errors 2')
+            #print('errors 2')
             return render(request, "login.html", {"errors": errors})
     return render(request, "login.html")
 
@@ -147,7 +147,11 @@ def sendreset(request):
     if request.method == "POST":
         phone = request.POST.get("resetphone")
         phone = '251' + phone[-9:]
-        member = Member.objects.get(phone=phone)
+        try:
+            member = Member.objects.get(phone=phone)
+        except:
+            return render(request, "forgot.html")
+
         user = member.user
         uidb64 = urlsafe_base64_encode(force_bytes(phone)) 
         link = reverse('resetPassword', kwargs={'uidb64': uidb64,'token': TokenGenerator.make_token(user)})
@@ -180,10 +184,10 @@ def registerPage(request):
             phone = request.POST.get("phone")
             if len(phone) < 9: return render(request, "register.html", { 'user_error': usr.errors , 'form_error' : 'Invalid phone number'})
             phone = "251"+ phone[-9:]
-            print(phone, "from user")
+            #print(phone, "from user")
             toBeVerified.add(phone, {'member': member, 'user': user}, 2000 )
 
-            # print(toBeVerified.get(phone))
+            # #print(toBeVerified.get(phone))
             # login(request, User.objects.get(username=username))
             return redirect('https://t.me/menfesawi_metsahft_bot')
 
@@ -258,8 +262,12 @@ def checkout(request):
     if request.method == 'POST':
         member = Member.objects.get(user=request.user)
         order = Order.objects.create(
-            member=member , delivery = request.POST.get("delivery"))
-        cart = json.loads(request.POST.get("cart"))
+            member=member , delivery = request.POST.get("delivery"),bank_payment = True if request.POST.get("bank_payment") == "True" else False,
+            transaction_id = request.POST.get("transaction_id"))
+        try:
+            cart = json.loads(request.POST.get("cart"))
+        except:
+            return redirect('checkout')
         amount_dict = defaultdict(int)
         package_amount = defaultdict(int)
         items = []
@@ -272,6 +280,7 @@ def checkout(request):
                     if amount_dict[str(book.id)] > book.count:
                         messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
                             book.title, book.count, amount_dict[str(book.id)]))
+                        return redirect('checkout')
                 except:
                     messages.error(request, "Item with id {} is invalid", id)
                     return redirect("checkout")
@@ -284,6 +293,8 @@ def checkout(request):
                     if package_amount[str(package.id)] > package.amount:
                         messages.error(request, "Sorry the amount of books you have reqeusted for the book {} with amount {} is less than the amount you have requested which is {}.".format(
                             book.title, book.count, amount_dict[str(book.id)]))
+                        return redirect('checkout')
+
 
                     #print("the books are", books)
                     for book in books:
@@ -318,10 +329,7 @@ def checkout(request):
 
             elif type == "true":
                 item["id"] = str(int(item["id"]))
-                #print("tis a package, with id", item["id"])
-                #print("has quantity", int(item["qty"]))
                 package_amount[item["id"]] += int(item["qty"])
-                #print("package amount is", package_amount)
                 validate_package(item["id"])
                 package = Packages.objects.get(id=item["id"])
                 packages.append((package, package_amount[item["id"]]))
@@ -337,8 +345,9 @@ def checkout(request):
         if not items:
             messages.error(request, "There are no Items in your cart")
             redirect("checkout")
-        #print("items are", items)
-        url = "https://endpoints.yenepay.com/api/urlgenerate/getcheckouturl/"
+        # url = "https://endpoints.yenepay.com/api/urlgenerate/getcheckouturl/"
+
+        url = "https://testapi.yenepay.com/api/urlgenerate/getcheckouturl/"
         
         data = {
             "process": "Cart",
@@ -352,9 +361,10 @@ def checkout(request):
             "totalItemsDeliveryFee": 0,
             "totalItemsTax1": 0
         }
-        response = requests.post(url=url, json=data)
-        #print(response.status_code)
-        if response.status_code == 200:
+
+
+        response = requests.post(url=url, json=data) if not order.bank_payment else None
+        if (response != None and response.status_code == 200) or order.bank_payment:
             for book in books:
                 order_book = OrderBook.objects.create(
                     member=member, book=book[0], quantity=book[1])
@@ -364,8 +374,10 @@ def checkout(request):
                     member=member, package=package[0], quantity=package[1]
                 )
                 order.packages.add(order_package)
-            result = response.json().get("result")
-            return redirect(result)
+            result = response.json().get("result") if not order.bank_payment else None
+            if order.bank_payment:
+                request.session["order_id"] = str(order.id)
+            return redirect("success")  if order.bank_payment else redirect(result)
         else:
             order.delete()
             messages.error(
@@ -375,20 +387,34 @@ def checkout(request):
 
 # @login_required(login_url="/login")
 def success(request):
+    order_id = request.session.get("order_id",None)
+
     ii = request.GET.get('itemId')
     total = request.GET.get('TotalAmount')
     moi = request.GET.get('MerchantOrderId')
     ti = request.GET.get('TransactionId')
     status = request.GET.get('Status')
-    url = 'https://endpoints.yenepay.com/api/verify/pdt/'
+    # url = 'https://endpoints.yenepay.com/api/verify/pdt/'
+    url = "https://testapi.yenepay.com/api/verify/pdt/"
     data = {
         "requestType": "PDT",
         "pdtToken": "GLxwJZFcC8SX4X",
         "transactionId": ti,
         "merchantOrderId": moi
     }
-    response = requests.post(url, json=data)
-    if response.status_code == 200:
+    moi = order_id if not moi else moi
+
+    # return HttpResponse(ti)
+
+    if order_id:
+        del request.session["order_id"]
+
+
+    if not moi:
+        return redirect("checkout")
+
+    response = requests.post(url, json=data) if not order_id else None
+    if (response != None and response.status_code == 200) or moi:
         #print("It's Paid")
         order = Order.objects.get(id=moi)
         books = order.books.all()
@@ -407,6 +433,8 @@ def success(request):
             package.amount -= int(order_package.quantity)
             package.save()
         # order.save(commit = False)
+        
+        order.transaction_id = ti if ti else order.transaction_id
         order.paid = True
         order.save()
     else:
@@ -421,54 +449,54 @@ def cancel(request):
 
 def ipn(request):
     messages.success("the ipn request has been successful")
-    #print("the ipn thing has been successful")
+    print("the ipn thing has been successful")
     return HttpResponse("this is to tell you that the ipn notification is working")
-    url = "https://endpoints.yenepay.com/api/verify/ipn"
-    totalAmount = request.GET.get('totalAmount')
-    buyerId = request.GET.get('buyerId')
-    merchantOrderId = request.GET.get('merchantOrderId')
-    merchantId = request.GET.get('merchantId')
-    merchantCode = request.GET.get('merchantCode')
-    transactionId = request.GET.get('transactionId')
-    status = request.GET.get("status")
-    transactionCode = request.GET.get('transactionCode')
-    currency = request.GET.get('currency')
-    signature = request.GET.get('signature')
+    # url = "https://endpoints.yenepay.com/api/verify/ipn"
+    # totalAmount = request.GET.get('totalAmount')
+    # buyerId = request.GET.get('buyerId')
+    # merchantOrderId = request.GET.get('merchantOrderId')
+    # merchantId = request.GET.get('merchantId')
+    # merchantCode = request.GET.get('merchantCode')
+    # transactionId = request.GET.get('transactionId')
+    # status = request.GET.get("status")
+    # transactionCode = request.GET.get('transactionCode')
+    # currency = request.GET.get('currency')
+    # signature = request.GET.get('signature')
 
-    data = {
-        "totalAmount": totalAmount,
-        "buyerId": buyerId,
-        "merchantOrderId": merchantOrderId,
-        "merchantId": merchantId,
-        "merchantCode": merchantCode,
-        "transactionId": transactionId,
-        "status": status,
-        "transactionCode": transactionCode,
-        "currency": currency,
-        "signature": signature
-    }
+    # data = {
+    #     "totalAmount": totalAmount,
+    #     "buyerId": buyerId,
+    #     "merchantOrderId": merchantOrderId,
+    #     "merchantId": merchantId,
+    #     "merchantCode": merchantCode,
+    #     "transactionId": transactionId,
+    #     "status": status,
+    #     "transactionCode": transactionCode,
+    #     "currency": currency,
+    #     "signature": signature
+    # }
 
-    response = requests.post(url, json=data)
-    if response.status_code == 200:
-        print("It's Paid")
-        # order = Order.objects.get(id=merchantOrderId)
-        # books = order.books.all()
-        # amount_dict = request.session["cart"]
-        # for book in books:
-        #     Quantity.objects.create(
-        #         order=order,
-        #         book=book,
-        #         quantity=amount_dict[str(book.id)]
-        #     )
-        #     final_book = Book.objects.get(id=book.id)
-        #     final_book.count -= int(amount_dict[str(book.id)])
-        #     final_book.save()
-        # order.paid = True
-        # order.save()
-        # del request.session['cart']
-    else:
-        print('Invalid payment process')
-    return render(request, 'ipn.html')
+    # response = requests.post(url, json=data)
+    # if response.status_code == 200:
+    #     #print("It's Paid")
+    #     # order = Order.objects.get(id=merchantOrderId)
+    #     # books = order.books.all()
+    #     # amount_dict = request.session["cart"]
+    #     # for book in books:
+    #     #     Quantity.objects.create(
+    #     #         order=order,
+    #     #         book=book,
+    #     #         quantity=amount_dict[str(book.id)]
+    #     #     )
+    #     #     final_book = Book.objects.get(id=book.id)
+    #     #     final_book.count -= int(amount_dict[str(book.id)])
+    #     #     final_book.save()
+    #     # order.paid = True
+    #     # order.save()
+    #     # del request.session['cart']
+    # # else:
+    #     #print('Invalid payment process')
+    # # return render(request, 'ipn.html')
 
 
 @ register.filter
@@ -708,14 +736,14 @@ def books(request):
     books2 = list(set(books[len(books)//4 : len(books)//2]))
     books3 = set(books[len(books)//2 : (len(books)*3)//4])
     books4 = set(books[(len(books)*3)//4 : len(books)])
-    print(books1 , books2)
+    #print(books1 , books2)
     
     context = {"books": books,"books4": books4,"books3": books3,"books2": books2,"books1": books1, 'p': p,"strp": str(p),'paginator':paginator, 
     "newBooks": newBooks, "minprice": pr[0], 'maxprice': pr[1], 'category':category, 'lencategory': len(category), 'lenchecked': len(c),
     'bNo':booksbycategory, 'checkedBox': c, 'sort': sort, 'q':q}
 
-    print(len(category), 'this is the length of the category')
-    print(len(c), 'this is the len of checked')
+    #print(len(category), 'this is the length of the category')
+    #print(len(c), 'this is the len of checked')
     packages = set(Packages.objects.all())
     exclude = []
     for package in packages:
@@ -736,7 +764,7 @@ def reset(request):
         return redirect("home")
     context = {}
     level = request.GET.get("l") if request.GET.get("l") else ''
-    print(level)
+    #print(level)
     membersWithDept = Equbtegna.objects.filter(
         Q(unpaid_month__gt = 0)& (Q(equb__type = level) if level != '' else Q(equb__type__icontains = level))
         )
@@ -750,7 +778,7 @@ def reset(request):
     context['reset'] = False
     if request.method == "POST":
         type = request.POST.get("type")
-        print(request.POST)
+        #print(request.POST)
         curequb = Equb.objects.get(type__exact = type)
         curequb.currentRound += 1
         curequb.save()
@@ -935,6 +963,9 @@ def adminOrders(request):
     elif request.GET.get("delivery") == "1":
         orders = Order.objects.filter(delivery = False ,sold = False , paid = True)
         selected = 1
+    elif request.GET.get("delivery") == "3":
+        orders = Order.objects.filter(bank_payment=True,sold = False , paid = True)
+        selected = 3
     
     context = {"orders":orders, "selected":selected, "order_price": order_price}
     return render(request, 'admin-orders.html', context)
